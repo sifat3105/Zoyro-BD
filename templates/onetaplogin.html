@@ -1,0 +1,32 @@
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+
+
+<script>
+    window.onload = function () {
+      google.accounts.id.initialize({
+        client_id: "YOUR_GOOGLE_CLIENT_ID",
+        callback: handleCredentialResponse,
+        auto_select: true, // automatically sign in if user previously approved
+        cancel_on_tap_outside: false, // stays open even if clicked elsewhere
+      });
+  
+      google.accounts.id.prompt(); // show the One Tap prompt
+    };
+  
+    function handleCredentialResponse(response) {
+      // Send the token to your backend to log in or sign up the user
+      fetch("/onetap-login/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRFToken": "{{ csrf_token }}",
+        },
+        body: JSON.stringify({ credential: response.credential }),
+      }).then(res => {
+        if (res.ok) {
+          window.location.href = "/";
+        }
+      });
+    }
+  </script>
+  
