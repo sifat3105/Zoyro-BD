@@ -13,5 +13,5 @@ urlpatterns = [
     path('payments/', include('payments.urls', namespace='payments')),
     path('products/', include('products.urls', namespace='products')),
     path('reviews/', include('reviews.urls', namespace='reviews')),
-    path('search/', include('search.urls', namespace='search')),
+    path('', include('search.urls', namespace='search')),
 ]

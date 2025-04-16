@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 from django.urls import reverse
 from django.utils.http import urlencode
 from products.models import Product, Category
@@ -10,7 +10,7 @@ import random, string
 def product_search(request):
     query = request.GET.get('q', '')
 
-    if query:   
+    if query:       
         products = smart_product_search(query)
     else:
         products = Product.objects.all()
@@ -20,8 +20,7 @@ def product_search(request):
         'query': query,
         "categories":categories
     }
-    
-    return render(request, 'product/products.html', context)
+    return render(request, 'product/product_list.html', context)
 
 def generate_random_string(length=10):
     """Generate a random string for query parameters like 'spm'."""
@@ -61,7 +60,8 @@ def search_redirect(request):
     query_string = urlencode(params)
 
     # Redirect to product search page with query parameters
-    return HttpResponseRedirect(f"{reverse('product_search')}?{query_string}")
+    return HttpResponseRedirect(f"{reverse('search:product_search')}?{query_string}")
+
 
 
 

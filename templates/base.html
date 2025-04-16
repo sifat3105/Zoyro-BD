@@ -9,7 +9,7 @@
    <meta name="author" content="Gurdeep singh osahan">
    <title>{% block title %}{% endblock  %}</title>
    <!-- Favicon Icon -->
-   <link rel="icon" type="{% static 'image/png" href="img/fav-icon.png' %}">
+   <link rel="icon" type="image/jpg" href="{% static 'img/fav-icon.jpg' %}">
    <!-- Bootstrap core CSS -->
    <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
    <!-- Slider CSS -->
@@ -72,14 +72,15 @@
                               <!-- Tab panes -->
                               <div class="tab-content">
                                  <div class="tab-pane active" id="login-form" role="tabpanel">
+                                    <form action="" method="GET">
                                     <h5 class="heading-design-h5 text-dark">LOGIN</h5>
                                     <fieldset class="form-group mt-4">
                                        <label>Enter Email/Mobile number</label>
-                                       <input type="text" class="form-control" placeholder="+91 123 456 7890">
+                                       <input type="text" name='email' class="form-control" placeholder="+91 123 456 7890">
                                     </fieldset>
                                     <fieldset class="form-group">
                                        <label>Enter Password</label>
-                                       <input type="password" class="form-control" placeholder="********">
+                                       <input type="password" name="password" class="form-control" placeholder="********">
                                     </fieldset>
                                     <fieldset class="form-group">
                                        <button type="submit" class="btn btn-lg btn-primary btn-block">Enter to your
@@ -89,6 +90,7 @@
                                        <input type="checkbox" class="custom-control-input" id="customCheck1">
                                        <label class="custom-control-label" for="customCheck1">Remember me</label>
                                     </div>
+                                 </form>
                                     <div class="login-with-sites mt-4">
                                        <p class="mb-2">or Login with your social profile:</p>
                                        <div class="row text-center">
@@ -104,6 +106,7 @@
                                     </div>
                                  </div>
                                  <div class="tab-pane" id="register" role="tabpanel">
+                                    <form action="" method="POST">
                                     <h5 class="heading-design-h5 text-dark">REGISTER</h5>
                                     <fieldset class="form-group mt-4">
                                        <label>Enter Email/Mobile number</label>
@@ -126,6 +129,7 @@
                                        <label class="custom-control-label" for="customCheck2">I Agree with <a
                                              href="#">Term and Conditions</a></label>
                                     </div>
+                                 </form>
                                     <div class="login-with-sites mt-4">
                                        <p class="mb-2">or Login with your social profile:</p>
                                        <div class="row text-center">
@@ -179,7 +183,7 @@
          <nav class="navbar navbar-expand-lg navbar-light bg-white pt-0 pb-0">
             <div class="container">
                <a class="navbar-brand" href="index.html">
-                  <img src="img/logo.png' %}" alt="gurdeep osahan designer">
+                  <img src="{%static 'img/zoyro.png' %}" alt="logo">
                </a>
                <a class="toggle" href="#">
                   <span></span>
