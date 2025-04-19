@@ -93,7 +93,17 @@ def update_cart_item(request):
             item = CartItem.objects.get(id=item_id)
             item.quantity = quantity
             item.save()
-            return JsonResponse({"status": "success", "item_id": item_id, "quantity": quantity})
+            context = zoyro(request)
+            
+            serialized_context = {
+                "sub_total": context.get("sub_total"),
+                "delivery_charge": (context.get("delivery_charge")),
+                "total": (context.get("total")),
+                "total_saving": (context.get("total_saving")),
+                "item_count": context.get("item_count"),
+                # Add more fields as needed, ensure they're serializable
+            }
+            return JsonResponse({"status": "success", 'context':serialized_context})
         except CartItem.DoesNotExist:
             return JsonResponse({"status": "error", "message": "Item not found"}, status=404)
     else:

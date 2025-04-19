@@ -1,4 +1,5 @@
 {% load static %}
+{% load socialaccount %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,7 +8,7 @@
    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
    <meta name="description" content="Gurdeep singh osahan">
    <meta name="author" content="Gurdeep singh osahan">
-   <title>Chpoee - Bootstrap E-Commerce Template</title>
+   <title>{% block title %}{% endblock  %}</title>
    <!-- Favicon Icon -->
    <link rel="icon" type="image/png" href="{% static 'img/fav-icon.png' %}">
    <!-- Bootstrap core CSS -->
@@ -25,6 +26,64 @@
    <!-- Owl Carousel -->
    <link rel="stylesheet" href="{% static 'vendor/owl-carousel/owl.carousel.css' %}">
    <link rel="stylesheet" href="{% static 'vendor/owl-carousel/owl.theme.css' %}">
+
+   <script src="https://accounts.google.com/gsi/client" async defer></script>
+
+   <style>
+      .mobile-footer-nav {
+         position: fixed;
+         bottom: 0;
+         left: 0;
+         width: 100%;
+         background: #fff;
+         border-top: 1px solid #ddd;
+         z-index: 999;
+         padding: 8px 0;
+       }
+       
+       .mobile-footer-nav .row {
+         margin: 0;
+       }
+       
+       .mobile-footer-nav .col {
+         padding: 0;
+       }
+       
+       .mobile-footer-nav .col a {
+         display: block;
+         color: #555;
+         font-size: 22px;
+         padding: 5px;
+         text-align: center;
+         transition: color 0.3s ease;
+       }
+       
+       .mobile-footer-nav .col a i {
+         transition: color 0.3s ease, font-size 0.3s ease;
+       }
+       
+       @media (min-width: 768px) {
+         .mobile-footer-nav {
+           display: none; /* Hide on tablet/desktop */
+         }
+       }
+       .mobile-footer-nav .col a {
+         display: block;
+         color: #555;
+         font-size: 22px;
+         padding: 5px;
+         text-align: center;
+       }
+       
+       .mobile-footer-nav .col.active a i {
+         font-size: 28px; /* Increased size (6px bigger) */
+       }
+       
+       .mobile-footer-nav .col a i {
+         transition: color 0.3s ease;
+       }
+       
+    </style>
 </head>
 
 <body>
@@ -178,7 +237,7 @@
       <div class="main-nav shadow-sm">
          <nav class="navbar navbar-expand-lg navbar-light bg-white pt-0 pb-0">
             <div class="container">
-               <a class="navbar-brand" href="index.html">
+               <a class="navbar-brand" href="{% url 'home:home' %}">
                   <img src="{% static 'img/zoyro.png' %}" alt="gurdeep osahan designer">
                </a>
                <a class="toggle" href="#">
@@ -191,7 +250,7 @@
                <div class="collapse navbar-collapse" id="navbarSupportedContent">
                   <ul class="navbar-nav mr-auto main-nav-left">
                      <li class="nav-item">
-                        <a class="nav-link" href="index.html"><i class="icofont-ui-home"></i></a>
+                        <a class="nav-link" href="{% url 'home:home' %}"><i class="icofont-ui-home"></i></a>
                      </li>
                      <li class="nav-item dropdown mega-drop-main">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
@@ -376,6 +435,7 @@
                      <input class="form-control mr-sm-2" type="search"
                         placeholder="Search for products, brands and more" aria-label="Search">
                   </form>
+                  {% if not request.user.is_authenticated %}
                   <ul class="navbar-nav ml-auto profile-nav-right">
                      <li class="nav-item">
                         <a href="#" data-target="#login" data-toggle="modal" class="nav-link ml-0">
@@ -383,12 +443,35 @@
                         </a>
                      </li>
                      <li class="nav-item cart-nav">
-                        <a data-toggle="offcanvas" class="nav-link" href="#">
+                        <a data-toggle="offcanvas" class="nav-link" href="#" >
                            <i class="icofont-basket"></i> Cart
                            <span class="badge badge-danger">{{item_count}}</span>
                         </a>
                      </li>
                   </ul>
+                  {% else %}
+                  <ul class="navbar-nav ml-auto profile-nav-right">
+                     <li class="nav-item dropdown">
+                        <a class="nav-link ml-0 dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <img alt="Generic placeholder image" src="https://ui-avatars.com/api/?name={{ user.username }}&background=1e3c72&color=fff" class="nav-osahan-pic rounded-pill"> My Account
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right shadow-sm border-0">
+                           <a class="dropdown-item" href="profile.html"><i class="icofont-ui-user"></i> My Profile</a>
+                           <a class="dropdown-item" href="profile.html"><i class="icofont-location-pin"></i> My Address</a>
+                           <a class="dropdown-item" href="profile.html"><i class="icofont-heart"></i> Wish List</a>
+                           <a class="dropdown-item" href="profile.html"><i class="icofont-list"></i> Order List</a>
+                           <a class="dropdown-item" href="profile.html"><i class="icofont-file-document"></i> Order Status</a>
+                           <a class="dropdown-item" href="profile.html"><i class="icofont-logout"></i> Logout</a>
+                        </div>
+                     </li>
+                     <li class="nav-item cart-nav">
+                        <a data-toggle="offcanvas" class="nav-link" href="#">
+                        <i class="icofont-basket"></i> Cart
+                        <span class="badge badge-danger">{{item_count}}</span>
+                        </a>
+                     </li>
+                  </ul>
+                  {% endif %}
                </div>
             </div>
          </nav>
@@ -546,25 +629,31 @@
    </div>
  </div>
 
-   <div class="footer-fix-nav shadow">
-      <div class="row">
-         <div class="col">
-            <a href="#"><i class="icofont icofont-home"></i></a>
-         </div>
-         <div class="col border-0">
-            <a type="button" data-toggle="modal" data-target="#exampleModalCenter" href="#"><i class="icofont icofont-search"></i></a>
-         </div>
-         <div class="col active">
-            <a href="#"><i class="icofont icofont-heart"></i></a>
-         </div>
-         <div class="col">
-            <a href="#"><i class="icofont icofont-tag"></i></a>
-         </div>
-         <div class="col">
-            <a href="#"><i class="icofont icofont-bag"></i></a>
-         </div>
-      </div>
+ <div class="mobile-footer-nav shadow">
+   <div class="row no-gutters text-center">
+     <div class="col active">
+       <a href="{% url 'home:home' %}"><i class="icofont icofont-home"></i></a>
+     </div>
+     <div class="col">
+      <a type="button" data-toggle="modal" data-target="#exampleModalCenter" href="#"><i class="icofont icofont-search"></i></a>
+     </div>
+     <div class="col">
+      <a href="#" data-toggle="offcanvas"><i class="icofont-shopping-cart"></i></a>
+    </div>
+     <div class="col ">
+       <a href="#"><i class="icofont icofont-heart"></i></a>
+     </div>
+     <div class="col">
+      <a id="nevMenu" href="#" role="button">
+         <i class="icofont icofont-navigation-menu"></i>
+       </a>
+     </div>
+     
    </div>
+ </div>
+ 
+ 
+ 
    <nav id="main-nav">
 
       <ul class="first-nav">
@@ -703,7 +792,7 @@
         </li>
       </ul>
 
-    </nav>
+   </nav>
 
     <div class="cart-sidebar">
       <div class="cart-sidebar-header">
@@ -971,6 +1060,48 @@
         });
       })(jQuery);
     </script>
+    {% if not request.user.is_authenticated %}
+    <script>
+        window.onload = function () {
+            google.accounts.id.initialize({
+                client_id: "{{ GOOGLE_CLIENT_ID }}",
+                login_uri: "{% provider_login_url 'google' process='login' %}",
+                auto_select: true,
+                cancel_on_tap_outside: false,
+            });
+
+            google.accounts.id.prompt();  // show One Tap
+        }
+    </script>
+    {% else %}
+        <p>Hello, {{ request.user.username }}!</p>
+    {% endif %}
+
+  {% comment %} mobile nev scripts {% endcomment %}
+  <script>
+   document.addEventListener('DOMContentLoaded', function () {
+     const triggerButton = document.querySelector('.toggle.hc-nav-trigger.hc-nav-1');
+     const nevMenu = document.getElementById('nevMenu');
+ 
+     nevMenu.addEventListener('click', function (e) {
+       e.preventDefault();
+       if (triggerButton) {
+         triggerButton.click(); // Simulate click on hamburger menu trigger
+       }
+     });
+   });
+ 
+    document.addEventListener('DOMContentLoaded', function () {
+      const navItems = document.querySelectorAll('.mobile-footer-nav .col');
+  
+      navItems.forEach(item => {
+        item.addEventListener('click', function () {
+          navItems.forEach(el => el.classList.remove('active'));
+          this.classList.add('active');
+        });
+      });
+    });
+  </script>
 </body>
 
 </html>
