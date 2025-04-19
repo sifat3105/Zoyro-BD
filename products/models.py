@@ -38,14 +38,8 @@ class SubCategory(models.Model):
     def __str__(self):
         return f"{self.category.name} → {self.name}"
 
-APPAREL_SIZES = [
-    ('XS', 'Extra Small'),
-    ('S', 'Small'),
-    ('M', 'Medium'),
-    ('L', 'Large'),
-    ('XL', 'Extra Large'),
-    ('XXL', 'Double Extra Large'),
-]
+
+
 
 AVAILABILITY_CHOICES = [
     ('in_stock', 'In Stock'),
@@ -60,7 +54,6 @@ class Product(models.Model):
     offer_price = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
     discount = models.PositiveIntegerField(help_text="Discount in percentage", blank=True, null=True)
     quantity = models.PositiveIntegerField()
-    apparel_size = models.CharField(max_length=5, choices=APPAREL_SIZES, blank=True, null=True)
     quick_overview = models.TextField()
     additional_description = models.TextField(blank=True, null=True)
     availability = models.CharField(max_length=20, choices=AVAILABILITY_CHOICES, default='in_stock')
@@ -71,7 +64,7 @@ class Product(models.Model):
     sku = models.CharField(max_length=100, unique=True)
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, blank=True, related_name='products')
     subcategory = models.ForeignKey(SubCategory, on_delete=models.SET_NULL, null=True, blank=True, related_name='products')
-    click_count = models.PositiveIntegerField(default=0, help_text="Number of times this product has been checked")
+    click_count = models.PositiveIntegerField(default=0)
     created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(auto_now=True)
     total_orders = models.PositiveIntegerField(default=0, help_text="Total number of orders for this product")
@@ -102,3 +95,17 @@ class ProductImage(models.Model):
 
     def __str__(self):
         return f"Image for {self.product.title}"
+    
+class ApparelSize(models.Model):
+    APPAREL_SIZES = [
+    ('XS', 'Extra Small'),
+    ('S', 'Small'),
+    ('M', 'Medium'),
+    ('L', 'Large'),
+    ('XL', 'Extra Large'),
+    ('XXL', 'Double Extra Large'),
+]
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='apparel_sizes')
+    size = models.CharField(max_length=5, choices=APPAREL_SIZES)
+    quantity = models.PositiveIntegerField(default=0)
+    

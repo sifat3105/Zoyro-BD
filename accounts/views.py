@@ -1,5 +1,7 @@
 import json
-from django.contrib.auth import logout, authenticate
+from django.shortcuts import render
+from django.contrib.auth import get_backends
+from django.contrib.auth import logout, authenticate, login
 from django.shortcuts import redirect
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
@@ -7,6 +9,9 @@ from google.oauth2 import id_token
 from google.auth.transport import requests
 from django.contrib.auth import login
 from django.contrib.auth.models import User
+from django.utils import timezone
+import random
+import string
 
 GOOGLE_CLIENT_ID = "321987152556-sfp8useco7j0t261q8mkj9u88ih23j52.apps.googleusercontent.com"
 
@@ -48,3 +53,27 @@ def login_view(request):
 
 def register_view(request):
     pass
+
+
+def create_guest_user(request):
+    timestamp = timezone.now().strftime('%Y%m%d%H%M%S')
+    random_str = ''.join(random.choices(string.ascii_uppercase + string.digits, k=6))
+    username = f"guest_user{timestamp}{random_str}"
+
+    user = User.objects.create_user(username=username, password='guestpassword')
+
+    # Automatically assign first backend
+    backend = get_backends()[0]
+    login(request, user, backend=f"{backend.__module__}.{backend.__class__.__name__}")
+    
+    return username
+
+
+def profile_view(request):
+    if not request.user.is_authenticated:
+        return redirect('home:home')
+    if request.user.username.startswith('guest_user'):
+        return redirect('home:home')
+    return render(request, 'account/profile.html',{
+        'user':request.user,
+    })

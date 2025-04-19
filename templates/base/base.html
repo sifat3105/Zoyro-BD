@@ -1,0 +1,976 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+   <meta name="description" content="Gurdeep singh osahan">
+   <meta name="author" content="Gurdeep singh osahan">
+   <title>Chpoee - Bootstrap E-Commerce Template</title>
+   <!-- Favicon Icon -->
+   <link rel="icon" type="image/png" href="{% static 'img/fav-icon.png' %}">
+   <!-- Bootstrap core CSS -->
+   <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+   <!-- Slider CSS -->
+   <link rel="stylesheet" href="{% static 'vendor/slider/slider.css' %}">
+   <!-- Select2 CSS -->
+   <link href="{% static 'vendor/select2/css/select2-bootstrap.css' %}" />
+   <link href="{% static 'vendor/select2/css/select2.min.css' %}" rel="stylesheet" />
+   <!-- Font Awesome-->
+   <link href="{% static 'vendor/fontawesome/css/all.min.css' %}" rel="stylesheet">
+   <link href="{% static 'vendor/icofont/icofont.min.css' %}" rel="stylesheet">
+   <!-- Custom styles for this template -->
+   <link href="{% static 'css/style.css' %}" rel="stylesheet">
+   <!-- Owl Carousel -->
+   <link rel="stylesheet" href="{% static 'vendor/owl-carousel/owl.carousel.css' %}">
+   <link rel="stylesheet" href="{% static 'vendor/owl-carousel/owl.theme.css' %}">
+</head>
+
+<body>
+   <div class="btn-primary pt-2 pb-2">
+      <div class="container-fluid">
+         <div class="row">
+            <div class="col-lg-12 text-center">
+               <a href="shop.html" class="mb-0 text-white">
+                  40% CASHBACK FOR NEW USERS | CODE: <strong><span class="text-light">GURDEEPOSAHAN40 <span
+                           class="mdi mdi-tag-faces"></span></span> </strong>
+               </a>
+            </div>
+         </div>
+      </div>
+   </div>
+   <div class="modal fade login-modal-main" id="login">
+      <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+         <div class="modal-content">
+            <div class="modal-body">
+               <div class="login-modal">
+                  <div class="row">
+                     <div class="col-lg-6 d-flex align-items-center">
+                        <div class="login-modal-left p-4 text-center pl-5">
+                           <img src="{% static 'img/login.jpg' %}" alt="Gurdeep singh osahan">
+                        </div>
+                     </div>
+                     <div class="col-lg-6">
+                        <button type="button" class="close close-top-right position-absolute" data-dismiss="modal"
+                           aria-label="Close">
+                           <span aria-hidden="true"><i class="icofont-close-line"></i></span>
+                           <span class="sr-only">Close</span>
+                        </button>
+                        <form class="position-relative">
+                           <ul class="mt-4 mr-4 nav nav-tabs-login float-right position-absolute" role="tablist">
+                              <li>
+                                 <a class="nav-link-login active" data-toggle="tab" href="#login-form" role="tab"><i
+                                       class="icofont-ui-lock"></i> LOGIN</a>
+                              </li>
+                              <li>
+                                 <a class="nav-link-login" data-toggle="tab" href="#register" role="tab"><i
+                                       class="icofont icofont-pencil"></i> REGISTER</a>
+                              </li>
+                           </ul>
+                           <div class="login-modal-right p-4">
+                              <!-- Tab panes -->
+                              <div class="tab-content">
+                                 <div class="tab-pane active" id="login-form" role="tabpanel">
+                                    <h5 class="heading-design-h5 text-dark">LOGIN</h5>
+                                    <fieldset class="form-group mt-4">
+                                       <label>Enter Email/Mobile number</label>
+                                       <input type="text" class="form-control" placeholder="+91 123 456 7890">
+                                    </fieldset>
+                                    <fieldset class="form-group">
+                                       <label>Enter Password</label>
+                                       <input type="password" class="form-control" placeholder="********">
+                                    </fieldset>
+                                    <fieldset class="form-group">
+                                       <button type="submit" class="btn btn-lg btn-primary btn-block">Enter to your
+                                          account</button>
+                                    </fieldset>
+                                    <div class="custom-control custom-checkbox">
+                                       <input type="checkbox" class="custom-control-input" id="customCheck1">
+                                       <label class="custom-control-label" for="customCheck1">Remember me</label>
+                                    </div>
+                                    <div class="login-with-sites mt-4">
+                                       <p class="mb-2">or Login with your social profile:</p>
+                                       <div class="row text-center">
+                                          <div class="col-6 pr-1">
+                                             <button class="btn-facebook btn-block login-icons btn-lg"><i
+                                                   class="icofont icofont-facebook"></i> Facebook</button>
+                                          </div>
+                                          <div class="col-6 pl-1">
+                                             <button class="btn-google btn-block login-icons btn-lg"><i
+                                                   class="icofont icofont-google-plus"></i> Google</button>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                                 <div class="tab-pane" id="register" role="tabpanel">
+                                    <h5 class="heading-design-h5 text-dark">REGISTER</h5>
+                                    <fieldset class="form-group mt-4">
+                                       <label>Enter Email/Mobile number</label>
+                                       <input type="text" class="form-control" placeholder="+91 123 456 7890">
+                                    </fieldset>
+                                    <fieldset class="form-group">
+                                       <label>Enter Password</label>
+                                       <input type="password" class="form-control" placeholder="********">
+                                    </fieldset>
+                                    <fieldset class="form-group">
+                                       <label>Enter Confirm Password </label>
+                                       <input type="password" class="form-control" placeholder="********">
+                                    </fieldset>
+                                    <fieldset class="form-group">
+                                       <button type="submit" class="btn btn-lg btn-primary btn-block">Create Your
+                                          Account</button>
+                                    </fieldset>
+                                    <div class="custom-control custom-checkbox">
+                                       <input type="checkbox" class="custom-control-input" id="customCheck2">
+                                       <label class="custom-control-label" for="customCheck2">I Agree with <a
+                                             href="#">Term and Conditions</a></label>
+                                    </div>
+                                    <div class="login-with-sites mt-4">
+                                       <p class="mb-2">or Login with your social profile:</p>
+                                       <div class="row text-center">
+                                          <div class="col-6 pr-1">
+                                             <button class="btn-facebook btn-block login-icons btn-lg"><i
+                                                   class="icofont icofont-facebook"></i> Facebook</button>
+                                          </div>
+                                          <div class="col-6 pl-1">
+                                             <button class="btn-google btn-block login-icons btn-lg"><i
+                                                   class="icofont icofont-google-plus"></i> Google</button>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </form>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+   <div class="bg-light">
+      <div class="header-top border-bottom bg-white">
+         <div class="container">
+            <div class="row">
+               <div class="col-lg-12">
+                  <ul class="list-inline float-right mb-0">
+                     <li class="list-inline-item border-right border-left py-1 pr-2 mr-2 pl-2">
+                        <a href=""><i class="icofont icofont-iphone"></i> +1-123-456-7890</a>
+                     </li>
+                     <li class="list-inline-item border-right py-1 pr-2 mr-2">
+                        <a href="contact-us.html"><i class="icofont icofont-headphone-alt"></i> Contact Us</a>
+                     </li>
+                     <li class="list-inline-item">
+                        <span>Download App</span> &nbsp;
+                        <a href="#"><i class="icofont icofont-brand-windows"></i></a>
+                        <a href="#"><i class="icofont icofont-brand-apple"></i></a>
+                        <a href="#"><i class="icofont icofont-brand-android-robot"></i></a>
+                     </li>
+                  </ul>
+                  <p class="mb-0 py-1">FREE CASH ON DELIVERY &amp; SHIPPING AVAILABLE OVER <span
+                        class="text-danger font-weight-bold">$499</span></p>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="main-nav shadow-sm">
+         <nav class="navbar navbar-expand-lg navbar-light bg-white pt-0 pb-0">
+            <div class="container">
+               <a class="navbar-brand" href="index.html">
+                  <img src="{% static 'img/zoyro.png' %}" alt="gurdeep osahan designer">
+               </a>
+               <a class="toggle" href="#">
+                  <span></span>
+               </a>
+               <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                  aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+               </button>
+               <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                  <ul class="navbar-nav mr-auto main-nav-left">
+                     <li class="nav-item">
+                        <a class="nav-link" href="index.html"><i class="icofont-ui-home"></i></a>
+                     </li>
+                     <li class="nav-item dropdown mega-drop-main">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                           WOMEN
+                        </a>
+                        <div class="dropdown-menu mega-drop  shadow-sm border-0" aria-labelledby="navbarDropdown">
+                           <div class="row ml-0 mr-0">
+                              <div class="col-lg-2 col-md-2">
+                                 <div class="mega-list">
+                                    <a class="mega-title" href="product-grid.html">Lingerie & Sleepwear</a>
+                                    <a href="product-grid.html">Bras & Lingerie Sets</a>
+                                    <a href="product-grid.html">Briefs</a>
+                                    <a href="product-grid.html">Shapewear</a>
+                                    <a href="product-grid.html">Sleepwear & Loungewear</a>
+                                    <a href="product-grid.html">Swimwear</a>
+                                    <a href="product-grid.html">Camisoles & Thermals</a>
+                                    <a href="product-grid.html">Blazers & Coats</a>
+                                    <a href="product-grid.html">Suits</a>
+                                    <a href="product-grid.html">Rain Jackets</a>
+                                 </div>
+                              </div>
+                              <div class="col-lg-2 col-md-2">
+                                 <div class="mega-list">
+                                    <a class="mega-title" href="product-grid.html">Bottomwear</a>
+                                    <a href="product-grid.html"> Jeans</a>
+                                    <a href="product-grid.html">Casual Trousers</a>
+                                    <a href="product-grid.html">Formal Trousers</a>
+                                    <a href="product-grid.html">Shorts</a>
+                                    <a href="product-grid.html">Track Pants & Joggers</a>
+                                    <a href="product-grid.html">T-Shirts</a>
+                                    <a href="product-grid.html">Sweatshirts</a>
+                                    <a href="product-grid.html">Casual Shirts</a>
+                                    <a href="product-grid.html">Formal Shirts</a>
+                                 </div>
+                              </div>
+                              <div class="col-lg-2 col-md-2">
+                                 <div class="mega-list">
+                                    <a class="mega-title" href="product-grid.html">Western Wear</a>
+                                    <a href="product-grid.html">Sweaters</a>
+                                    <a href="product-grid.htproduct-grid.htmll">Jackets</a>
+                                    <a href="product-grid.html">Blazers & Coats</a>
+                                    <a href="product-grid.html">Suits</a>
+                                    <a href="product-grid.html">Rain Jackets</a>
+                                    <a href="product-grid.html">T-Shirts</a>
+                                    <a href="product-grid.html">Casual Shirts</a>
+                                    <a href="product-grid.html">Formal Shirts</a>
+                                    <a href="product-grid.html">Sweatshirts</a>
+                                 </div>
+                              </div>
+                              <div class="col-lg-2 col-md-2">
+                                 <div class="mega-list">
+                                    <a class="mega-title" href="product-grid.html">Footwear</a>
+                                    <a href="product-grid.html">Casual Shoes</a>
+                                    <a href="product-grid.html">Sports Shoes</a>
+                                    <a href="product-grid.html">Formal Shoes</a>
+                                    <a href="product-grid.html">Sandals & Floaters</a>
+                                    <a href="product-grid.html">Flip Flops</a>
+                                    <a href="product-grid.html">Socks</a>
+                                    <a href="product-grid.html">Formal Shirts</a>
+                                    <a href="product-grid.html">Sneakers</a>
+                                    <a href="product-grid.html">Sweatshirts</a>
+                                 </div>
+                              </div>
+                              <div class="col-lg-2 col-md-2">
+                                 <div class="mega-list">
+                                    <a class="mega-title" href="product-grid.html">Lingerie & Sleepwear</a>
+                                    <a href="product-grid.html">Bras & Lingerie Sets</a>
+                                    <a href="product-grid.html">Briefs</a>
+                                    <a href="product-grid.html">Shapewear</a>
+                                    <a href="product-grid.html">Sleepwear & Loungewear</a>
+                                    <a href="product-grid.html">Swimwear</a>
+                                    <a href="product-grid.html">Camisoles & Thermals</a>
+                                    <a href="product-grid.html">Blazers & Coats</a>
+                                    <a href="product-grid.html">Suits</a>
+                                    <a href="product-grid.html">Rain Jackets</a>
+                                 </div>
+                              </div>
+                              <div class="col-lg-2 col-md-2">
+                                 <div class="mega-list">
+                                    <a class="mega-title" href="product-grid.html">Bottomwear</a>
+                                    <a href="product-grid.html"> Jeans</a>
+                                    <a href="product-grid.html">Casual Trousers</a>
+                                    <a href="product-grid.html">Formal Trousers</a>
+                                    <a href="product-grid.html">Shorts</a>
+                                    <a href="product-grid.html">Track Pants & Joggers</a>
+                                    <a href="product-grid.html">T-Shirts</a>
+                                    <a href="product-grid.html">Sweatshirts</a>
+                                    <a href="product-grid.html">Casual Shirts</a>
+                                    <a href="product-grid.html">Formal Shirts</a>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </li>
+                     <li class="nav-item dropdown mega-drop-main">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                           MEN</a>
+                        <div class="dropdown-menu mega-drop  shadow-sm border-0" aria-labelledby="navbarDropdown">
+                           <div class="row ml-0 mr-0">
+                              <div class="col-lg-3 col-sm-3 col-xs-3 col-md-3">
+                                 <div class="mega-list">
+                                    <a class="mega-title" href="product-grid.html">Topwear</a>
+                                    <a href="product-grid.html">T-Shirts</a>
+                                    <a href="product-grid.html">Casual Shirts</a>
+                                    <a href="product-grid.html">Formalproduct-grid.htmlShirts</a>
+                                    <a href="product-grid.html">Sweatshirts</a>
+                                    <a href="product-grid.html">Sweaters</a>
+                                    <a href="product-grid.html">Jackets</a>
+                                    <a href="product-grid.html">Blazers & Coats</a>
+                                    <a href="product-grid.html">Suits</a>
+                                    <a href="product-grid.html">Rain Jackets</a>
+                                 </div>
+                              </div>
+                              <div class="col-lg-3 col-sm-3 col-xs-3 col-md-3">
+                                 <div class="mega-list">
+                                    <a class="mega-title" href="product-grid.html">Western Wear</a>
+                                    <a href="product-grid.html">Sweaters</a>
+                                    <a href="product-grid.html">Jackets</a>
+                                    <a href="product-grid.html">Blazers & Coats</a>
+                                    <a href="product-grid.html">Suits</a>
+                                    <a href="product-grid.html">Rain Jackets</a>
+                                    <a href="product-grid.html">T-Shirts</a>
+                                    <a href="product-grid.html">Casual Shirts</a>
+                                    <a href="product-grid.html">Formal Shirts</a>
+                                    <a href="product-grid.html">Sweatshirts</a>
+                                 </div>
+                              </div>
+                              <div class="col-lg-3 col-sm-3 col-xs-3 col-md-3">
+                                 <div class="mega-list">
+                                    <a class="mega-title" href="product-grid.html">Bottomwear</a>
+                                    <a href="product-grid.html"> Jeans</a>
+                                    <a href="product-grid.html">Casual Trousers</a>
+                                    <a href="product-grid.html">Formal Trousers</a>
+                                    <a href="product-grid.html">Shorts</a>
+                                    <a href="product-grid.html">Track Pants & Joggers</a>
+                                    <a href="product-grid.html">T-Shirts</a>
+                                    <a href="product-grid.html">Sweatshirts</a>
+                                    <a href="product-grid.html">Casual Shirts</a>
+                                    <a href="product-grid.html">Formal Shirts</a>
+                                 </div>
+                              </div>
+                              <div class="col-lg-3 col-sm-3 col-xs-3 col-md-3">
+                                 <div class="mega-list">
+                                    <a class="mega-title" href="product-grid.html">Footwear</a>
+                                    <a href="product-grid.html">Casual Shoes</a>
+                                    <a href="product-grid.html">Sports Shoes</a>
+                                    <a href="product-grid.html">Formal Shoes</a>
+                                    <a href="product-grid.html">Sneakers</a>
+                                    <a href="product-grid.html">Sweatshirts</a>
+                                    <a href="product-grid.html">Sandals & Floaters</a>
+                                    <a href="product-grid.html">Flip Flops</a>
+                                    <a href="product-grid.html">Socks</a>
+                                    <a href="product-grid.html">Formal Shirts</a>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </li>
+                     <li class="nav-item">
+                        <a class="nav-link" href="product-grid.html">SALE</a>
+                     </li>
+                     <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                           PAGES
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right shadow-sm border-0">
+                           <a class="dropdown-item" href="product-grid.html">Product List</a>
+                           <a class="dropdown-item" href="product-detail.html">Product Detail</a>
+                           <a class="dropdown-item" href="checkout.html">Checkout</a>
+                           <a class="dropdown-item" href="profile.html">My Account</a>
+                           <a class="dropdown-item" href="about-us.html">About Us</a>
+                           <a class="dropdown-item" href="faq.html">FAQ</a>
+                           <a class="dropdown-item" href="contact-us.html">Contact Us</a>
+                        </div>
+                     </li>
+                  </ul>
+                  <form class="form-inline my-2 my-lg-0 top-search">
+                     <button class="btn-link" type="submit"><i class="icofont-search"></i></button>
+                     <input class="form-control mr-sm-2" type="search"
+                        placeholder="Search for products, brands and more" aria-label="Search">
+                  </form>
+                  <ul class="navbar-nav ml-auto profile-nav-right">
+                     <li class="nav-item">
+                        <a href="#" data-target="#login" data-toggle="modal" class="nav-link ml-0">
+                           <i class="icofont-ui-user"></i> Login/Sign Up
+                        </a>
+                     </li>
+                     <li class="nav-item cart-nav">
+                        <a data-toggle="offcanvas" class="nav-link" href="#">
+                           <i class="icofont-basket"></i> Cart
+                           <span class="badge badge-danger">{{item_count}}</span>
+                        </a>
+                     </li>
+                  </ul>
+               </div>
+            </div>
+         </nav>
+      </div>
+      <!-- Header End -->
+      {% block banner %}
+      {% endblock  %}
+   </div>
+   {% block content %}
+   {% endblock  %}
+   
+   <!-- Footer -->
+   <footer class="bg-white border-bottom border-top">
+      <div class="container">
+         <div class="row no-gutters">
+            <div class="col-md-4">
+               <div class="border-right py-5 pr-5">
+                  <h6 class="mt-0 mb-4 f-14 text-dark font-weight-bold">TOP CATEGORIES</h6>
+                  <div class="row no-gutters">
+                     <div class="col-6">
+                        <ul class="list-unstyled mb-0">
+                           <li><a href="#">Dresses for Girls</a></li>
+                           <li><a href="#">Maxi Dresses</a></li>
+                           <li><a href="#">Tops for Girls</a></li>
+                           <li><a href="#">Women Jumpsuits</a></li>
+                           <li><a href="#">Dungarees Dress</a></li>
+                        </ul>
+                     </div>
+                     <div class="col-6">
+                        <ul class="list-unstyled mb-0">
+                           <li><a href="#">T Shirts</a></li>
+                           <li><a href="#">Shoes for Men</a></li>
+                           <li><a href="#">Ripped Jeans</a></li>
+                           <li><a href="#">Jeans for Girls</a></li>
+                           <li><a href="#">Denim shirts</a></li>
+                        </ul>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="col-md-4">
+               <div class="border-right py-5 px-5">
+                  <h6 class="mt-0 mb-4 f-14 text-dark font-weight-bold">ABOUT US</h6>
+                  <div class="row no-gutters">
+                     <div class="col-6">
+                        <ul class="list-unstyled mb-0">
+                           <li><a href="#">History</a></li>
+                           <li><a href="#">Band of Trust</a></li>
+                           <li><a href="#">Brand Guidelines</a></li>
+                           <li><a href="#">TV Commercials</a></li>
+                           <li><a href="#">In the News
+                              </a>
+                           </li>
+                        </ul>
+                     </div>
+                     <div class="col-6">
+                        <ul class="list-unstyled mb-0">
+                           <li><a href="#">Awards</a></li>
+                           <li><a href="#">Terms & Conditions</a></li>
+                           <li><a href="#">Privacy Policy</a></li>
+                           <li><a href="#">Careers</a></li>
+                           <li><a href="#">Offers</a></li>
+                        </ul>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="col-md-4">
+               <div class="py-5 pl-5">
+                  <h6 class="mt-0 mb-4 f-14 text-dark font-weight-bold">DOWNLOAD APP</h6>
+                  <div class="app">
+                     <a href="#">
+                        <img class="img-fluid" src="{% static 'img/google.png' %}">
+                     </a>
+                     <a href="#">
+                        <img class="img-fluid" src="{% static 'img/apple.png' %}">
+                     </a>
+                  </div>
+                  <h6 class="mt-4 mb-4 f-14 text-dark font-weight-bold">KEEP IN TOUCH</h6>
+                  <div class="footer-social">
+                     <a class="btn-facebook" href="#"><i class="icofont-facebook"></i></a>
+                     <a class="btn-twitter" href="#"><i class="icofont-twitter"></i></a>
+                     <a class="btn-instagram" href="#"><i class="icofont-instagram"></i></a>
+                     <a class="btn-whatsapp" href="#"><i class="icofont-whatsapp"></i></a>
+                     <a class="btn-messenger" href="#"><i class="icofont-facebook-messenger"></i></a>
+                     <a class="btn-google" href="#"><i class="icofont-google-plus"></i></a>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <!-- /.container -->
+   </footer>
+   <div class="popular-tag py-5">
+      <div class="container">
+         <div class="row">
+            <div class="col-lg-12">
+               <h6 class="mt-0 mb-4 f-14 text-dark font-weight-bold">POPULAR SEARCHES</h6>
+               <p class="mb-0">
+                  <a href="#">Makeup</a> &nbsp; | &nbsp; <a href="#">Dresses For Girls</a> &nbsp; | &nbsp; <a
+                     href="#">T-Shirts</a> &nbsp; | &nbsp; <a href="#">Sandals</a> &nbsp; | &nbsp; <a
+                     href="#">Headphones</a> &nbsp; | &nbsp; <a href="#">Babydolls</a> &nbsp; | &nbsp; <a
+                     href="#">Blazers For Men</a> &nbsp; | &nbsp; <a href="#">Handbags</a> &nbsp; | &nbsp; <a
+                     href="#">Ladies Watches</a> &nbsp; | &nbsp; <a href="#">Bags</a> &nbsp; | &nbsp; <a href="#">Sport
+                     Shoes</a> &nbsp; | &nbsp; <a href="#">Reebok Shoes</a> &nbsp; | &nbsp; <a href="#">Puma Shoes</a>
+                  &nbsp; | &nbsp; <a href="#">Boxers Wallets</a> &nbsp; | &nbsp; <a href="#">Tops</a> &nbsp; | &nbsp; <a
+                     href="#">Earrings</a> &nbsp; | &nbsp; <a href="#">Fastrack Watches</a> &nbsp; | &nbsp; <a
+                     href="#">Nike</a> &nbsp; | &nbsp; <a href="#">Smart Watches</a> &nbsp; | &nbsp; <a href="#">Cricket
+                     Shoes</a> &nbsp; | &nbsp; <a href="#">Forever 21</a> &nbsp; | &nbsp; <a href="#">Eye Makeup</a> <a
+                     href="#">Photo</a> &nbsp; | &nbsp; <a href="#">Fashion Show</a> &nbsp; | &nbsp; <a
+                     href="#">Lipstick</a> &nbsp; | &nbsp; <a href="#">Dresses</a> &nbsp; | &nbsp; <a href="#">Nike
+                     Shoes</a> &nbsp; | &nbsp; <a href="#">Goggles</a> &nbsp; | &nbsp; <a href="#">Suit Chinos</a>
+                  &nbsp; | &nbsp; <a href="#">Adidas Shoes</a> &nbsp; | &nbsp; <a href="#">Woodland Shoes</a> &nbsp; |
+                  &nbsp; <a href="#">Boxers Wallets</a> &nbsp; | &nbsp; <a href="#">Tops</a> &nbsp; | &nbsp; <a
+                     href="#">Earrings</a> &nbsp; | &nbsp; <a href="#">Fastrack Watches</a> &nbsp; | &nbsp; <a
+                     href="#">Nike</a> &nbsp; | &nbsp; <a href="#">Smart Watches</a> &nbsp; | &nbsp; <a href="#">Cricket
+                     Shoes</a> &nbsp; | &nbsp; <a href="#">Forever 21</a> &nbsp; | &nbsp; <a href="#">Eye Makeup</a> <a
+                     href="#">Photo</a> &nbsp; | &nbsp; <a href="#">Fashion Show</a> &nbsp; | &nbsp; <a
+                     href="#">Lipstick</a> &nbsp; | &nbsp; <a href="#">Dresses</a> &nbsp; | &nbsp; <a href="#">Nike
+                     Shoes</a> &nbsp; | &nbsp; <a href="#">Goggles</a> &nbsp; | &nbsp; <a href="#">Suit Chinos</a>
+                  &nbsp; | &nbsp; <a href="#">Adidas Shoes</a> &nbsp; | &nbsp; <a href="#">Woodland Shoes</a>
+               </p>
+            </div>
+         </div>
+      </div>
+   </div>
+   <div class="copyright bg-light py-3">
+      <div class="container">
+         <div class="row">
+            <div class="col-md-6 d-flex align-items-center">
+               <p class="mb-0">© Copyright 2019 <a href="#">Chpoee</a> . All Rights Reserved
+               </p>
+            </div>
+            <div class="col-md-6 text-right">
+               <img class="img-fluid" src="{% static 'img/payment_methods.png' %}">
+            </div>
+         </div>
+      </div>
+   </div>
+ <!-- Modal -->
+ <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+   <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+         <div class="modal-header">
+           <h5 class="modal-title" id="exampleModalCenterTitle">Search...</h5>
+           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+             <span aria-hidden="true">×</span>
+           </button>
+         </div>
+         <div class="modal-body">
+           <input class="form-control form-control-lg mb-3" type="text" placeholder="Search for products, brands and more">
+        <button type="button" class="btn btn-primary btn-block btn-lg">Search</button></div>
+         
+       </div>
+   </div>
+ </div>
+
+   <div class="footer-fix-nav shadow">
+      <div class="row">
+         <div class="col">
+            <a href="#"><i class="icofont icofont-home"></i></a>
+         </div>
+         <div class="col border-0">
+            <a type="button" data-toggle="modal" data-target="#exampleModalCenter" href="#"><i class="icofont icofont-search"></i></a>
+         </div>
+         <div class="col active">
+            <a href="#"><i class="icofont icofont-heart"></i></a>
+         </div>
+         <div class="col">
+            <a href="#"><i class="icofont icofont-tag"></i></a>
+         </div>
+         <div class="col">
+            <a href="#"><i class="icofont icofont-bag"></i></a>
+         </div>
+      </div>
+   </div>
+   <nav id="main-nav">
+
+      <ul class="first-nav">
+        <li class="search" data-nav-custom-content>
+          <div class="form-container">
+            <form class="search-form" action="https://www.google.com/search" target="_blank" method="get">
+              <input type="text" name="q" placeholder="Search..." autocomplete="off">
+            </form>
+          </div>
+        </li>
+        <li class="cryptocurrency">
+          <a href="#" target="_blank">Cryptocurrency</a>
+          <ul>
+            <li><a href="#">Bitcoin</a></li>
+            <li><a href="#">Ethereum</a></li>
+            <li class="add">
+              <a href="#" data-nav-close="false" data-add="['Litecoin','Dogecoin','Bitcoin Cash','ZCash']">Add Coin</a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+
+      <ul class="second-nav">
+        <li class="devices">
+          <span>Devices</span>
+          <ul>
+            <li class="mobile">
+              <a href="#">Mobile Phones</a>
+              <ul>
+                <li><a href="#">Super Smart Phone</a></li>
+                <li><a href="#">Thin Magic Mobile</a></li>
+                <li><a href="#">Performance Crusher</a></li>
+                <li><a href="#">Futuristic Experience</a></li>
+              </ul>
+            </li>
+            <li class="television">
+              <a href="#">Televisions</a>
+              <div class="subnav-container">
+                <ul>
+                  <li><a href="#">Flat Superscreen</a></li>
+                  <li><a href="#">Gigantic LED</a></li>
+                  <li><a href="#">Power Eater</a></li>
+                  <li><a href="#">3D Experience</a></li>
+                  <li><a href="#">Classic Comfort</a></li>
+                </ul>
+              </div>
+            </li>
+            <li class="camera">
+              <a href="#">Cameras</a>
+              <ul>
+                <li><a href="#">Smart Shot</a></li>
+                <li><a href="#">Power Shooter</a></li>
+                <li><a href="#">Easy Photo Maker</a></li>
+                <li><a href="#">Super Pixel</a></li>
+              </ul>
+            </li>
+            <li data-nav-custom-content>
+              <div class="custom-message">
+                You can add any custom content to your navigation items. This text is just an example.
+              </div>
+            </li>
+          </ul>
+        </li>
+        <li class="magazines">
+          <a href="#magazines">Magazines</a>
+          <ul>
+            <li><a href="#">National Geographic</a></li>
+            <li><a href="#">Scientific American</a></li>
+            <li><a href="#">The Spectator</a></li>
+            <li><a href="#">The Rambler</a></li>
+            <li><a href="#">Physics World</a></li>
+            <li><a href="#">Popular Science</a></li>
+            <li><a href="#">Popular Mechanics</a></li>
+            <li><a href="#">Sky & Telescope</a></li>
+            <li><a href="#">Discover</a></li>
+            <li><a href="#">New Scientist</a></li>
+            <li><a href="#">Psychology Today</a></li>
+            <li><a href="#">Wired</a></li>
+          </ul>
+        </li>
+        <li class="store">
+          <a href="#">Store</a>
+          <ul>
+            <li>
+              <a href="#">Clothes</a>
+              <ul>
+                <li>
+                  <a href="#">Women's Clothing</a>
+                  <ul>
+                    <li><a href="#">Tops</a></li>
+                    <li><a href="#">Dresses</a></li>
+                    <li><a href="#">Trousers</a></li>
+                    <li><a href="#">Shoes</a></li>
+                    <li><a href="#">Sale</a></li>
+                  </ul>
+                </li>
+                <li>
+                  <a href="#">Men's Clothing</a>
+                  <ul>
+                    <li><a href="#">Shirts</a></li>
+                    <li><a href="#">Trousers</a></li>
+                    <li><a href="#">Shoes</a></li>
+                    <li><a href="#">Sale</a></li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+            <li><a href="#">Jewelry</a></li>
+            <li><a href="#">Music</a></li>
+            <li><a href="#">Grocery</a></li>
+          </ul>
+        </li>
+        <li class="collections"><a href="#collections">Collections</a></li>
+        <li class="nolink">No Link</li>
+        <li class="disabled"><a href="#" disabled>Disabled Link</a></li>
+        <li class="add">
+          <a href="#" data-nav-close="false" data-add="['Charts', 'Logs', 'Tests', 'Profile']">Add Item</a>
+        </li>
+      </ul>
+
+      <ul class="bottom-nav">
+        <li class="github">
+          <a href="#" target="_blank">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+          </a>
+        </li>
+        <li class="email">
+          <a href="#" target="_blank">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+          </a>
+        </li>
+        <li class="ko-fi">
+          <a href="#" target="_blank">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M23.881 8.948c-.773-4.085-4.859-4.593-4.859-4.593H.723c-.604 0-.679.798-.679.798s-.082 7.324-.022 11.822c.164 2.424 2.586 2.672 2.586 2.672s8.267-.023 11.966-.049c2.438-.426 2.683-2.566 2.658-3.734 4.352.24 7.422-2.831 6.649-6.916zm-11.062 3.511c-1.246 1.453-4.011 3.976-4.011 3.976s-.121.119-.31.023c-.076-.057-.108-.09-.108-.09-.443-.441-3.368-3.049-4.034-3.954-.709-.965-1.041-2.7-.091-3.71.951-1.01 3.005-1.086 4.363.407 0 0 1.565-1.782 3.468-.963 1.904.82 1.832 3.011.723 4.311zm6.173.478c-.928.116-1.682.028-1.682.028V7.284h1.77s1.971.551 1.971 2.638c0 1.913-.985 2.667-2.059 3.015z"/></svg>
+          </a>
+        </li>
+      </ul>
+
+    </nav>
+
+    <div class="cart-sidebar">
+      <div class="cart-sidebar-header">
+         <h5>
+            My Cart <span class="text-info">({{item_count}} item)</span> <a data-toggle="offcanvas" class="float-right" href="#"><i
+                  class="icofont icofont-close-line"></i>
+            </a>
+         </h5>
+      </div>
+      <div class="cart-sidebar-body">
+         {% if request.user.is_authenticated %}
+         {% for item in cart_items %}
+         <div class="cart-list-product">
+            <a class="float-right remove-cart" href="#"><i class="icofont icofont-close-circled"></i></a>
+            <img class="img-fluid" src="{{ item.product.default_image.url }}" alt="">
+            <span class="badge badge-success">{{ item.product.discount }}% OFF</span>
+            <h5><a href="#">{{ item.product.title|slice:":35" }}</a></h5>
+            <div class="stars-rating"><i class="icofont icofont-star active"></i><i
+                  class="icofont icofont-star active"></i><i class="icofont icofont-star active"></i><i
+                  class="icofont icofont-star active"></i><i class="icofont icofont-star"></i> <span>613</span></div>
+            <p class="f-14 mb-0 text-dark float-right">৳{{ item.product.offer_price }} <del class="small text-secondary">৳ {{ item.product.price }} </del></p>
+
+            <span class="count-number float-left" data-id="{{ item.id }}">
+               <input type="hidden" class="cart-item-id" value="{{ item.id }}">
+               <a class="btn btn-outline-secondary btn-sm left dec quantity-down" href="#"> 
+                  <i class="icofont-minus"></i> 
+               </a>
+               <input class="count-number-input" type="text" value="{{ item.quantity }}" readonly>
+               <a class="btn btn-outline-secondary btn-sm right inc quantity-up" href="#"> 
+                  <i class="icofont-plus"></i> 
+               </a>
+               Size: <strong class="text-info">{{ item.size|upper }}</strong>
+            </span>
+         </div>
+         {% empty %}
+         <p>Your cart is empty</p>
+         {% endfor %}
+         {% else %}
+         {% for key, item in cart_items.items %}
+         <div class="cart-list-product">
+            <a class="float-right remove-cart" href="#"><i class="icofont icofont-close-circled"></i></a>
+            <img class="img-fluid" src="{{ item.product.default_image.url }}" alt="">
+            <span class="badge badge-success">{{ item.product.discount }}% OFF</span>
+            <h5><a href="#">{{ item.product.title|slice:":35" }}</a></h5>
+            <div class="stars-rating"><i class="icofont icofont-star active"></i><i
+                  class="icofont icofont-star active"></i><i class="icofont icofont-star active"></i><i
+                  class="icofont icofont-star active"></i><i class="icofont icofont-star"></i> <span>613</span></div>
+            <p class="f-14 mb-0 text-dark float-right">৳{{ item.product.offer_price }} <del class="small text-secondary">৳ {{ item.product.price }} </del></p>
+
+            <span class="count-number float-left" data-id="{{ item.id }}">
+               <input type="hidden" class="cart-item-id" value="{{ item.id }}">
+               <a class="btn btn-outline-secondary btn-sm left dec quantity-down" href="#"> 
+                  <i class="icofont-minus"></i> 
+               </a>
+               <input class="count-number-input" type="text" value="{{ item.quantity }}" readonly>
+               <a class="btn btn-outline-secondary btn-sm right inc quantity-up" href="#"> 
+                  <i class="icofont-plus"></i> 
+               </a>
+               Size: <strong class="text-info">{{ item.size|upper }}</strong>
+            </span>
+         </div>
+         {% empty %}
+         <p>Your cart is empty</p>
+         {% endfor %}
+         {% endif %}
+        
+      </div>
+      <div class="cart-sidebar-footer">
+         <div class="cart-store-details">
+            <p>Sub Total <strong class="float-right">৳{{sub_total}}</strong></p>
+            <p>Delivery Charges <strong class="float-right text-danger">+ ৳{{delivery_charge}}</strong></p>
+            <h6>Your total savings <strong class="float-right text-danger">৳{{total_saving}}</strong></h6>
+         </div>
+         <a href="checkout.html"><button class="btn btn-primary btn-lg btn-block text-left" type="button"><span
+                  class="float-left"><i class="icofont icofont-cart"></i> Proceed to Checkout </span><span
+                  class="float-right"><strong>৳{{total}}</strong> <span
+                     class="icofont icofont-bubble-right"></span></span></button></a>
+      </div>
+   </div>
+   <!-- Bootstrap core JavaScript -->
+   <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+   <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+   <!-- select2 Js -->
+   <script src="{% static 'vendor/select2/js/select2.min.js' %}"></script>
+   <!-- Owl Carousel -->
+   <script src="{% static 'vendor/owl-carousel/owl.carousel.js' %}"></script>
+   <!-- Slider Js -->
+   <script src="{% static 'vendor/slider/slider.js' %}"></script>
+   <!-- Custom scripts for all pages-->
+   <script src="{% static 'js/custom.js' %}"></script>
+   <script src="{% static 'js/hc-offcanvas-nav.js' %}?ver=4.1.1"></script>
+   <link rel="stylesheet" href="{% static 'js/demo.css' %}?ver=3.4.0">
+   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+
+   <script>
+      document.addEventListener("DOMContentLoaded", function () {
+          const downButtons = document.querySelectorAll('.quantity-down');
+          const upButtons = document.querySelectorAll('.quantity-up');
+      
+          downButtons.forEach(button => {
+              button.addEventListener('click', function(e) {
+                  e.preventDefault();
+                  const container = this.closest('.count-number');
+                  const input = container.querySelector('.count-number-input');
+                  const itemId = container.querySelector('.cart-item-id').value;
+                  let quantity = parseInt(input.value);
+      
+                  if (quantity > 1) {
+                      quantity -= 1;
+                      input.value = quantity;
+                      updateQuantity(itemId, quantity);
+                  }
+              });
+          });
+      
+          upButtons.forEach(button => {
+              button.addEventListener('click', function(e) {
+                  e.preventDefault();
+                  const container = this.closest('.count-number');
+                  const input = container.querySelector('.count-number-input');
+                  const itemId = container.querySelector('.cart-item-id').value;
+                  let quantity = parseInt(input.value);
+      
+                  quantity += 1;
+                  input.value = quantity;
+                  updateQuantity(itemId, quantity);
+              });
+          });
+      
+          function updateQuantity(itemId, quantity) {
+              console.log("Updating Item:", itemId, "Quantity:", quantity); // ✅ Debug print
+              fetch("{% url 'cart:update_cart_item' %}", {
+                  method: "POST",
+                  headers: {
+                      "Content-Type": "application/json",
+                      "X-CSRFToken": getCookie("csrftoken")
+                  },
+                  body: JSON.stringify({
+                      item_id: itemId,
+                      quantity: quantity
+                  })
+              })
+              .then(response => response.json())
+              .then(data => {
+               console.log("Server response:", data);
+               if (data.status === "success") {
+                   const ctx = data.context;
+                   document.querySelector('.cart-store-details p strong.float-right').textContent = `৳${ctx.sub_total}`;
+                   document.querySelector('.cart-store-details p strong.text-danger').textContent = `+ ৳${ctx.delivery_charge}`;
+                   document.querySelector('.cart-store-details h6 strong.float-right').textContent = `৳${ctx.total_saving}`;
+                   document.querySelector('.btn.btn-primary span.float-right strong').textContent = `৳${ctx.total}`;
+                   const itemCountText = `(${ctx.item_count} item${ctx.item_count !== 1 ? 's' : ''})`;
+                   const itemCountSpan = document.querySelector('.cart-sidebar-header span.text-info');
+                   if (itemCountSpan) itemCountSpan.textContent = itemCountText;
+           
+                   // ✅ Update item count in navbar badge
+                   const cartBadge = document.querySelector('.cart-nav .badge-danger');
+                   if (cartBadge) cartBadge.textContent = ctx.item_count;
+               }
+           })
+           
+              .catch(error => {
+                  console.error("Fetch error:", error);
+              });
+          }
+      
+          function getCookie(name) {
+              let cookieValue = null;
+              if (document.cookie && document.cookie !== '') {
+                  const cookies = document.cookie.split(';');
+                  for (let cookie of cookies) {
+                      if (cookie.trim().startsWith(name + '=')) {
+                          cookieValue = decodeURIComponent(cookie.trim().substring(name.length + 1));
+                          break;
+                      }
+                  }
+              }
+              return cookieValue;
+          }
+      });
+      </script>
+
+      
+   <script>
+      (function($) {
+        var $main_nav = $('#main-nav');
+        var $toggle = $('.toggle');
+
+        var defaultOptions = {
+          disableAt: false,
+          customToggle: $toggle,
+          levelSpacing: 40,
+          navTitle: 'All Categories',
+          levelTitles: true,
+          levelTitleAsBack: true,
+          pushContent: '#container',
+          insertClose: 2
+        };
+
+        // call our plugin
+        var Nav = $main_nav.hcOffcanvasNav(defaultOptions);
+
+        // add new items to original nav
+        $main_nav.find('li.add').children('a').on('click', function() {
+          var $this = $(this);
+          var $li = $this.parent();
+          var items = eval('(' + $this.attr('data-add') + ')');
+
+          $li.before('<li class="new"><a href="#">'+items[0]+'</a></li>');
+
+          items.shift();
+
+          if (!items.length) {
+            $li.remove();
+          }
+          else {
+            $this.attr('data-add', JSON.stringify(items));
+          }
+
+          Nav.update(true);
+        });
+
+        // demo settings update
+
+        const update = (settings) => {
+          if (Nav.isOpen()) {
+            Nav.on('close.once', function() {
+              Nav.update(settings);
+              Nav.open();
+            });
+
+            Nav.close();
+          }
+          else {
+            Nav.update(settings);
+          }
+        };
+
+        $('.actions').find('a').on('click', function(e) {
+          e.preventDefault();
+
+          var $this = $(this).addClass('active');
+          var $siblings = $this.parent().siblings().children('a').removeClass('active');
+          var settings = eval('(' + $this.data('demo') + ')');
+
+          update(settings);
+        });
+
+        $('.actions').find('input').on('change', function() {
+          var $this = $(this);
+          var settings = eval('(' + $this.data('demo') + ')');
+
+          if ($this.is(':checked')) {
+            update(settings);
+          }
+          else {
+            var removeData = {};
+            $.each(settings, function(index, value) {
+              removeData[index] = false;
+            });
+
+            update(removeData);
+          }
+        });
+      })(jQuery);
+    </script>
+</body>
+
+</html>

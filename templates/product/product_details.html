@@ -1,0 +1,569 @@
+{% extends 'base/base.html' %}
+{% block title %}{{product.title}}{% endblock  %}
+
+{% block content %}
+<section class="py-2  inner-header">
+    <div class="container">
+       <div class="row d-flex align-items-center">
+          <div class="col-lg-12">
+             <div class="breadcrumbs">
+                <p class="mb-0"><a href="{% url 'home:home' %}"><span class="icofont icofont-ui-home"></span> Home</a> <span class="icofont icofont-thin-right"></span> <a href="#">{{ product.category }}</a> <span class="icofont icofont-thin-right"></span> <a href="#">{{ product.subcategory.name }}</a> <span class="icofont icofont-thin-right"></span> <span>{{ product.title }}</span>
+                </p>
+             </div>
+          </div>
+       </div>
+    </div>
+ </section>
+ <section class="py-5 shop-single bg-light">
+    <div class="container">
+       <div class="row">
+          <div class="col-md-6">
+             <div class="shop-detail-left">
+                <div class="shop-detail-slider position-relative">
+                   <div class="favourite-icon"> <a class="fav-btn" title="" data-placement="bottom" data-toggle="tooltip" href="#" data-original-title="59% OFF"><i class="icofont-ui-tag"></i></a>
+                   </div>
+                   <div id="sync1" class="border rounded shadow-sm bg-white mb-2 owl-carousel text-center">
+                    
+                         <!-- Main product image -->
+                        <div class="item bg-r">
+                            <img alt="" src="{{ product.default_image.url }}" class="img-fluid img-center">
+                        </div>
+
+                        <!-- Loop through additional images -->
+                        
+                        {% if images %}
+                        {% for image in images %}
+                            <div class="item {% if forloop.counter|divisibleby:2 %}bg-r{% else %}bg-b{% endif %}">
+                                <img alt="" src="{{ image.image.url }}" class="img-fluid img-center">
+                            </div>
+                        {% endfor %}
+                        {% endif %}
+                     
+                   </div>
+                   <div id="sync2" class="owl-carousel">
+                      <div class="item">
+                         <img alt="" src="{{ product.default_image.url }}" class="img-fluid img-center">
+                      </div>
+                      {% if images %}
+                      {% for image in images %}
+                      <div class="item">
+                         <img alt="" src="{{ image.image.url }}" class="img-fluid img-center">
+                      </div>
+                      {% endfor %}
+                      {% endif %}
+                      
+                   </div>
+                </div>
+             </div>
+          </div>
+          <div class="col-md-6">
+             <div class="shop-detail-right">
+                <div class="border rounded shadow-sm bg-white p-4">
+                   <div class="product-name">
+                      <p class="text-danger text-uppercase mb-0"> <i class="icofont-sale-discount"></i> {{product.discount}}% Off</p>
+                      <h2>{{product.title}}</h2>
+                      <span>Product code: <b>{{product.product_code}}</b> | <strong class="text-info">FREE Delivery</strong> on orders over ৳299</span>
+                   </div>
+                   <div class="price-box">
+                      <h5>
+                         <span class="product-desc-price">৳{{ product.price}}</span>
+                         <span class="product-price text-danger">৳{{product.offer_price}}</span>
+                         <small class="text-success">You Save : ৳{{save}}</small>
+                      </h5>
+                   </div>
+                   <div class="ratings">
+                      <div class="stars-rating"> <i class="icofont icofont-star active"></i>
+                         <i class="icofont icofont-star active"></i>
+                         <i class="icofont icofont-star"></i>
+                         <i class="icofont icofont-star"></i>
+                         <i class="icofont icofont-star"></i>  <span>(product.)</span>
+                         <span class="rating-links float-right"> <a href="#">1 Review(65)</a> <span class="separator"> </span>  <a href="#det"><i class="icofont icofont-comment"></i> Add Your Review</a> 
+                         </span>
+                      </div>
+                   </div>
+                   <div class="clearfix"></div>
+             <!-- Apparel size -->
+             <div class="product-color-size-area mt-3">
+               <span class="d-inline-block pt-1">Apparel size : </span>
+             <div class="btn-group btn-group-toggle float-right" data-toggle="buttons">
+               {% for size in all_sizes %}
+                   {% if size in apparel_size_list %}
+                       <label class="btn btn-sm btn-outline-secondary">
+                           <input type="radio" name="size" value="{{ size }}" autocomplete="off"> {{ size|upper }}
+                       </label>
+                   {% else %}
+                       <label class="btn btn-sm btn-outline-secondary disabled-size">
+                           <input type="radio" name="size" value="{{ size }}" autocomplete="off" disabled> {{ size|upper }}
+                       </label>
+                   {% endif %}
+               {% endfor %}
+           </div>
+           
+           </div>
+           
+           <style>
+               .disabled-size {
+                   pointer-events: none; /* Prevent interaction */
+                   opacity: 0.5; /* Make it semi-transparent */
+                   color: #999 !important; /* Light gray text */
+                   background-color: #f5f5f5 !important; /* Light gray background */
+                   border-color: #ddd !important; /* Light border */
+                   text-decoration: line-through; /* Optional: strikethrough text */
+               }
+           
+               /* Remove hover effects for disabled elements */
+               .disabled-size:hover {
+                   cursor: not-allowed; /* Show not-allowed cursor */
+                   background-color: #f5f5f5 !important; /* Maintain same background */
+               }
+           </style>
+             
+             
+             
+                   <div class="clearfix"></div>
+                   <div class="product-variation">
+                     
+                         <div class="mt-1 pt-2 float-left mr-2">Quantity :</div>
+                         <div class="input-group quantity-input"> 
+                           <span class="input-group-btn">
+                               <button type="button" class="btn btn-outline-secondary btn-number btn-lg" data-type="minus" data-field="quant[1]">
+                                   <span class="fa fa-minus"></span>
+                               </button>
+                           </span>
+                           <input type="text" name="quantity" class="text-center form-control border-form-control form-control-sm input-number" value="1" disabled size="50"> 
+                           <span class="input-group-btn">
+                               <button type="button" class="btn btn-outline-secondary btn-number btn-lg" data-type="plus" data-field="quant[1]">
+                                   <span class="fa fa-plus"></span>
+                               </button>
+                           </span>
+                       </div>
+                       
+                       <!-- Add this JavaScript -->
+                       <script>
+                       document.querySelectorAll('.btn-number').forEach(button => {
+                           button.addEventListener('click', function() {
+                               const input = this.closest('.input-group').querySelector('.input-number');
+                               let value = parseInt(input.value) || 0;
+                               
+                               if (this.getAttribute('data-type') === 'minus') {
+                                   value = Math.max(1, value - 1); // Minimum value is 1
+                               } else {
+                                   value = value + 1;
+                               }
+                               
+                               input.value = value;
+                           });
+                       });
+                       </script>
+                         <span class="float-right">
+                         <button type="button" title="" data-placement="top" data-toggle="tooltip" href="#"  class="btn btn-outline-primary btn-lg">&nbsp;&nbsp;&nbsp;Buy Now&nbsp;&nbsp;&nbsp;</i></button>
+                         <button id="addProductToCartBtn" class="btn btn-primary btn-lg">Add To Cart</button>
+
+                         </span>
+                   </div>
+                   <div class="short-description border-bottom">
+                      <h6 class="mb-3">
+                         <span class="text-dark font-weight-bold">Quick Overview</span>  
+                         <small class="float-right">Availability: <strong class="badge badge-danger">In Stock</strong></small>
+                      </h6>
+                      <p>{{product.quick_overview}} <a class="font-weight-bold" href="#det">View More[...]</a></p>
+                   </div>
+                   <div class="product-cart-option">
+                      <ul class="list-inline mb-0 mt-3">
+                         <li class="list-inline-item"><a href="wishlist.html"><i class="icofont icofont-heart"></i> <span>Add to Wishlist</span></a>
+                         </li>
+                         <li class="list-inline-item"><a href="#"><i class="icofont icofont-retweet"></i> <span>Add to Compare</span></a>
+                         </li>
+                         <li class="list-inline-item"><a href="#"><i class="icofont icofont-send-mail"></i> <span>Email to a Friend</span></a>
+                         </li>
+                      </ul>
+                   </div>
+                </div>
+             </div>
+          </div>
+       </div>
+    </div>
+ </section>
+ <section id="det" class="pb-5 pt-0 shop-single-detail bg-light">
+    <div class="container">
+       <div class="row">
+          <div class="col-md-12">
+             <div class="rounded shadow-sm bg-white">
+                <ul class="nav nav-pills p-3" id="pills-tab" role="tablist">
+                   <li class="nav-item"> <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">DETAILS</a>
+                   </li>
+                   <li class="nav-item"> <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">ADDITIONAL</a>
+                   </li>
+                   <li class="nav-item"> <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="false">REVIEWS (25445)</a>
+                   </li>
+                </ul>
+                <div class="tab-content p-4 border-top" id="pills-tabContent">
+                   <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                      <table class="table table-bordered">
+                         <thead>
+                            <div style="text-align: center;">
+                               <span style="font-weight: bold;">Size Chart - In inches (Expected Deviation < 3%)</span>
+                             </div>
+                             
+                             <br>
+                            <tr>
+                               <th>Standard Size</th>
+                               <th><span>Medium</span></th>
+                               <th><span>Large</span></th>
+                               <th><span>Extra Large</span></th>
+                               <th><span>Double Extra Large</span></th>
+                            </tr>
+                         </thead>
+                         <tbody class="c6">
+                            <tr>
+                               <td>Brand Size</td>
+                               <td><span>M</span></td>
+                               <td><span>L</span></td>
+                               <td><span>XL</span></td>
+                               <td><span>XXL</span></td>
+                            </tr>
+                            <tr>
+                               <td>Chest (Round)</td>
+                               <td>39</td>
+                               <td>40.5</td>
+                               <td>43</td>
+                               <td>45</td>
+                            </tr>
+                            <tr>
+                               <td>Length</td>
+                               <td>27.5</td>
+                               <td>28</td>
+                               <td>29</td>
+                               <td>30</td>
+                            </tr>
+                            <tr>
+                               <td>Sleeve</td>
+                               <td>8.5</td>
+                               <td>8.75</td>
+                               <td>9</td>
+                               <td>9.25</td>
+                            </tr>
+                         </tbody>
+                      </table>
+                   </div>
+                   <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                      <h5 class="mt-0 mb-3">Aliquam ultricies est ut quam vulputate accumsan</h5>
+                      <p>{{product.additional_description}}
+                      </p>
+                      <ul class="m-0 ml-3 p-0">
+                         <li>Suspendisse varius libero id arcu facilisis blandit.</li>
+                         <li>Nam suscipit leo in eros maximus commodo.</li>
+                         <li>Sed condimentum mauris eget nibh dapibus accumsan.</li>
+                         <li>Cras eget quam et quam dignissim dictum a sit amet eros.</li>
+                         <li>Nullam ultricies diam a sapien mollis tincidunt.</li>
+                      </ul>
+                   </div>
+                   <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
+                      <div class="card-body p-0 reviews-card">
+                         <div class="media mb-4">
+                            <img class="d-flex mr-3 rounded-circle" src="img/user/1.jpg" alt="">
+                            <div class="media-body">
+                               <div class="mt-0 mb-1">
+                                  <span class="h6 mr-2 font-weight-bold">Stave Martin</span> <span><i class="icofont-ui-calendar"></i> Feb 12, 2018</span>
+                                  <div class="stars-rating float-right"> <i class="icofont icofont-star active"></i>
+                                     <i class="icofont icofont-star active"></i>
+                                     <i class="icofont icofont-star"></i>
+                                     <i class="icofont icofont-star"></i>
+                                     <i class="icofont icofont-star"></i>  <span class="rounded bg-warning text-dark pl-1 pr-1">5/3</span>
+                                  </div>
+                               </div>
+                               <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.</p>
+                            </div>
+                         </div>
+                         <div class="media">
+                            <img class="d-flex mr-3 rounded-circle" src="img/user/2.jpg" alt="">
+                            <div class="media-body">
+                               <div class="mt-0 mb-1">
+                                  <span class="h6 mr-2 font-weight-bold">Mark Smith</span> <span><i class="icofont-ui-calendar"></i> Feb 12, 2018</span>
+                                  <div class="stars-rating float-right"> <i class="icofont icofont-star active"></i>
+                                     <i class="icofont icofont-star active"></i>
+                                     <i class="icofont icofont-star"></i>
+                                     <i class="icofont icofont-star"></i>
+                                     <i class="icofont icofont-star"></i>  <span class="rounded bg-warning text-dark pl-1 pr-1">5/3</span>
+                                  </div>
+                               </div>
+                               <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.</p>
+                               <div class="media mt-4">
+                                  <img class="d-flex mr-3 rounded-circle" src="img/user/3.jpg" alt="">
+                                  <div class="media-body">
+                                     <div class="mt-0 mb-1">
+                                        <span class="h6 mr-2 font-weight-bold">Ryan Printz</span> <span><i class="icofont-ui-calendar"></i> Feb 12, 2018</span>
+                                        <div class="stars-rating float-right"> <i class="icofont icofont-star active"></i>
+                                           <i class="icofont icofont-star active"></i>
+                                           <i class="icofont icofont-star"></i>
+                                           <i class="icofont icofont-star"></i>
+                                           <i class="icofont icofont-star"></i>  <span class="rounded bg-warning text-dark pl-1 pr-1">5/3</span>
+                                        </div>
+                                     </div>
+                                     <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.</p>
+                                  </div>
+                               </div>
+                            </div>
+                         </div>
+                         <div class="media mt-4">
+                            <img class="d-flex mr-3 rounded-circle" src="img/user/1.jpg" alt="">
+                            <div class="media-body">
+                               <div class="mt-0 mb-1">
+                                  <span class="h6 mr-2 font-weight-bold">Stave Mark</span> <span><i class="icofont-ui-calendar"></i> Feb 12, 2018</span>
+                                  <div class="stars-rating float-right"> <i class="icofont icofont-star active"></i>
+                                     <i class="icofont icofont-star active"></i>
+                                     <i class="icofont icofont-star"></i>
+                                     <i class="icofont icofont-star"></i>
+                                     <i class="icofont icofont-star"></i>  <span class="rounded bg-warning text-dark pl-1 pr-1">5/3</span>
+                                  </div>
+                               </div>
+                               <p class="mb-0">Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.</p>
+                            </div>
+                         </div>
+                      </div>
+                      <div class="p-4 bg-light rounded mt-4">
+                         <h5 class="card-title mb-4">Leave a Review</h5>
+                         <form name="sentMessage">
+                            <div class="row">
+                               <div class="control-group form-group col-lg-4 col-md-4">
+                                  <div class="controls">
+                                     <label>Your Name <span class="text-danger">*</span></label>
+                                     <input type="text" class="form-control" required="">
+                                  </div>
+                               </div>
+                               <div class="control-group form-group col-lg-4 col-md-4">
+                                  <div class="controls">
+                                     <label>Your Email <span class="text-danger">*</span></label>
+                                     <input type="email" class="form-control" required="">
+                                  </div>
+                               </div>
+                               <div class="control-group form-group col-lg-4 col-md-4">
+                                  <div class="controls">
+                                     <label>Rating <span class="text-danger">*</span></label>
+                                     <select class="form-control custom-select">
+                                        <option>1 Star</option>
+                                        <option>2 Star</option>
+                                        <option>3 Star</option>
+                                        <option>4 Star</option>
+                                        <option>5 Star</option>
+                                     </select>
+                                  </div>
+                               </div>
+                            </div>
+                            <div class="control-group form-group">
+                               <div class="controls">
+                                  <label>Review <span class="text-danger">*</span></label>
+                                  <textarea rows="3" cols="100" class="form-control"></textarea>
+                               </div>
+                            </div>
+                            <div class="text-right">
+                               <button type="submit" class="btn btn-primary">Send Message</button>
+                            </div>
+                         </form>
+                      </div>
+                   </div>
+                </div>
+             </div>
+          </div>
+       </div>
+    </div>
+ </section>
+ <section class="product-list pt-5 bg-light pb-4 pbc-5 border-top">
+    <div class="container">
+       <h6 class="mt-1 mb-0 float-right"><a href="#">View All Items</a></h6>
+       <h4 class="mt-0 mb-3 text-dark">Items You Recently Viewed</h4>
+       <div class="row">
+          <div class="col-md-12">
+             <div class="owl-carousel owl-carousel-category owl-theme">
+                <div class="item">
+                   <div class="card list-item bg-white rounded overflow-hidden position-relative shadow-sm">
+                      <span class="like-icon"><a href="#"> <i class="icofont icofont-heart"></i></a></span>
+                      <a href="#">
+                      <span class="badge badge-danger">NEW</span>
+                      <img src="img/item/1.jpg" class="card-img-top" alt="..."></a>
+                      <div class="card-body">
+                         <h6 class="card-title mb-1">Floret Printed Ivory Skater Dress</h6>
+                         <div class="stars-rating"><i class="icofont icofont-star active"></i><i class="icofont icofont-star active"></i><i class="icofont icofont-star active"></i><i class="icofont icofont-star active"></i><i class="icofont icofont-star"></i> <span>613</span></div>
+                         <p class="mb-0 text-dark">$ 135.00 <span class="text-black-50"><del>$500.00 </del></span> <span class="bg-danger  rounded-sm pl-1 ml-1 pr-1 text-white small"> 50% OFF</span></p>
+                      </div>
+                   </div>
+                </div>
+                <div class="item">
+                   <div class="card list-item bg-white rounded overflow-hidden position-relative shadow-sm">
+                      <span class="like-icon"><a href="#"> <i class="icofont icofont-heart"></i></a></span>
+                      <a href="#">
+                      <span class="badge badge-success">50% OFF</span>
+                      <img src="img/item/2.jpg" class="card-img-top" alt="..."></a>
+                      <div class="card-body">
+                         <h6 class="card-title mb-1">Floret Printed Ivory Skater Dress</h6>
+                         <div class="stars-rating"><i class="icofont icofont-star active"></i><i class="icofont icofont-star active"></i><i class="icofont icofont-star active"></i><i class="icofont icofont-star active"></i><i class="icofont icofont-star"></i> <span>613</span></div>
+                         <p class="mb-0 text-dark">$135.00 <span class="text-black-50"><del>$500.00 </del></span></p>
+                      </div>
+                   </div>
+                </div>
+                <div class="item">
+                   <div class="card list-item bg-white rounded overflow-hidden position-relative shadow-sm">
+                      <span class="like-icon"><a class="active" href="#"> <i class="icofont icofont-heart"></i></a></span>
+                      <a href="#">
+                      <span class="badge badge-danger">NEW</span>
+                      <img src="img/item/3.jpg" class="card-img-top" alt="..."></a>
+                      <div class="card-body">
+                         <h6 class="card-title mb-1">Floret Printed Ivory Skater Dress</h6>
+                         <div class="stars-rating"><i class="icofont icofont-star active"></i><i class="icofont icofont-star active"></i><i class="icofont icofont-star active"></i><i class="icofont icofont-star active"></i><i class="icofont icofont-star"></i> <span>613</span></div>
+                         <p class="mb-0 text-dark">$135.00 <span class="text-black-50"><del>$500.00 </del></span></p>
+                      </div>
+                   </div>
+                </div>
+                <div class="item">
+                   <div class="card list-item bg-white rounded overflow-hidden position-relative shadow-sm">
+                      <span class="like-icon"><a href="#"> <i class="icofont icofont-heart"></i></a></span>
+                      <a href="#">
+                      <span class="badge badge-success">50% OFF</span>
+                      <img src="img/item/4.jpg" class="card-img-top" alt="..."></a>
+                      <div class="card-body">
+                         <h6 class="card-title mb-1">Floret Printed Ivory Skater Dress</h6>
+                         <div class="stars-rating"><i class="icofont icofont-star active"></i><i class="icofont icofont-star active"></i><i class="icofont icofont-star active"></i><i class="icofont icofont-star active"></i><i class="icofont icofont-star"></i> <span>613</span></div>
+                         <p class="mb-0 text-dark">$135.00 <span class="text-black-50"><del>$500.00 </del></span></p>
+                      </div>
+                   </div>
+                </div>
+                <div class="item">
+                   <div class="card list-item bg-white rounded overflow-hidden position-relative shadow-sm">
+                      <span class="like-icon"><a href="#"> <i class="icofont icofont-heart"></i></a></span>
+                      <a href="#">
+                      <span class="badge badge-danger">NEW</span>
+                      <img src="img/item/5.jpg" class="card-img-top" alt="..."></a>
+                      <div class="card-body">
+                         <h6 class="card-title mb-1">Floret Printed Ivory Skater Dress</h6>
+                         <div class="stars-rating"><i class="icofont icofont-star active"></i><i class="icofont icofont-star active"></i><i class="icofont icofont-star active"></i><i class="icofont icofont-star active"></i><i class="icofont icofont-star"></i> <span>613</span></div>
+                         <p class="mb-0 text-dark">$135.00 <span class="text-black-50"><del>$500.00 </del></span></p>
+                      </div>
+                   </div>
+                </div>
+                <div class="item">
+                   <div class="card list-item bg-white rounded overflow-hidden position-relative shadow-sm">
+                      <span class="like-icon"><a href="#"> <i class="icofont icofont-heart"></i></a></span>
+                      <a href="#">
+                      <span class="badge badge-success">50% OFF</span>
+                      <img src="img/item/6.jpg" class="card-img-top" alt="..."></a>
+                      <div class="card-body">
+                         <h6 class="card-title mb-1">Floret Printed Ivory Skater Dress</h6>
+                         <div class="stars-rating"><i class="icofont icofont-star active"></i><i class="icofont icofont-star active"></i><i class="icofont icofont-star active"></i><i class="icofont icofont-star active"></i><i class="icofont icofont-star"></i> <span>613</span></div>
+                         <p class="mb-0 text-dark">$135.00 <span class="text-black-50"><del>$500.00 </del></span></p>
+                      </div>
+                   </div>
+                </div>
+             </div>
+          </div>
+       </div>
+    </div>
+ </section>
+
+
+
+ <script>
+   document.getElementById('addProductToCartBtn').addEventListener('click', function () {
+       // Check if a size is selected
+       const sizeInput = document.querySelector('input[name="size"]:checked');
+       if (!sizeInput) {
+           swal('Oops!', 'Please select a size', 'warning');
+           return;
+       }
+   
+       // Get product details
+       const productSlug = "{{ product.slug }}";
+       const selectedSize = sizeInput.value;
+       const quantity = document.querySelector('input[name="quantity"]').value;
+       const domain = "{{ domain }}";
+       const csrfToken = '{{ csrf_token }}';
+   
+       // Construct the URL
+       const url = `http://${domain}/cart/add-to-cart/`;
+   
+       // Send request to server
+       fetch(url, {
+           method: 'POST',
+           headers: {
+               'X-CSRFToken': csrfToken,
+               'Content-Type': 'application/json',
+           },
+           body: JSON.stringify({
+               slug: productSlug,
+               size: selectedSize,
+               quantity: quantity
+           })
+       })
+       .then(response => {
+           if (!response.ok) {
+               throw new Error('Network response was not ok');
+           }
+           return response.json();
+       })
+       .then(data => {
+           if (data.status === 'ok') {
+            const cartBadge = document.querySelector('.cart-nav .badge-danger');
+            if (cartBadge) cartBadge.textContent = data.itemCount;
+               swal({
+                   title: "Success!",
+                   text: `${data.productName} added to cart!`,
+                   icon: "success",
+                   
+                   buttons: {
+                       cancel: "OK",
+                       confirm: {
+                           text: "View Cart",
+                           value: "viewCart",
+                       }
+                   }
+               }).then((value) => {
+                   if (value === "viewCart") {
+                       // Set a flag to open cart after reload
+                       localStorage.setItem('openCartAfterReload', 'true');
+                   }
+                   location.reload();
+               });
+           } else {
+               swal({
+                   title: "Success!",
+                   text: `${data.productName} added to cart!`,
+                   icon: "success",
+                   buttons: {
+                       cancel: "OK",
+                       confirm: {
+                           text: "View Cart",
+                           value: "viewCart",
+                       }
+                   }
+               }).then((value) => {
+                   if (value === "viewCart") {
+                       localStorage.setItem('openCartAfterReload', 'true');
+                   }
+                   location.reload();
+               });
+           }
+       })
+       .catch(error => {
+           console.error('Error:', error);
+           swal("Oops!", "Failed to add to cart. Please try again.", "error");
+       });
+   });
+   </script>
+   
+   <script>
+   // This runs on every page load
+   window.addEventListener('load', function () {
+       if (localStorage.getItem('openCartAfterReload') === 'true') {
+           // Open the cart offcanvas
+           const cartToggleBtn = document.querySelector('a[data-toggle="offcanvas"]');
+           if (cartToggleBtn) {
+               cartToggleBtn.click();
+           }
+           // Remove the flag after use
+           localStorage.removeItem('openCartAfterReload');
+       }
+   });
+   </script>
+   
+
+   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+{% endblock  %}

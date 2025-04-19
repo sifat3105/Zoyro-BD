@@ -26,12 +26,13 @@ SECRET_KEY = 'django-insecure-_b)yj3ovi(z8@4d$xochlnaa$1ncvqx-b(!9wik&+h*x6m+p_8
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -50,6 +51,7 @@ INSTALLED_APPS = [
     'search',
     'users',
     'banners',
+    'discounts',
 
      # allauth
     'django.contrib.sites',
@@ -93,6 +95,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'products.context_processors.zoyro'
             ],
         },
     },
@@ -164,6 +167,10 @@ SOCIALACCOUNT_PROVIDERS = {
         }
     }
 }
+
+GOOGLE_CLIENT_ID = '321987152556-sfp8useco7j0t261q8mkj9u88ih23j52.apps.googleusercontent.com'
+GOOGLE_CLIENT_SECRET = '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'
+
 OPENAI_API_KEY = "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"
 
 
