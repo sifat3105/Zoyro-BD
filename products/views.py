@@ -9,15 +9,14 @@ def product_details(request, product_slug):
     images = product.images.all()
     domain = request.get_host()
     apparel_sizes = product.apparel_sizes.all()
-    apparel_size_list =[]
-    for apparel_size in apparel_sizes:
-        apparel_size_list.append(apparel_size.size.lower())
+    apparel_size_list = [size.size.lower() for size in product.apparel_sizes.all()]
     save = product.price - product.offer_price
     return render(request, 'product/product_details.html',{
         'product': product,
         'images':images,
         'save':save,
         'domain':domain,
+        'apparel_sizes':apparel_sizes,
         'apparel_size_list':apparel_size_list,
         'all_sizes': ['xs', 's', 'm', 'l', 'xl', 'xxl'],
     })

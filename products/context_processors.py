@@ -42,6 +42,7 @@ def zoyro(request):
                 if product:
                     cart_items[f"AnonymousUser{item_id}"] = {
                         'id': item_id,
+                    
                         'product': product,
                         'quantity': item.get('quantity', 0),
                         'size': item.get('size', ''),

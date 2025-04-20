@@ -88,6 +88,7 @@ def update_cart_item(request):
         data = json.loads(request.body)
         item_id = data.get("item_id")
         quantity = data.get("quantity")
+    # Handle authenticated user cart
     if request.user.is_authenticated:
         try:
             item = CartItem.objects.get(id=item_id)
@@ -130,4 +131,23 @@ def update_cart_item(request):
 
 
 def remove_from_cart(request):
-    pass
+    if request.method == "POST":
+        data = json.loads(request.body)
+        item_id = data.get("item_id")
+        # Handle authenticated user cart
+        if request.user.is_authenticated:
+            try:
+                item = get_object_or_404(CartItem, id=item_id, cart__user = request.user)
+                item.delete()
+                return JsonResponse({"status": "success", "message": "Item removed from cart."}, status=200)
+            except CartItem.DoesNotExist:
+                return JsonResponse({"status": "error", "message": "Item not found"}, status=404)
+        else:
+            cart = request.session.get('cart', {})
+            if str(item_id) in cart:
+                del cart[str(item_id)]
+                request.session['cart'] = cart
+                request.session.modified = True
+                return JsonResponse({"status": "success", "message": "Item removed from cart."}, status=200)
+            else:
+                return JsonResponse({"status": "error", "message": "Item not found in session cart"}, status=404)

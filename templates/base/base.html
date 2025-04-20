@@ -806,7 +806,9 @@
          {% if request.user.is_authenticated %}
          {% for item in cart_items %}
          <div class="cart-list-product">
-            <a class="float-right remove-cart" href="#"><i class="icofont icofont-close-circled"></i></a>
+            <a class="float-right remove-cart" href="#" data-item-id="{{ item.id }}">
+               <i class="icofont icofont-ui-delete"></i>
+           </a>
             <img class="img-fluid" src="{{ item.product.default_image.url }}" alt="">
             <span class="badge badge-success">{{ item.product.discount }}% OFF</span>
             <h5><a href="#">{{ item.product.title|slice:":35" }}</a></h5>
@@ -833,7 +835,9 @@
          {% else %}
          {% for key, item in cart_items.items %}
          <div class="cart-list-product">
-            <a class="float-right remove-cart" href="#"><i class="icofont icofont-close-circled"></i></a>
+            <a class="float-right remove-cart" href="#" data-item-id="{{ item.id }}">
+               <i class="icofont icofont-ui-delete"></i>
+           </a>
             <img class="img-fluid" src="{{ item.product.default_image.url }}" alt="">
             <span class="badge badge-success">{{ item.product.discount }}% OFF</span>
             <h5><a href="#">{{ item.product.title|slice:":35" }}</a></h5>
@@ -976,7 +980,78 @@
       });
       </script>
 
-      
+      <script>
+         document.addEventListener('DOMContentLoaded', function () {
+             // Check if offcanvas should be opened after reload
+             if (localStorage.getItem('openOffcanvasAfterReload') === 'true') {
+                 const toggle = document.querySelector('[data-toggle="offcanvas"]');
+                 if (toggle) toggle.click();
+                 localStorage.removeItem('openOffcanvasAfterReload');
+             }
+         
+             // Add click event for all remove buttons
+             document.querySelectorAll('.remove-cart').forEach(function (button) {
+                 button.addEventListener('click', function (e) {
+                     e.preventDefault();
+         
+                     const itemId = this.dataset.itemId;
+                     const url = "{% url 'cart:remove_from_cart' %}";
+         
+                     fetch(url, {
+                         method: 'POST',
+                         headers: {
+                             'Content-Type': 'application/json',
+                             'X-CSRFToken': getCookie('csrftoken'),
+                         },
+                         body: JSON.stringify({ item_id: itemId })
+                     })
+                     .then(response => response.json())
+                     .then(data => {
+                         if (data) {
+                             // Mark to reopen offcanvas after reload
+                             localStorage.setItem('openCartAfterReload', 'true');
+                             location.reload();
+                         } else {
+                             console.error("Remove failed:", data.message);
+                         }
+                     })
+                     .catch(error => console.error('Error:', error));
+                 });
+             });
+         
+             // CSRF helper
+             function getCookie(name) {
+                 let cookieValue = null;
+                 if (document.cookie && document.cookie !== '') {
+                     const cookies = document.cookie.split(';');
+                     for (let i = 0; i < cookies.length; i++) {
+                         const cookie = cookies[i].trim();
+                         if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                             cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                             break;
+                         }
+                     }
+                 }
+                 return cookieValue;
+             }
+         });
+         </script>
+         
+         <script>
+            // This runs on every page load
+            window.addEventListener('load', function () {
+                if (localStorage.getItem('openCartAfterReload') === 'true') {
+                    // Open the cart offcanvas
+                    const cartToggleBtn = document.querySelector('a[data-toggle="offcanvas"]');
+                    if (cartToggleBtn) {
+                        cartToggleBtn.click();
+                    }
+                    // Remove the flag after use
+                    localStorage.removeItem('openCartAfterReload');
+                }
+            });
+            </script>
+         
    <script>
       (function($) {
         var $main_nav = $('#main-nav');
