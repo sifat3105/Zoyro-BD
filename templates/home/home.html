@@ -38,7 +38,11 @@
                   {% else %}
                   <span class="badge badge-success">{{product.discount}}% OFF</span>
                   {% endif %}
+                  {% if product.default_image %}
                    <img src="{{product.default_image.url}}" class="card-img-top" alt="..."></a>
+                   {% else %}
+                   <img src="{% static 'img/product.jpg'%}" class="card-img-top" alt="..."></a>
+                   {% endif %}
                 <div class="card-body">
                    <h6 class="card-title mb-1">{{product.title}}</h6>
                    <div class="stars-rating"><i class="icofont icofont-star active"></i><i
@@ -79,13 +83,17 @@
                 <div class="item">
                    <div class="card list-item bg-white rounded overflow-hidden position-relative shadow-sm">
                       <span class="like-icon"><a href="#"> <i class="icofont icofont-heart"></i></a></span>
-                      <a href="#">
+                      <a href="{% url 'products:details' product.slug %}">
                         {% if forloop.counter|divisibleby:2 %}
                          <span class="badge badge-danger">NEW</span>
                          {% else %}
                          <span class="badge badge-success">{{product.discount}}% OFF</span>
                          {% endif %}
-                         <img src="{{ product.default_image.url }}" class="card-img-top" alt="..."></a>
+                         {% if product.default_image %}
+                        <img src="{{product.default_image.url}}" class="card-img-top" alt="..."></a>
+                        {% else %}
+                        <img src="{% static 'img/product.jpg'%}" class="card-img-top" alt="..."></a>
+                        {% endif %}
                       <div class="card-body">
                          <h6 class="card-title mb-1">{{product.title}}</h6>
                          <div class="stars-rating"><i class="icofont icofont-star active"></i><i
@@ -98,52 +106,7 @@
                    </div>
                 </div>
                 {% endfor %}
-                {% for product in top_savers_products %}
-                <div class="item">
-                   <div class="card list-item bg-white rounded overflow-hidden position-relative shadow-sm">
-                      <span class="like-icon"><a href="#"> <i class="icofont icofont-heart"></i></a></span>
-                      <a href="#">
-                        {% if forloop.counter|divisibleby:2 %}
-                         <span class="badge badge-danger">NEW</span>
-                         {% else %}
-                         <span class="badge badge-success">{{product.discount}}% OFF</span>
-                         {% endif %}
-                         <img src="{{ product.default_image.url }}" class="card-img-top" alt="..."></a>
-                      <div class="card-body">
-                         <h6 class="card-title mb-1">{{product.title}}</h6>
-                         <div class="stars-rating"><i class="icofont icofont-star active"></i><i
-                               class="icofont icofont-star active"></i><i class="icofont icofont-star active"></i><i
-                               class="icofont icofont-star active"></i><i class="icofont icofont-star"></i>
-                            <span>613</span></div>
-                         <p class="mb-0 text-dark">৳ {{product.offer_price}} <span class="text-black-50"><del>৳{{product.price}} </del></span>
-                            <span class="bg-danger  rounded-sm pl-1 ml-1 pr-1 text-white small"> {{product.discount}}% OFF</span></p>
-                      </div>
-                   </div>
-                </div>
-                {% endfor %}
-                {% for product in top_savers_products %}
-                <div class="item">
-                   <div class="card list-item bg-white rounded overflow-hidden position-relative shadow-sm">
-                      <span class="like-icon"><a href="#"> <i class="icofont icofont-heart"></i></a></span>
-                      <a href="#">
-                        {% if forloop.counter|divisibleby:2 %}
-                         <span class="badge badge-danger">NEW</span>
-                         {% else %}
-                         <span class="badge badge-success">{{product.discount}}% OFF</span>
-                         {% endif %}
-                         <img src="{{ product.default_image.url }}" class="card-img-top" alt="..."></a>
-                      <div class="card-body">
-                         <h6 class="card-title mb-1">{{product.title}}</h6>
-                         <div class="stars-rating"><i class="icofont icofont-star active"></i><i
-                               class="icofont icofont-star active"></i><i class="icofont icofont-star active"></i><i
-                               class="icofont icofont-star active"></i><i class="icofont icofont-star"></i>
-                            <span>613</span></div>
-                         <p class="mb-0 text-dark">৳ {{product.offer_price}} <span class="text-black-50"><del>৳{{product.price}} </del></span>
-                            <span class="bg-danger  rounded-sm pl-1 ml-1 pr-1 text-white small"> {{product.discount}}% OFF</span></p>
-                      </div>
-                   </div>
-                </div>
-                {% endfor %}
+                
                 
              </div>
           </div>

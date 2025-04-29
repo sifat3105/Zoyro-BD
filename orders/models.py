@@ -2,6 +2,10 @@ from django.db import models
 from django.conf import settings
 from django.core.validators import MinValueValidator
 from decimal import Decimal
+from django.utils import timezone
+import random
+
+
 
 class Order(models.Model):
     """Model representing a customer order."""
@@ -14,13 +18,13 @@ class Order(models.Model):
         ('delivered', 'Delivered'),
         ('cancelled', 'Cancelled'),
         ('refunded', 'Refunded'),
+        ('failed', 'Failed'),
+
     ]
     
     # Payment method choices
     PAYMENT_CHOICES = [
-        ('credit_card', 'Credit Card'),
-        ('paypal', 'PayPal'),
-        ('bank_transfer', 'Bank Transfer'),
+        ('sslcommerz', 'SSLCommerz'),
         ('cash_on_delivery', 'Cash on Delivery'),
     ]
     
@@ -28,7 +32,7 @@ class Order(models.Model):
     order_number = models.CharField(max_length=32, unique=True)
     order_date = models.DateTimeField(auto_now_add=True)
     status = models.CharField(max_length=20,choices=STATUS_CHOICES,default='pending')
-    payment_method = models.CharField(max_length=20,choices=PAYMENT_CHOICES,default='credit_card')
+    payment_method = models.CharField(max_length=20,choices=PAYMENT_CHOICES,default='cash_on_delivery')
     payment_status = models.BooleanField(default=False)
     shipping_address = models.TextField()
     billing_address = models.TextField(blank=True, null=True)
@@ -40,30 +44,40 @@ class Order(models.Model):
     notes = models.TextField(blank=True, null=True)
     tracking_number = models.CharField(max_length=100, blank=True, null=True)
     estimated_delivery_date = models.DateField(blank=True, null=True)
+    number = models.CharField(max_length=15, blank=True, null=True)
     
     class Meta:
         ordering = ['-order_date']
         verbose_name = 'Order'
         verbose_name_plural = 'Orders'
+
+    def save(self, *args, **kwargs):
+        if not self.estimated_delivery_date and not self.pk:  # Only set on creation
+            # Calculate 3-5 days from now (random or fixed)
+            delivery_days = random.randint(3, 5)  # Random between 3-5 days
+            # delivery_days = 3  # Fixed 3 days (if preferred)
+            self.estimated_delivery_date = timezone.now().date() + timezone.timedelta(days=delivery_days)
+        super().save(*args, **kwargs)
+    
+    def save(self, *args, **kwargs):
+        if not self.order_number:
+            # Get the last order_number and increment
+            last_order = Order.objects.order_by('-id').first()
+            if last_order:
+                last_id = int(last_order.order_number) if last_order.order_number.isdigit() else 1000
+                self.order_number = f"ORD-{str(last_id + 1)}"
+            else:
+                self.order_number = "ORD-1000"  # Starting number
+        super().save(*args, **kwargs)   
+
+    def __str__(self):
+        return f"Order #{self.order_number}"
     
     def __str__(self):
         return f"Order #{self.order_number} - {self.customer}"
     
-    def save(self, *args, **kwargs):
-        if not self.order_number:
-            # Generate a unique order number if not provided
-            self.order_number = self._generate_order_number()
-        super().save(*args, **kwargs)
     
-    def _generate_order_number(self):
-        """Generate a unique order number."""
-        from django.utils import timezone
-        import random
-        import string
-        
-        timestamp = timezone.now().strftime('%Y%m%d%H%M%S')
-        random_str = ''.join(random.choices(string.ascii_uppercase + string.digits, k=6))
-        return f"ORD-{timestamp}-{random_str}"
+    
     
     @property
     def items_count(self):
@@ -78,6 +92,7 @@ class OrderItem(models.Model):
     product = models.ForeignKey('products.Product', on_delete=models.CASCADE, null=True, related_name='order_items')
     quantity = models.PositiveIntegerField(default=1)
     unit_price = models.DecimalField(max_digits=10,decimal_places=2,validators=[MinValueValidator(Decimal('0.00'))])
+    size = models.CharField(max_length=5, blank=True, null=True)
     discount = models.DecimalField(max_digits=5,decimal_places=2,default=0.00,validators=[MinValueValidator(Decimal('0.00'))])
     
     class Meta:

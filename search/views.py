@@ -1,27 +1,176 @@
-from django.shortcuts import render
+import random
+import string
+from django.db.models import Q, Case, When, Count
+from django.core.paginator import Paginator
+import faiss
+import numpy as np
+from sentence_transformers import SentenceTransformer, util
+
+from django.core.cache import cache
+from django.db.models import Case, When
 from django.http import HttpResponseRedirect, JsonResponse
+from django.shortcuts import render
 from django.urls import reverse
 from django.utils.http import urlencode
-from products.models import Product, Category
-from . utils import smart_product_search
-import random, string
 
+from products.models import Product, Category, Brand
+from .utils import smart_product_search
+
+# Initialize the model once at startup
+
+model = SentenceTransformer('all-MiniLM-L6-v2')
+
+def get_product_embeddings():
+    """Cache product embeddings and return them with product IDs"""
+    cache_key = 'product_embeddings'
+    embeddings_data = cache.get(cache_key)
+    
+    if embeddings_data is None:
+        products = Product.objects.all().only(
+            'id', 'title', 'quick_overview', 'additional_description'
+        )
+        
+        product_texts = {
+            p.id: f"{p.title} {p.quick_overview} {p.additional_description}".strip()
+            for p in products
+        }
+        
+        texts = list(product_texts.values())
+        vectors = model.encode(
+            texts,
+            batch_size=64,
+            convert_to_numpy=True,
+            normalize_embeddings=True
+        ).astype('float32')
+        
+        embeddings_data = {
+            'product_ids': list(product_texts.keys()),
+            'embeddings': vectors
+        }
+        cache.set(cache_key, embeddings_data, timeout=60*60*24)
+    
+    return embeddings_data
+
+def get_faiss_index():
+    """Initialize and cache FAISS index"""
+    cache_key = 'faiss_product_index'
+    index = cache.get(cache_key)
+    
+    if index is None:
+        embeddings_data = get_product_embeddings()
+        vectors = embeddings_data['embeddings']
+        index = faiss.IndexFlatIP(vectors.shape[1])
+        index.add(vectors)
+        cache.set(cache_key, index, timeout=60*60*24)
+    
+    return index
+
+def search_products(query, top_k=100):
+    """Perform semantic search using FAISS"""
+    query_vec = model.encode(
+        query,
+        convert_to_numpy=True,
+        normalize_embeddings=True
+    ).astype('float32').reshape(1, -1)
+    
+    index = get_faiss_index()
+    distances, indices = index.search(query_vec, top_k)
+    
+    embeddings_data = get_product_embeddings()
+    return [embeddings_data['product_ids'][i] for i in indices[0]]
 
 def product_search(request):
-    query = request.GET.get('q', '')
-
-    if query:       
-        products = smart_product_search(query)
+    query = request.GET.get('q', '').strip()
+    
+    # Get filter parameters
+    categories = request.GET.getlist('category')
+    brands = request.GET.getlist('brand')
+    price_range = request.GET.get('price')
+    sort = request.GET.get('sort', 'relevance')
+    min_price = request.GET.get('min_price')
+    max_price = request.GET.get('max_price')
+    
+    if query:
+        # Semantic search
+        product_ids = search_products(query)
+        preserved_order = Case(
+            *[When(pk=pk, then=pos) for pos, pk in enumerate(product_ids)]
+        )
+        products = Product.objects.filter(id__in=product_ids)
     else:
         products = Product.objects.all()
-    categories = Category.objects.filter(products__in=products).distinct()
+        preserved_order = None
+    
+    # Apply filters
+    if categories:
+        products = products.filter(category__id__in=categories)
+    
+    if brands:
+        products = products.filter(brand__id__in=brands)
+    
+    if price_range:
+        if price_range == '50_100':
+            products = products.filter(offer_price__gte=50, offer_price__lte=100)
+        elif price_range == '100_150':
+            products = products.filter(offer_price__gte=100, offer_price__lte=150)
+        elif price_range == '150_200':
+            products = products.filter(offer_price__gte=150, offer_price__lte=200)
+        elif price_range == '200_1000':
+            products = products.filter(offer_price__gte=200, offer_price__lte=1000)
+    
+    # Custom price range
+    if min_price:
+        products = products.filter(offer_price__gte=float(min_price))
+    if max_price:
+        products = products.filter(offer_price__lte=float(max_price))
+    
+    # Apply sorting
+    if sort == 'price_low':
+        products = products.order_by('offer_price')
+    elif sort == 'price_high':
+        products = products.order_by('-offer_price')
+    elif sort == 'discount':
+        products = products.order_by('-discount')
+    elif sort == 'name':
+        products = products.order_by('title')
+    elif sort == 'relevance' and preserved_order:
+        products = products.order_by(preserved_order)
+    else:
+        products = products.order_by('-created_at')
+    
+    # Get filter options with counts
+    filter_categories = Category.objects.filter(
+        products__in=products
+    ).annotate(
+        product_count=Count('products')
+    ).filter(product_count__gt=0)
+    
+    filter_brands = Brand.objects.filter(
+        products__in=products
+    ).annotate(
+        product_count=Count('products')
+    ).filter(product_count__gt=0)
+    
+    # Pagination
+    paginator = Paginator(products, 12)
+    page_number = request.GET.get('page')
+    products_page = paginator.get_page(page_number)
+    
     context = {
-        'products': products,
+        'products': products_page,
         'query': query,
-        "categories":categories
+        'categories': filter_categories,
+        'brands': filter_brands,
+        'selected_categories': [int(c) for c in categories],
+        'selected_brands': [int(b) for b in brands],
+        'selected_price': price_range,
+        'selected_sort': sort,
+        'min_price': min_price,
+        'max_price': max_price,
     }
+    
     return render(request, 'product/product_list.html', context)
-
+    
 def generate_random_string(length=10):
     """Generate a random string for query parameters like 'spm'."""
     return ''.join(random.choices(string.ascii_letters + string.digits, k=length))
@@ -61,6 +210,7 @@ def search_redirect(request):
 
     # Redirect to product search page with query parameters
     return HttpResponseRedirect(f"{reverse('search:product_search')}?{query_string}")
+
 
 
 

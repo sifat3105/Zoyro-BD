@@ -9,7 +9,7 @@ from .models import CartItem
 # Create your views here.
 
 
-@csrf_exempt  # Optional: Only if you’re not already handling CSRF properly
+@csrf_exempt 
 def add_to_cart(request):
     if request.method == 'POST':
         try:
@@ -23,7 +23,6 @@ def add_to_cart(request):
 
             product = get_object_or_404(Product, slug=slug)
 
-            # Handle guest cart using session
             if not request.user.is_authenticated:
                 cart = request.session.get('cart', {})
                 cart_id = f"{slug}_{size}"

@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.utils.html import format_html
-from .models import Category, SubCategory, Product, ProductImage, ApparelSize
+from .models import Category, SubCategory, Product, ProductImage, ApparelSize, Brand
 
 class ProductImageInline(admin.TabularInline):
     model = ProductImage
@@ -200,3 +200,5 @@ class ApparelSizeAdmin(admin.ModelAdmin):
         return obj.product.title
     get_product.short_description = 'Product'
     get_product.admin_order_field = 'product__title'
+
+admin.site.register(Brand)

@@ -1,0 +1,590 @@
+{% extends "base/base.html" %}
+{% load static %}
+{% block title %}Checkout{% endblock  %}
+{% block content %}
+<section class="checkout-body py-5 bg-light">
+    <div class="container">
+       <div class="row">
+          <div class="col-md-8">
+             <div class="checkout-body-left">
+                <div class="accordion checkout-step" id="accordionExample">
+                   
+                    <div class="bg-white rounded shadow-sm mb-3 overflow-hidden">
+                        <div class="card-header bg-white" id="headingTwo">
+                            <h2 class="mb-0">
+                                <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                    <i class="icofont-simple-down float-right mt-1"></i>
+                                    1. Delivery Address
+                                </button>
+                            </h2>
+                        </div>
+                        <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                            <div class="card-body p-2 p-md-3">
+                                <div class="row">
+                                    {% for add in address %}
+                                    <div class="col-12 col-md-6 col-lg-4 mb-3">
+                                        <div class="bg-white card addresses-item h-100 mb-0 shadow-sm position-relative">
+                                            <div class="position-absolute" style="top: 15px; right: 15px;">
+                                                <input type="radio" name="deliveryAddress" id="address{{ add.id }}" class="address-radio" value="{{ add.id }}" {% if add.is_default %}checked{% endif %}>
+                                            </div>
+                                            <div class="gold-members p-2 p-md-3">
+                                                <div class="media">
+                                                    <div class="media-body">
+                                                        <span class="badge badge-danger">{% if add.is_default %}Default -{% endif %} {{ add.address_type }}</span>
+                                                        <h6 class="mb-2 mb-md-3 mt-2 mt-md-3 text-dark">{{ add.full_name }}</h6>
+                                                        <p class="small">{{ add.get_full_address }}</p>
+                                                        <p class="text-secondary small">Phone: <span class="text-dark">{{ add.phone_number }}</span></p>
+                                                        <button type="button" class="btn btn-primary btn-sm btn-block deliver-btn" data-address="#address{{ add.id }}">
+                                                            DELIVER HERE
+                                                        </button>
+                                                        <hr class="my-2">
+                                                        <p class="mb-0 text-black">
+                                                            <a class="text-success mr-3" data-toggle="modal" data-target="#add-address-modal" href="#" data-address-id="{{ add.id }}">
+                                                                <i class="icofont-ui-edit"></i> EDIT
+                                                            </a> 
+                                                            <a class="text-danger" data-toggle="modal" data-target="#delete-address-modal" href="#" data-address-id="{{ add.id }}">
+                                                                <i class="icofont-ui-delete"></i> DELETE
+                                                            </a>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                                                        
+                                                                        <!-- Add New Address -->
+                                    <div class="col-12 col-md-6 col-lg-4 mb-3">
+                                        <a data-toggle="modal" data-target="#add-address-modal" href="#">
+                                            <div class="bg-light p-3 border rounded mb-0 shadow-sm text-center h-100 d-flex align-items-center">
+                                                <h6 class="text-center m-0 w-100">
+                                                    <i class="icofont-plus-circle icofont-2x icofont-md-3x mb-2 mb-md-3"></i><br>
+                                                    Add New Address
+                                                </h6>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                   <div class="bg-white rounded shadow-sm mb-3 overflow-hidden">
+                      <div class="card-header bg-white" id="headingThree">
+                         <h2 class="mb-0">
+                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                            <i class="icofont-simple-down float-right mt-1"></i>                                 
+                            2. Review Order
+                            </button>
+                         </h2>
+                      </div>
+                      <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+                         <div class="card-body p-0">
+                            <div class="cart-table">
+                               <div class="table-responsive">
+                                  <table class="table cart_summary">
+                                     <thead>
+                                        <tr>
+                                           <th>Product</th>
+                                           <th>Description</th>
+                                           <th>Delivery Options</th>
+                                           <th>Quantity</th>
+                                           <th>Subtotal</th>
+                                        </tr>
+                                     </thead>
+                                     <tbody>
+                                          <tr>
+                                            <td class="cart_product"><a href="#">{% if product.default_image %}
+                                             <img class="img-fluid" src="{{ product.default_image.url }}" alt="" />
+                                             {% else %}
+                                             <img class="img-fluid" src="{% static 'img/product.jpg'%}" alt="" />
+                                             {% endif %}</a></td>
+                                            <td class="cart_description">
+                                               <h6 class="product-name"><a href="#">{{product.title}}</a></h6>
+                                               <p class="f-12 text-secondary mb-1 pt-1 pb-1">5/4 Review</p>
+                                               <hr>
+                                               <a class="text-info" href="#"><i class="icofont-heart"></i> Move to Shortlist</a> &nbsp; &nbsp; <a class="text-danger" href="#"><i class="icofont-trash"></i> Remove Item</a>
+                                            </td>
+                                            <td>
+                                               <p class="text-secondary"><i class="icofont-check-circled"></i> 17 Aug to 19 Aug <span class="text-dark">+৳. 49</span></p>
+                                            </td>
+                                            <td class="qty">
+                                               <select class="custom-select custom-select-sm">
+                                                  <option selected>{{ quantity }}</option>
+                                                  <option value="1">2</option>
+                                                  <option value="2">3</option>
+                                                  <option value="3">4</option>
+                                               </select>
+                                            </td>
+                                           
+                                            <td class="price">
+                                               <p class="f-14 mb-0 text-dark">৳{{product.offer_price}}<br> <del class="small text-secondary">৳ {{product.price}} </del></p>
+                                            </td>
+                                         </tr>
+                                      
+                                        
+                                     </tbody>
+                                     <tfoot>
+                                        <tr>
+                                            <td colspan="3">
+                                                <form class="form-inline float-right" id="couponForm" method="post" action="">
+                                                    {% csrf_token %}
+                                                    <div class="form-group">
+                                                        <input type="text" name="coupon_code" placeholder="Have a promo code?" class="form-control border-form-control form-control-sm">
+                                                    </div>
+                                                    &nbsp;
+                                                    <button class="btn btn-outline-primary float-left btn-sm" type="submit">Apply</button>
+                                                </form>
+                                            </td>
+                                           <td colspan="2">Discount : ৳{{product_disccount}} </td>
+                                        </tr>
+                                        <tr>
+                                           <td class="text-right" colspan="3">Total products (tax incl.)</td>
+                                           <td colspan="2">৳{{subtotal}} </td>
+                                        </tr>
+                                        <tr>
+                                           <td class="text-right" colspan="3"><strong>You Pay</strong></td>
+                                           <td class="text-danger" colspan="2"><strong>৳{{total_cost}} </strong></td>
+                                        </tr>
+                                     </tfoot>
+                                  </table>
+                               </div>
+                               <button data-toggle="collapse" data-target="#collapsefour" aria-expanded="false" aria-controls="collapsefour" class="btn btn-primary btn-lg btn-block text-left" type="button"><span class="float-left"><i class="icofont icofont-cart"></i> PROCEED TO PAYMENT </span><span class="float-right"><strong>৳{{total_cost}}</strong> <span class="icofont icofont-bubble-right"></span></span></button>
+                            </div>
+                         </div>
+                      </div>
+                   </div>
+                   <div class="bg-white rounded shadow-sm overflow-hidden">
+                    <div class="card-header bg-white" id="headingfour">
+                        <h2 class="mb-0">
+                            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapsefour" aria-expanded="true" aria-controls="collapsefour">
+                                <i class="icofont-simple-down float-right mt-1"></i> 3. Make Payment
+                            </button>
+                        </h2>
+                    </div>
+                    <div id="collapsefour" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                        <div class="card-body osahan-payment">
+                            <div class="row">
+                                <div class="col-sm-4 pr-0">
+                                    <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                                        <a class="nav-link active" id="v-pills-ssl-tab" data-toggle="pill" href="#v-pills-ssl" role="tab" aria-controls="v-pills-ssl" aria-selected="false">
+                                            <i class="icofont-credit-card"></i> SSLCommerz
+                                        </a>
+                                        <a class="nav-link " id="v-pills-cash-tab" data-toggle="pill" href="#v-pills-cash" role="tab" aria-controls="v-pills-cash" aria-selected="true">
+                                            <i class="icofont-money"></i> Cash on Delivery
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="col-sm-8 pl-0">
+                                    <div class="tab-content h-100" id="v-pills-tabContent">
+                                        <div class="tab-pane fade active show" id="v-pills-ssl" role="tabpanel" aria-labelledby="v-pills-ssl-tab">
+                                            <h6 class="mb-3 mt-0 mb-3">Pay with SSLCommerz</h6>
+                                            <p>Secure payment gateway accepting all major payment methods:</p>
+                                            
+                                            <!-- Popular Mobile Banking -->
+                                            <div class="mb-4">
+                                                <h6 class="font-weight-bold">Popular Mobile Banking</h6>
+                                                <div class="d-flex flex-wrap">
+                                                    <div class="mr-3 mb-2">
+                                                        <img src="{% static 'img/bank/bkash.svg'%}" alt="bKash" class="img-fluid border p-1 rounded" style="height: 60px;">
+                                                    </div>
+                                                    <div class="mr-3 mb-2">
+                                                        <img src="{% static 'img/bank/nagad.svg'%}" alt="bKash" class="img-fluid border p-1 rounded" style="height: 60px;">
+                                                    </div>
+                                                    <div class="mr-3 mb-2">
+                                                        <img src="{% static 'img/bank/rocket.svg'%}" alt="bKash" class="img-fluid border p-1 rounded" style="height: 60px;">
+                                                    </div>
+                                                    <div class="mr-3 mb-2">
+                                                        <img src="{% static 'img/bank/upay.svg'%}" alt="bKash" class="img-fluid border p-1 rounded" style="height: 60px;">
+                                                    </div>
+                                                   
+                                                </div>
+                                            </div>
+                                            
+                                            <!-- Popular Banks -->
+                                            <div class="mb-4">
+                                                <h6 class="font-weight-bold">Popular Banks</h6>
+                                                <div class="d-flex flex-wrap">
+                                                    <div class="mr-3 mb-2">
+                                                        <img src="{% static 'img/bank/dbbl.jpg'%}" alt="bKash" class="img-fluid border p-1 rounded" style="height: 45px;">
+                                                    </div>
+                                                    <div class="mr-3 mb-2">
+                                                        <img src="{% static 'img/bank/city-bank.jpg'%}" alt="bKash" class="img-fluid border p-1 rounded" style="height: 45px;">
+                                                    </div>
+                                                    <div class="mr-3 mb-2">
+                                                        <img src="{% static 'img/bank/dhaka-bank.jpg'%}" alt="bKash" class="img-fluid border p-1 rounded" style="height: 45px;">
+                                                    </div>
+                                                    <div class="mr-3 mb-2">
+                                                        <img src="{% static 'img/bank/ab-bank.jpg'%}" alt="bKash" class="img-fluid border p-1 rounded" style="height: 45px;">
+                                                    </div>
+                                                    <div class="mr-3 mb-2">
+                                                        <img src="{% static 'img/bank/ibbl.jpg'%}" alt="bKash" class="img-fluid border p-1 rounded" style="height: 45px;">
+                                                    </div>
+                                                    <div class="mr-3 mb-2">
+                                                        <img src="{% static 'img/bank/modhumoti-bank.jpg'%}" alt="bKash" class="img-fluid border p-1 rounded" style="height: 45px;">
+                                                    </div>
+                                                    <div class="mr-3 mb-2">
+                                                        <img src="{% static 'img/bank/ucb.jpg'%}" alt="bKash" class="img-fluid border p-1 rounded" style="height: 45px;">
+                                                    </div>
+                                                    <div class="mr-3 mb-2">
+                                                        <img src="{% static 'img/bank/trustbank.jpg'%}" alt="bKash" class="img-fluid border p-1 rounded" style="height: 45px;">
+                                                    </div>
+                                                    <div class="mr-3 mb-2">
+                                                        <img src="{% static 'img/bank/brac-bank.jpg'%}" alt="bKash" class="img-fluid border p-1 rounded" style="height: 45px;">
+                                                    </div>
+                                                    <div class="mr-3 mb-2">
+                                                        <img src="{% static 'img/bank/jamuna-bank.jpg'%}" alt="bKash" class="img-fluid border p-1 rounded" style="height: 45px;">
+                                                    </div>
+                                                    
+                                                </div>
+                                            </div>
+                                            
+                                            <!-- Credit/Debit Cards -->
+                                            <div class="mb-4">
+                                                <h6 class="font-weight-bold">Credit/Debit Cards</h6>
+                                                <div class="d-flex">
+                                                    <div class="mr-3 mb-2">
+                                                        <img src="{% static 'img/bank/visa.svg'%}" alt="bKash" class="img-fluid border p-1 rounded" style="height: 60px;">
+                                                    </div>
+                                                    <div class="mr-3 mb-2">
+                                                        <img src="{% static 'img/bank/mastercard.svg'%}" alt="bKash" class="img-fluid border p-1 rounded" style="height: 60px;">
+                                                    </div>
+                                                    <div class="mr-3 mb-2">
+                                                        <img src="{% static 'img/bank/unionpay.svg'%}" alt="bKash" class="img-fluid border p-1 rounded" style="height: 60px;">
+                                                    </div>
+                                                    <div class="mr-3 mb-2">
+                                                        <img src="{% static 'img/bank/amex.svg'%}" alt="bKash" class="img-fluid border p-1 rounded" style="height: 60px;">
+                                                    </div>
+                                                   
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="text-center py-2">
+                                                <img src="{% static 'img/sslcommerz-logo.png' %}" alt="SSLCommerz" class="img-fluid mb-3" style="max-height: 40px;">
+                                                <form action="your-sslcommerz-endpoint" method="POST">
+                                                    <!-- SSLCommerz required hidden fields would go here -->
+                                                    <button type="submit" class="btn btn-primary btn-lg btn-block">
+                                                        PAY ৳<span id="ssl-total-price">{{total_cost}}</span> SECURELY
+                                                        <i class="icofont-lock"></i>
+                                                    </button>
+                                                </form>
+                                                <small class="text-muted d-block mt-2">
+                                                    <i class="icofont-lock"></i> Your payment information is processed securely
+                                                </small>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade " id="v-pills-cash" role="tabpanel" aria-labelledby="v-pills-cash-tab">
+                                            <h6 class="mb-3 mt-0 mb-3">Cash on Delivery</h6>
+                                            <p>Please keep exact change handy to help us serve you better</p>
+                                            <div class="alert alert-info">
+                                                <i class="icofont-info-circle"></i> A small cash on delivery charge may apply.
+                                            </div>
+                                            <hr>
+                                            <a href="#" id="cod-payment-btn" class="btn btn-primary btn-block btn-lg"
+                                            data-quantity="{{ quantity }}"
+                                            data-size="{{ size }}"
+                                            data-slug="{{ product.slug }}"
+                                            data-subtotal="{{ subtotal }}"
+                                            data-total-cost="{{ total_cost }}">
+                                            PAY ৳<span id="cash-total-price">{{ total_cost }}</span> ON DELIVERY
+                                            <i class="icofont-long-arrow-right"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+             </div>
+          </div>
+          <div class="col-md-4">
+             <div class="osahan-cart-item">
+                <h5 class="mb-3 mt-0 text-dark">Summary <span class="small text-success">(5 Item)</span></h5>
+                <div class="bg-white rounded shadow-sm mb-3">
+                   
+                    <div class="cart-list-product">
+                        <a class="float-right remove-cart" href="#"><i class="icofont icofont-close-circled"></i></a>
+                          {% if product.default_image %}
+                          <img class="img-fluid" src="{{ product.default_image.url }}" alt="" />   
+                          {% else %}
+                          <img class="img-fluid" src="{% static 'img/product.jpg'%}" alt="" />
+                          {% endif %}
+                          
+                        <span class="badge badge-{% if product.discount > 25 %}danger{% else %}success{% endif %}">{{ product.discount }}% OFF</span>
+                        
+                        <h5><a href="#">{{ product.title }}</a></h5>
+                        <div class="stars-rating"><i class="icofont icofont-star active"></i><i class="icofont icofont-star active"></i><i class="icofont icofont-star active"></i><i class="icofont icofont-star active"></i><i class="icofont icofont-star"></i> <span>613</span></div>
+                        <p class="f-14 mb-0 text-dark float-right">৳{{ product.offer_price }} <del class="small text-secondary">৳ {{ product.price }} </del><span class="bg-info rounded-sm pl-1 ml-1 pr-1 text-white small">NEW</span></p>
+                        <p class="f-12 text-secondary float-left quantity-text">Quantity: {{quantity}}  &nbsp;&nbsp;&nbsp;Size: <strong class="text-info">{{ size|upper }}</strong></p>
+                     </div>
+                   
+                   
+                </div>
+                <div class="mb-3 bg-white rounded shadow-sm p-3 clearfix">
+                   <p class="mb-1">Item Total <span class="float-right text-dark">৳{{subtotal}}</span></p>
+                   <p class="mb-1">GST Charges 10% <span class="float-right text-dark">৳0.00</span></p>
+                   <p class="mb-1">Delivery Fee <span class="text-info" data-toggle="tooltip" data-placement="top" title="Total discount breakup">
+                      <i class="icofont-info-circle"></i>
+                      </span> <span class="float-right text-dark">৳{{delivery_charge}}</span>
+                   </p>
+                   <p class="mb-1 text-info">Total Discount 
+                      <span class="float-right text-info">৳{{discount}}</span>
+                   </p>
+                   <hr />
+                   <h6 class="font-weight-bold text-danger mb-0">TO PAY  <span class="float-right">৳{{total_cost}}</span></h6>
+                </div>
+             </div>
+             <div class="text-info">
+                You have saved <strong>৳{{product_disccount}}</strong> on the bill
+             </div>
+          </div>
+       </div>
+    </div>
+ </section>
+ <style>
+    .address-radio {
+        transform: scale(1.3);
+        cursor: pointer;
+      }
+      
+      .addresses-item {
+        transition: all 0.3s ease;
+      }
+      
+      .addresses-item:hover {
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+      }
+        
+      .modal-content {
+        border: none;
+        border-radius: 12px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    }
+    .modal-header {
+        border-bottom: 2px solid rgba(255,255,255,0.2) !important;
+    }
+    .form-control-lg {
+        height: 55px;
+        font-size: 1.05rem;
+        border: 2px solid #e0e0e0;
+    }
+    .form-control-lg:focus {
+        box-shadow: 0 0 0 0.2rem rgba(74, 144, 226, 0.25);
+        border-color: #4a90e2;
+    }
+    textarea.form-control-lg {
+        height: auto !important;
+        resize: none;
+        padding-top: 15px !important;
+    }
+    .btn-lg {
+        padding: 12px 25px;
+        font-size: 1.1rem;
+        border-width: 2px;
+    }
+    .font-weight-600 {
+        font-weight: 600;
+    }
+    .font-weight-500 {
+        font-weight: 500;
+    }
+    .btn-primary {
+        background-color: #4a90e2;
+        border-color: #4a90e2;
+    }
+    .btn-primary:hover {
+        background-color: #3a7bc8;
+        border-color: #3a7bc8;
+    }
+    .btn-outline-primary {
+        color: #4a90e2;
+        border-color: #4a90e2;
+        font-size: 1.05rem;
+    }
+    .btn-outline-primary:hover, .btn-outline-primary.active {
+        background-color: #4a90e2;
+        color: white;
+    }
+
+ </style>
+ <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+ <script>
+    document.getElementById('cod-payment-btn').addEventListener('click', function(e) {
+        e.preventDefault();
+    
+        const selectedAddress = document.querySelector('input[name="deliveryAddress"]:checked');
+    
+        if (!selectedAddress) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'No Delivery Address Selected',
+                text: 'Please select a delivery address before proceeding!',
+                confirmButtonText: 'Select Address'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const addressSectionBtn = document.querySelector('[data-target="#collapseTwo"]');
+                    if (addressSectionBtn) {
+                        addressSectionBtn.click();
+                    }
+                }
+            });
+    
+            return;
+        }
+    
+        const quantity = this.getAttribute('data-quantity');
+        const size = this.getAttribute('data-size');
+        const slug = this.getAttribute('data-slug');
+        const subtotal = this.getAttribute('data-subtotal');
+        const totalCost = this.getAttribute('data-total-cost');
+        const addressId = selectedAddress.value;
+    
+        const finalUrl = `/orders/cod/create/${quantity}/${size}/${slug}/${addressId}/?subtotal=${subtotal}&total_cost=${totalCost}`;
+    
+        fetch(finalUrl, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': getCookie('csrftoken')
+            }
+        })
+        .then(response => {
+            if (response.redirected) {
+                // If backend redirects, force browser to follow it
+                window.location.href = response.url;
+            } else {
+                return response.json();
+            }
+        })
+        .then(data => {
+            if (data && !data.success) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Order Failed',
+                    text: data.message,
+                    confirmButtonText: 'Try Again'
+                });
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Something went wrong!',
+                text: 'Please try again later.',
+                confirmButtonText: 'Okay'
+            });
+        });
+    });
+    
+    // CSRF helper
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    </script>
+    
+    
+ <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Handle deliver button clicks
+        const deliverButtons = document.querySelectorAll('.deliver-btn');
+        const collapseTarget = '#collapseThree'; // The section we want to collapse
+        
+        deliverButtons.forEach(button => {
+            button.addEventListener('click', function(e) {
+                const addressId = this.getAttribute('data-address');
+                const radio = document.querySelector(addressId);
+                
+                // Check the radio button
+                if(radio) {
+                    radio.checked = true;
+                    // Trigger change event in case other listeners depend on it
+                    radio.dispatchEvent(new Event('change'));
+                }
+                
+                // Update button styles
+                deliverButtons.forEach(btn => {
+                    btn.classList.remove('btn-primary');
+                    btn.classList.add('btn-outline-primary');
+                });
+                
+                this.classList.remove('btn-outline-primary');
+                this.classList.add('btn-primary');
+                
+                // Trigger the collapse
+                if(collapseTarget) {
+                    // Using Bootstrap's collapse method if jQuery is available
+                    if (typeof $ !== 'undefined') {
+                        $(collapseTarget).collapse('show');
+                    } else {
+                        // Fallback to vanilla JS
+                        document.querySelector(collapseTarget).classList.add('show');
+                    }
+                }
+            });
+        });
+        
+        // Handle radio button changes
+        const radioButtons = document.querySelectorAll('.address-radio');
+        
+        radioButtons.forEach(radio => {
+            radio.addEventListener('change', function() {
+                if(this.checked) {
+                    // Find the corresponding button and update its style
+                    const button = document.querySelector(`.deliver-btn[data-address="#${this.id}"]`);
+                    if(button) {
+                        deliverButtons.forEach(btn => {
+                            btn.classList.remove('btn-primary');
+                            btn.classList.add('btn-outline-primary');
+                        });
+                        button.classList.remove('btn-outline-primary');
+                        button.classList.add('btn-primary');
+                    }
+                }
+            });
+        });
+    
+        // Initialize the correct button state based on checked radio on page load
+        const checkedRadio = document.querySelector('.address-radio:checked');
+        if (checkedRadio) {
+            const button = document.querySelector(`.deliver-btn[data-address="#${checkedRadio.id}"]`);
+            if (button) {
+                button.classList.remove('btn-outline-primary');
+                button.classList.add('btn-primary');
+            }
+        }
+    });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if the collapse was open before page reload
+            if (sessionStorage.getItem('collapseThreeOpen') === 'true') {
+                $('#collapseThree').collapse('show');
+            }
+        
+            // Store collapse state before form submission
+            $('#couponForm').on('submit', function() {
+                sessionStorage.setItem('collapseThreeOpen', $('#collapseThree').hasClass('show'));
+            });
+        
+            // Accordion toggle handler to update the state
+            $('#collapseThree').on('shown.bs.collapse', function() {
+                sessionStorage.setItem('collapseThreeOpen', true);
+            }).on('hidden.bs.collapse', function() {
+                sessionStorage.setItem('collapseThreeOpen', false);
+            });
+        });
+        </script>
+{% endblock  %}

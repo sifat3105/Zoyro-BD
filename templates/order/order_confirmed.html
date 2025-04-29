@@ -1,0 +1,32 @@
+{% extends "base/base.html" %}
+{% block title %}{% endblock  %}
+
+{% block content %}
+<section class="section pt-5 pb-5 osahan-not-found-page">
+    <div class="container">
+       <div class="row">
+          <div class="col-md-12 text-center pt-5 pb-5">
+             <img class="img-fluid mb-5" src="img/thanks.png" alt="404">
+             <h1 class="mt-2 mb-2 text-success">Congratulations!</h1>
+             <h2 class="mt-2 mb-2 text-success"></h2>
+             <p class="mb-3">You have successfully placed your order</p>
+             <div class="order-number mb-4">
+                <p class="mb-1">Your order number is:</p>
+                <h3 class="text-primary font-weight-bold">{{ order_number }}</h3>
+             </div>
+             <a class="btn btn-primary btn-lg" href="profile.html">View Order :)</a>
+          </div>
+       </div>
+    </div>
+ </section>
+
+ <script>
+    // Push a dummy state so that back button won't go back
+    history.pushState(null, document.title, location.href);
+    window.addEventListener('popstate', function () {
+        // If user tries to go back, redirect them to home page
+        window.location.href = '/';  // Home page URL
+    });
+    </script>
+    
+{% endblock  %}

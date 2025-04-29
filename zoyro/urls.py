@@ -7,8 +7,10 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')),
-    path('accounts/', include('accounts.urls', namespace='accounts')),
+    path('auth/', include('social_django.urls', namespace='social_zoyro')),
+    path('account/', include('accounts.urls', namespace='accounts')),
     path('dashboard/', include('admin_dashboard.urls', namespace='admin_dashboard')),
+    path('delivery/', include('delivery.urls', namespace='delivery')),
     path('cart/', include('cart.urls', namespace='cart')),
     path('checkout/', include('checkout.urls', namespace='checkout')),
     path('', include('home.urls', namespace='home')),  # homepage at root

@@ -1,4 +1,6 @@
 {% extends 'base/base.html' %}
+{% load static %}
+{% load custom_filters %}
 {% block title %}{{product.title}}{% endblock  %}
 
 {% block content %}
@@ -26,7 +28,11 @@
                     
                          <!-- Main product image -->
                         <div class="item bg-r">
+                           {% if product.default_image %}
                             <img alt="" src="{{ product.default_image.url }}" class="img-fluid img-center">
+                            {% else %}
+                            <img alt="" src="{% static 'img/product.jpg'%}" class="img-fluid img-center">
+                            {% endif %}
                         </div>
 
                         <!-- Loop through additional images -->
@@ -42,7 +48,11 @@
                    </div>
                    <div id="sync2" class="owl-carousel">
                       <div class="item">
+                        {% if product.default_image %}
                          <img alt="" src="{{ product.default_image.url }}" class="img-fluid img-center">
+                         {% else %}
+                         <img alt="" src="{% static 'img/product.jpg'%}" class="img-fluid img-center">
+                         {% endif %}
                       </div>
                       {% if images %}
                       {% for image in images %}
@@ -83,24 +93,33 @@
                    </div>
                    <div class="clearfix"></div>
              <!-- Apparel size -->
-            <div class="product-color-size-area mt-3">
-               <span class="d-inline-block pt-1">Apparel size : </span>
-               <div class="btn-group btn-group-toggle float-right" data-toggle="buttons">
-                  <div id="size-info" class="mt-2 text-info font-weight-bold"></div>
-                  {% for size in all_sizes %}
-                     {% if size in apparel_size_list %}
-                        <label class="btn btn-sm btn-outline-secondary">
+                  <div class="product-color-size-area mt-3">
+                     <span class="d-inline-block pt-1">Apparel size : </span>
+                     <div class="btn-group btn-group-toggle float-right" data-toggle="buttons">
+                        <div id="size-info" class="mt-2 text-info font-weight-bold"></div>
+                        {% for size in all_sizes %}
+                           {% if size in available_sizes %}
+                           <label class="btn btn-sm btn-outline-secondary" title="{{ size_quantities|get_item:size }}" data-bs-toggle="tooltip">
                               <input type="radio" name="size" value="{{ size }}" autocomplete="off"> {{ size|upper }}
                         </label>
-                     {% else %}
-                        <label class="btn btn-sm btn-outline-secondary disabled-size">
-                              <input type="radio" name="size" value="{{ size }}" autocomplete="off" disabled> {{ size|upper }}
-                        </label>
-                     {% endif %}
-                  {% endfor %}
-               </div>
-            </div>
-           
+                        
+                                             
+                           {% else %}
+                              <label class="btn btn-sm btn-outline-secondary disabled-size">
+                                    <input type="radio" name="size" value="{{ size }}" autocomplete="off" disabled> {{ size|upper }}
+                              </label>
+                           {% endif %}
+                        {% endfor %}
+                     </div>
+                  </div>
+                  <script>
+                     document.addEventListener('DOMContentLoaded', function () {
+                       var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+                       tooltipTriggerList.forEach(function (tooltipTriggerEl) {
+                         new bootstrap.Tooltip(tooltipTriggerEl)
+                       })
+                     });
+                   </script>
            <style>
                .disabled-size {
                    pointer-events: none; /* Prevent interaction */
@@ -123,7 +142,7 @@
                    <div class="clearfix"></div>
                    <div class="product-variation">
                      
-                         <div class="mt-1 pt-2 float-left mr-2">Quantity :</div>
+                        <div class="mt-1 pt-2 float-left mr-2">Quantity :</div>
                          <div class="input-group quantity-input"> 
                            <span class="input-group-btn">
                                <button type="button" class="btn btn-outline-secondary btn-number btn-lg" data-type="minus" data-field="quant[1]">
@@ -138,25 +157,9 @@
                            </span>
                        </div>
                        
-                       <!-- Add this JavaScript -->
-                       <script>
-                       document.querySelectorAll('.btn-number').forEach(button => {
-                           button.addEventListener('click', function() {
-                               const input = this.closest('.input-group').querySelector('.input-number');
-                               let value = parseInt(input.value) || 0;
-                               
-                               if (this.getAttribute('data-type') === 'minus') {
-                                   value = Math.max(1, value - 1); // Minimum value is 1
-                               } else {
-                                   value = value + 1;
-                               }
-                               
-                               input.value = value;
-                           });
-                       });
-                       </script>
+                      
                          <span class="float-right">
-                         <button type="button" title="" data-placement="top" data-toggle="tooltip" href="#"  class="btn btn-outline-primary btn-lg">&nbsp;&nbsp;&nbsp;Buy Now&nbsp;&nbsp;&nbsp;</i></button>
+                         <button type="button" title="" data-placement="top" data-toggle="tooltip" data-product-slug="{{ product.slug }}"  class="btn btn-outline-primary btn-lg buy-now-btn">&nbsp;&nbsp;&nbsp;Buy Now&nbsp;&nbsp;&nbsp;</i></button>
                          <button id="addProductToCartBtn" class="btn btn-primary btn-lg">Add To Cart</button>
 
                          </span>
@@ -549,6 +552,34 @@
    });
    </script>
    
+   <script>
+      document.querySelectorAll('.btn-number').forEach(button => {
+          button.addEventListener('click', function() {
+              const input = this.closest('.input-group').querySelector('.input-number');
+              let value = parseInt(input.value) || 0;
+              
+              if (this.getAttribute('data-type') === 'minus') {
+                  value = Math.max(1, value - 1); // Minimum value is 1
+              } else {
+                  value = value + 1;
+              }
+              
+              input.value = value;
+          });
+      });
+      document.querySelector('.buy-now-btn').addEventListener('click', function(e) {
+         e.preventDefault();
+         const sizeInput = document.querySelector('input[name="size"]:checked');
+         if (!sizeInput) {
+             swal('Oops!', 'Please select a size', 'warning');
+             return;
+         }
+         const selectedSize = sizeInput.value;
+         const productSlug = this.getAttribute('data-product-slug');
+         const quantity = parseInt(document.querySelector('input[name="quantity"]').value) || 1;
+         window.location.href = `/checkout/${productSlug}/${quantity}/${selectedSize}/`;
+     });
+      </script>
 
    
 

@@ -55,18 +55,16 @@ def register_view(request):
     pass
 
 
-def create_guest_user(request):
-    timestamp = timezone.now().strftime('%Y%m%d%H%M%S')
-    random_str = ''.join(random.choices(string.ascii_uppercase + string.digits, k=6))
-    username = f"guest_user{timestamp}{random_str}"
+def create_guest_user(email,first_name,last_name):
+    user = User.objects.filter(email=email).first()
+    if user:
+        return user
 
-    user = User.objects.create_user(username=username, password='guestpassword')
+    slice_email = email.split('@')
+    username = slice_email[1]
 
-    # Automatically assign first backend
-    backend = get_backends()[0]
-    login(request, user, backend=f"{backend.__module__}.{backend.__class__.__name__}")
-    
-    return username
+    user = User.objects.create_user(username=username, password='guestpassword', first_name=first_name, last_name=last_name, email=email)
+    return user
 
 
 def profile_view(request):

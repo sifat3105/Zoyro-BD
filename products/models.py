@@ -1,6 +1,12 @@
 from django.db import models
+
+# Create your models here.
+from django.db import models
+from django.urls import reverse
 from django.utils.text import slugify
 from django.utils import timezone
+from django.db.models.signals import post_save, post_delete
+from django.dispatch import receiver
 
 
 class Category(models.Model):
@@ -38,6 +44,13 @@ class SubCategory(models.Model):
     def __str__(self):
         return f"{self.category.name} → {self.name}"
 
+class Brand(models.Model):
+    name = models.CharField(max_length=100, default="ZOYRO")
+    slug = models.SlugField(unique=True)
+    description = models.TextField(blank=True)
+    
+    def __str__(self):
+        return self.name
 
 
 
@@ -68,6 +81,7 @@ class Product(models.Model):
     created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(auto_now=True)
     total_orders = models.PositiveIntegerField(default=0, help_text="Total number of orders for this product")
+    brand = models.ForeignKey(Brand, related_name='products', on_delete=models.CASCADE, blank=True, null=True, default=1)
     is_active = models.BooleanField(default=False)
 
     def save(self, *args, **kwargs):
@@ -85,6 +99,20 @@ class Product(models.Model):
 
         super().save(*args, **kwargs)
 
+
+
+        @receiver([post_save, post_delete], sender=Product)
+        def clear_search_cache(sender, **kwargs):
+            from django.core.cache import cache
+            cache.delete_many(['product_embeddings', 'faiss_product_index'])
+
+    def get_quantity_for_size(self, size):
+            try:
+                return self.apparel_sizes.get(size=size).quantity
+            except ApparelSize.DoesNotExist:
+                return 0
+
+    
     def __str__(self):
         return self.title
 
@@ -109,3 +137,5 @@ class ApparelSize(models.Model):
     size = models.CharField(max_length=5, choices=APPAREL_SIZES)
     quantity = models.PositiveIntegerField(default=0)
     
+    def __str__(self):
+        return self.size

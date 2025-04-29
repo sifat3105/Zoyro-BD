@@ -2,673 +2,785 @@
 {% load socialaccount %}
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="Gurdeep singh osahan" />
+    <meta name="author" content="Gurdeep singh osahan" />
+    <title>
+      {% block title %}
+      {% endblock %}
+    </title>
+    <!-- Favicon Icon -->
+    <link rel="icon" type="image/png" href="{% static 'img/fav-icon.png' %}" />
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet" />
+    <!-- Slider CSS -->
+    <link rel="stylesheet" href="{% static 'vendor/slider/slider.css' %}" />
+    <!-- Select2 CSS -->
+    <link href="{% static 'vendor/select2/css/select2-bootstrap.css' %}" />
+    <link href="{% static 'vendor/select2/css/select2.min.css' %}" rel="stylesheet" />
+    <!-- Font Awesome -->
+    <link href="{% static 'vendor/fontawesome/css/all.min.css' %}" rel="stylesheet" />
+    <link href="{% static 'vendor/icofont/icofont.min.css' %}" rel="stylesheet" />
+    <!-- Custom styles for this template -->
+    <link href="{% static 'css/style.css' %}" rel="stylesheet" />
+    <!-- Owl Carousel -->
+    <link rel="stylesheet" href="{% static 'vendor/owl-carousel/owl.carousel.css' %}" />
+    <link rel="stylesheet" href="{% static 'vendor/owl-carousel/owl.theme.css' %}" />
 
-<head>
-   <meta charset="utf-8">
-   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-   <meta name="description" content="Gurdeep singh osahan">
-   <meta name="author" content="Gurdeep singh osahan">
-   <title>{% block title %}{% endblock  %}</title>
-   <!-- Favicon Icon -->
-   <link rel="icon" type="image/png" href="{% static 'img/fav-icon.png' %}">
-   <!-- Bootstrap core CSS -->
-   <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
-   <!-- Slider CSS -->
-   <link rel="stylesheet" href="{% static 'vendor/slider/slider.css' %}">
-   <!-- Select2 CSS -->
-   <link href="{% static 'vendor/select2/css/select2-bootstrap.css' %}" />
-   <link href="{% static 'vendor/select2/css/select2.min.css' %}" rel="stylesheet" />
-   <!-- Font Awesome-->
-   <link href="{% static 'vendor/fontawesome/css/all.min.css' %}" rel="stylesheet">
-   <link href="{% static 'vendor/icofont/icofont.min.css' %}" rel="stylesheet">
-   <!-- Custom styles for this template -->
-   <link href="{% static 'css/style.css' %}" rel="stylesheet">
-   <!-- Owl Carousel -->
-   <link rel="stylesheet" href="{% static 'vendor/owl-carousel/owl.carousel.css' %}">
-   <link rel="stylesheet" href="{% static 'vendor/owl-carousel/owl.theme.css' %}">
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
 
-   <script src="https://accounts.google.com/gsi/client" async defer></script>
-
-   <style>
+    <style>
       .mobile-footer-nav {
-         position: fixed;
-         bottom: 0;
-         left: 0;
-         width: 100%;
-         background: #fff;
-         border-top: 1px solid #ddd;
-         z-index: 999;
-         padding: 8px 0;
-       }
-       
-       .mobile-footer-nav .row {
-         margin: 0;
-       }
-       
-       .mobile-footer-nav .col {
-         padding: 0;
-       }
-       
-       .mobile-footer-nav .col a {
-         display: block;
-         color: #555;
-         font-size: 22px;
-         padding: 5px;
-         text-align: center;
-         transition: color 0.3s ease;
-       }
-       
-       .mobile-footer-nav .col a i {
-         transition: color 0.3s ease, font-size 0.3s ease;
-       }
-       
-       @media (min-width: 768px) {
-         .mobile-footer-nav {
-           display: none; /* Hide on tablet/desktop */
-         }
-       }
-       .mobile-footer-nav .col a {
-         display: block;
-         color: #555;
-         font-size: 22px;
-         padding: 5px;
-         text-align: center;
-       }
-       
-       .mobile-footer-nav .col.active a i {
-         font-size: 28px; /* Increased size (6px bigger) */
-       }
-       
-       .mobile-footer-nav .col a i {
-         transition: color 0.3s ease;
-       }
-       
-    </style>
-</head>
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background: #fff;
+        border-top: 1px solid #ddd;
+        z-index: 999;
+        padding: 8px 0;
+      }
+      
+      .mobile-footer-nav .row {
+        margin: 0;
+      }
+      
+      .mobile-footer-nav .col {
+        padding: 0;
+      }
+      
+      .mobile-footer-nav .col a {
+        display: block;
+        color: #555;
+        font-size: 22px;
+        padding: 5px;
+        text-align: center;
+        transition: color 0.3s ease;
+      }
+      
+      .mobile-footer-nav .col a i {
+        transition: color 0.3s ease, font-size 0.3s ease;
+      }
+      
+      @media (min-width: 768px) {
+        .mobile-footer-nav {
+          display: none; /* Hide on tablet/desktop */
+        }
+      }
+      .mobile-footer-nav .col a {
+        display: block;
+        color: #555;
+        font-size: 22px;
+        padding: 5px;
+        text-align: center;
+      }
+      
+      .mobile-footer-nav .col.active a i {
+        font-size: 28px; /* Increased size (6px bigger) */
+      }
+      
+      .mobile-footer-nav .col a i {
+        transition: color 0.3s ease;
+      }
 
-<body>
-   <div class="btn-primary pt-2 pb-2">
+        
+/* Base styles */
+.checkbox-wrapper {
+  --checkbox-size: 24px;
+  --checkbox-color:rgb(250, 6, 6);
+  --border-default: #e0e0e0;
+  --border-hover: #b0b0b0;
+  --x-color-default: #b0b0b0;
+  --x-color-checked:rgb(255, 255, 255);
+
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: auto;
+  cursor: pointer;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+}
+
+/* Hide default checkbox */
+.checkbox-input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+/* Custom checkbox style */
+.checkbox-tile {
+  position: relative;
+  width: var(--checkbox-size);
+  height: var(--checkbox-size);
+  background: #ffffff;
+  border: 2px solid var(--border-default);
+  border-radius: 4px;
+  transition: all 0.2s ease-in-out;
+}
+
+/* Hover state */
+.checkbox-wrapper:hover .checkbox-tile {
+  border-color: var(--border-hover);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Focus state - modify this section */
+.checkbox-input:focus-visible ~ .checkbox-tile {
+  outline: 2px solid var(--checkbox-color);
+  outline-offset: 2px;
+}
+
+/* Remove default focus styles */
+.checkbox-input:focus:not(:focus-visible) ~ .checkbox-tile {
+  outline: none;
+}
+
+/* Checked state */
+.checkbox-input:checked ~ .checkbox-tile {
+  background: var(--checkbox-color);
+  border-color: var(--checkbox-color);
+  transition: all 0.2s ease-out;
+}
+
+/* Checkmark base */
+.checkmark {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 16px;
+  height: 16px;
+  transform: translate(-50%, -50%);
+  transform-origin: center;
+}
+
+/* X lines base */
+.checkmark::before,
+.checkmark::after {
+  content: "";
+  position: absolute;
+  background: var(--x-color-default);
+  border-radius: 2px;
+  width: 2px;
+  height: 16px;
+  left: 50%;
+  top: 0;
+  transform-origin: center;
+  transition: all 0.3s ease-out;
+}
+
+/* X formation */
+.checkmark::before {
+  transform: translateX(-50%) rotate(45deg);
+}
+
+.checkmark::after {
+  transform: translateX(-50%) rotate(-45deg);
+}
+
+/* Checkmark formation when checked */
+.checkbox-input:checked ~ .checkbox-tile .checkmark::before {
+  width: 2px;
+  height: 9px;
+  left: 2px;
+  top: 6px;
+  transform: rotate(-45deg);
+}
+
+.checkbox-input:checked ~ .checkbox-tile .checkmark::after {
+  width: 2px;
+  height: 16px;
+  left: 10px;
+  top: 0px;
+  transform: rotate(45deg);
+}
+
+/* Rotation animation when checked */
+.checkbox-input:checked ~ .checkbox-tile .checkmark {
+  animation: rotate-container 0.8s ease-out forwards;
+}
+
+/* Change X color to white when checked */
+.checkbox-input:checked ~ .checkbox-tile .checkmark::before,
+.checkbox-input:checked ~ .checkbox-tile .checkmark::after {
+  background: var(--x-color-checked);
+}
+
+/* Animation keyframes */
+@keyframes rotate-container {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  70% {
+    transform: translate(-50%, -50%) rotate(720deg);
+  }
+  85% {
+    transform: translate(-50%, -50%) rotate(720deg) scale(1.2);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(720deg) scale(1);
+  }
+}
+
+/* Disabled state */
+.checkbox-input:disabled ~ .checkbox-tile {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Animation keyframes */
+@keyframes rotate-container {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  70% {
+    transform: translate(-50%, -50%) rotate(720deg);
+  }
+  85% {
+    transform: translate(-50%, -50%) rotate(720deg) scale(1.2);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(720deg) scale(1);
+  }
+}
+
+@keyframes draw-lines {
+  0% {
+    height: 0;
+    opacity: 1;
+  }
+  100% {
+    height: 16px;
+    opacity: 1;
+  }
+}
+
+/* Active/Click animation */
+.checkbox-wrapper:active .checkbox-tile {
+  transform: scale(0.95);
+}
+
+/* Label text styles */
+.label-text {
+  color: var(--border-hover);
+  font-size: 16px;
+  transition: color 0.2s ease-out;
+  user-select: none;
+}
+
+/* Show unchecked text by default */
+.label-text::before {
+  content: attr(data-unchecked);
+}
+
+/* Show checked text when checkbox is checked */
+.checkbox-input:checked ~ .label-text::before {
+  content: attr(data-checked);
+}
+
+/* Label color change when checked */
+.checkbox-input:checked ~ .label-text {
+  color: var(--checkbox-color);
+}
+
+    </style>
+  </head>
+
+  <body>
+    {% if request.resolver_match.url_name == 'home' %}
+    <div class="btn-primary pt-2 pb-2">
       <div class="container-fluid">
-         <div class="row">
-            <div class="col-lg-12 text-center">
-               <a href="shop.html" class="mb-0 text-white">
-                  40% CASHBACK FOR NEW USERS | CODE: <strong><span class="text-light">GURDEEPOSAHAN40 <span
-                           class="mdi mdi-tag-faces"></span></span> </strong>
-               </a>
-            </div>
-         </div>
+        <div class="row">
+          <div class="col-lg-12 text-center">
+            <a href="shop.html" class="mb-0 text-white">40% CASHBACK FOR NEW USERS | CODE: <strong><span class="text-light">GURDEEPOSAHAN40 <span class="mdi mdi-tag-faces"></span></span></strong></a>
+          </div>
+        </div>
       </div>
-   </div>
-   <div class="modal fade login-modal-main" id="login">
+    </div>
+    {% endif %}
+    <div class="modal fade login-modal-main" id="login">
       <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-         <div class="modal-content">
-            <div class="modal-body">
-               <div class="login-modal">
-                  <div class="row">
-                     <div class="col-lg-6 d-flex align-items-center">
-                        <div class="login-modal-left p-4 text-center pl-5">
-                           <img src="{% static 'img/login.jpg' %}" alt="Gurdeep singh osahan">
-                        </div>
-                     </div>
-                     <div class="col-lg-6">
-                        <button type="button" class="close close-top-right position-absolute" data-dismiss="modal"
-                           aria-label="Close">
-                           <span aria-hidden="true"><i class="icofont-close-line"></i></span>
-                           <span class="sr-only">Close</span>
-                        </button>
-                        <form class="position-relative">
-                           <ul class="mt-4 mr-4 nav nav-tabs-login float-right position-absolute" role="tablist">
-                              <li>
-                                 <a class="nav-link-login active" data-toggle="tab" href="#login-form" role="tab"><i
-                                       class="icofont-ui-lock"></i> LOGIN</a>
-                              </li>
-                              <li>
-                                 <a class="nav-link-login" data-toggle="tab" href="#register" role="tab"><i
-                                       class="icofont icofont-pencil"></i> REGISTER</a>
-                              </li>
-                           </ul>
-                           <div class="login-modal-right p-4">
-                              <!-- Tab panes -->
-                              <div class="tab-content">
-                                 <div class="tab-pane active" id="login-form" role="tabpanel">
-                                    <h5 class="heading-design-h5 text-dark">LOGIN</h5>
-                                    <fieldset class="form-group mt-4">
-                                       <label>Enter Email/Mobile number</label>
-                                       <input type="text" class="form-control" placeholder="+91 123 456 7890">
-                                    </fieldset>
-                                    <fieldset class="form-group">
-                                       <label>Enter Password</label>
-                                       <input type="password" class="form-control" placeholder="********">
-                                    </fieldset>
-                                    <fieldset class="form-group">
-                                       <button type="submit" class="btn btn-lg btn-primary btn-block">Enter to your
-                                          account</button>
-                                    </fieldset>
-                                    <div class="custom-control custom-checkbox">
-                                       <input type="checkbox" class="custom-control-input" id="customCheck1">
-                                       <label class="custom-control-label" for="customCheck1">Remember me</label>
-                                    </div>
-                                    <div class="login-with-sites mt-4">
-                                       <p class="mb-2">or Login with your social profile:</p>
-                                       <div class="row text-center">
-                                          <div class="col-6 pr-1">
-                                             <button class="btn-facebook btn-block login-icons btn-lg"><i
-                                                   class="icofont icofont-facebook"></i> Facebook</button>
-                                          </div>
-                                          <div class="col-6 pl-1">
-                                             <button class="btn-google btn-block login-icons btn-lg"><i
-                                                   class="icofont icofont-google-plus"></i> Google</button>
-                                          </div>
-                                       </div>
-                                    </div>
-                                 </div>
-                                 <div class="tab-pane" id="register" role="tabpanel">
-                                    <h5 class="heading-design-h5 text-dark">REGISTER</h5>
-                                    <fieldset class="form-group mt-4">
-                                       <label>Enter Email/Mobile number</label>
-                                       <input type="text" class="form-control" placeholder="+91 123 456 7890">
-                                    </fieldset>
-                                    <fieldset class="form-group">
-                                       <label>Enter Password</label>
-                                       <input type="password" class="form-control" placeholder="********">
-                                    </fieldset>
-                                    <fieldset class="form-group">
-                                       <label>Enter Confirm Password </label>
-                                       <input type="password" class="form-control" placeholder="********">
-                                    </fieldset>
-                                    <fieldset class="form-group">
-                                       <button type="submit" class="btn btn-lg btn-primary btn-block">Create Your
-                                          Account</button>
-                                    </fieldset>
-                                    <div class="custom-control custom-checkbox">
-                                       <input type="checkbox" class="custom-control-input" id="customCheck2">
-                                       <label class="custom-control-label" for="customCheck2">I Agree with <a
-                                             href="#">Term and Conditions</a></label>
-                                    </div>
-                                    <div class="login-with-sites mt-4">
-                                       <p class="mb-2">or Login with your social profile:</p>
-                                       <div class="row text-center">
-                                          <div class="col-6 pr-1">
-                                             <button class="btn-facebook btn-block login-icons btn-lg"><i
-                                                   class="icofont icofont-facebook"></i> Facebook</button>
-                                          </div>
-                                          <div class="col-6 pl-1">
-                                             <button class="btn-google btn-block login-icons btn-lg"><i
-                                                   class="icofont icofont-google-plus"></i> Google</button>
-                                          </div>
-                                       </div>
-                                    </div>
-                                 </div>
-                              </div>
-                           </div>
-                        </form>
-                     </div>
+        <div class="modal-content">
+          <div class="modal-body">
+            <div class="login-modal">
+              <div class="row">
+                <div class="col-lg-6 d-flex align-items-center">
+                  <div class="login-modal-left p-4 text-center pl-5">
+                    <img src="{% static 'img/300z-3.png' %}" alt="Gurdeep singh osahan" />
                   </div>
-               </div>
+                </div>
+                <div class="col-lg-6">
+                  <button type="button" class="close close-top-right position-absolute" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true"><i class="icofont-close-line"></i></span>
+                    <span class="sr-only">Close</span>
+                  </button>
+                  <form class="position-relative">
+                    <ul class="mt-4 mr-4 nav nav-tabs-login float-right position-absolute" role="tablist">
+                      <li>
+                        <a class="nav-link-login active" data-toggle="tab" href="#login-form" role="tab"><i class="icofont-ui-lock"></i> LOGIN</a>
+                      </li>
+                      <li>
+                        <a class="nav-link-login" data-toggle="tab" href="#register" role="tab"><i class="icofont icofont-pencil"></i> REGISTER</a>
+                      </li>
+                    </ul>
+                    <div class="login-modal-right p-4">
+                      <!-- Tab panes -->
+                      <div class="tab-content">
+                        <div class="tab-pane active" id="login-form" role="tabpanel">
+                          <h5 class="heading-design-h5 text-dark">LOGIN</h5>
+                          <fieldset class="form-group mt-4">
+                            <label>Enter Email/Mobile number</label>
+                            <input type="text" class="form-control" placeholder="+91 123 456 7890" />
+                          </fieldset>
+                          <fieldset class="form-group">
+                            <label>Enter Password</label>
+                            <input type="password" class="form-control" placeholder="********" />
+                          </fieldset>
+                          <fieldset class="form-group">
+                            <button type="submit" class="btn btn-lg btn-primary btn-block">Enter to your account</button>
+                          </fieldset>
+                          <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="customCheck1" />
+                            <label class="custom-control-label" for="customCheck1">Remember me</label>
+                          </div>
+                          <div class="login-with-sites mt-4">
+                            <p class="mb-2">or Login with your social profile:</p>
+                            <div class="row text-center">
+                              <div class="col-6 pr-1">
+                                <a href="#" onclick="openFacebookOAuthPopup()" class="btn-facebook btn-block login-icons btn-lg"><i class="icofont icofont-facebook"></i> Facebook</a>
+                              </div>
+                              <div class="col-6 pl-1">
+                                <a href="#" onclick="openGoogleOAuthPopup()" class="btn-google btn-block login-icons btn-lg"><i class="icofont icofont-google-plus"></i> Google</a>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="tab-pane" id="register" role="tabpanel">
+                          <h5 class="heading-design-h5 text-dark">REGISTER</h5>
+                          <fieldset class="form-group mt-4">
+                            <label>Enter Email/Mobile number</label>
+                            <input type="text" class="form-control" placeholder="+91 123 456 7890" />
+                          </fieldset>
+                          <fieldset class="form-group">
+                            <label>Enter Password</label>
+                            <input type="password" class="form-control" placeholder="********" />
+                          </fieldset>
+                          <fieldset class="form-group">
+                            <label>Enter Confirm Password</label>
+                            <input type="password" class="form-control" placeholder="********" />
+                          </fieldset>
+                          <fieldset class="form-group">
+                            <button type="submit" class="btn btn-lg btn-primary btn-block">Create Your Account</button>
+                          </fieldset>
+                          <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="customCheck2" />
+                            <label class="custom-control-label" for="customCheck2">I Agree with <a href="#">Term and Conditions</a></label>
+                          </div>
+                          <div class="login-with-sites mt-4">
+                            <p class="mb-2">or Login with your social profile:</p>
+                            <div class="row text-center">
+                              <div class="col-6 pr-1">
+                                <a href="#" onclick="openFacebookOAuthPopup()" class="btn-facebook btn-block login-icons btn-lg"><i class="icofont icofont-facebook"></i> Facebook</a>
+                              </div>
+
+                              <div class="col-6 pl-1">
+                                <a href="#" onclick="openGoogleOAuthPopup()" class="btn-google btn-block login-icons btn-lg"><i class="icofont icofont-google-plus"></i> Google</a>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
             </div>
-         </div>
+          </div>
+        </div>
       </div>
-   </div>
-   <div class="bg-light">
+    </div>
+    <div class="bg-light">
       <div class="header-top border-bottom bg-white">
-         <div class="container">
-            <div class="row">
-               <div class="col-lg-12">
-                  <ul class="list-inline float-right mb-0">
-                     <li class="list-inline-item border-right border-left py-1 pr-2 mr-2 pl-2">
-                        <a href=""><i class="icofont icofont-iphone"></i> +1-123-456-7890</a>
-                     </li>
-                     <li class="list-inline-item border-right py-1 pr-2 mr-2">
-                        <a href="contact-us.html"><i class="icofont icofont-headphone-alt"></i> Contact Us</a>
-                     </li>
-                     <li class="list-inline-item">
-                        <span>Download App</span> &nbsp;
-                        <a href="#"><i class="icofont icofont-brand-windows"></i></a>
-                        <a href="#"><i class="icofont icofont-brand-apple"></i></a>
-                        <a href="#"><i class="icofont icofont-brand-android-robot"></i></a>
-                     </li>
-                  </ul>
-                  <p class="mb-0 py-1">FREE CASH ON DELIVERY &amp; SHIPPING AVAILABLE OVER <span
-                        class="text-danger font-weight-bold">$499</span></p>
-               </div>
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-12">
+              <ul class="list-inline float-right mb-0">
+                <li class="list-inline-item border-right border-left py-1 pr-2 mr-2 pl-2">
+                  <a href=""><i class="icofont icofont-iphone"></i> +1-123-456-7890</a>
+                </li>
+                <li class="list-inline-item border-right py-1 pr-2 mr-2">
+                  <a href="contact-us.html"><i class="icofont icofont-headphone-alt"></i> Contact Us</a>
+                </li>
+                <li class="list-inline-item">
+                  <span>Download App</span> &nbsp;
+                  {% comment %} <a href="#"><i class="icofont icofont-brand-windows"></i></a>
+                  <a href="#"><i class="icofont icofont-brand-apple"></i></a> {% endcomment %}
+                  <a href="https://www.webintoapp.com/download/apk/714579/app-release.apk"><i class="icofont icofont-brand-android-robot"></i></a>
+                </li>
+              </ul>
+              <p class="mb-0 py-1">
+                FREE CASH ON DELIVERY &amp; SHIPPING AVAILABLE OVER <span class="text-danger font-weight-bold">$499</span>
+              </p>
             </div>
-         </div>
+          </div>
+        </div>
       </div>
       <div class="main-nav shadow-sm">
-         <nav class="navbar navbar-expand-lg navbar-light bg-white pt-0 pb-0">
-            <div class="container">
-               <a class="navbar-brand" href="{% url 'home:home' %}">
-                  <img src="{% static 'img/zoyro.png' %}" alt="gurdeep osahan designer">
-               </a>
-               <a class="toggle" href="#">
-                  <span></span>
-               </a>
-               <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                  aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                  <span class="navbar-toggler-icon"></span>
-               </button>
-               <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                  <ul class="navbar-nav mr-auto main-nav-left">
-                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'home:home' %}"><i class="icofont-ui-home"></i></a>
-                     </li>
-                     <li class="nav-item dropdown mega-drop-main">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                           WOMEN
-                        </a>
-                        <div class="dropdown-menu mega-drop  shadow-sm border-0" aria-labelledby="navbarDropdown">
-                           <div class="row ml-0 mr-0">
-                              <div class="col-lg-2 col-md-2">
-                                 <div class="mega-list">
-                                    <a class="mega-title" href="product-grid.html">Lingerie & Sleepwear</a>
-                                    <a href="product-grid.html">Bras & Lingerie Sets</a>
-                                    <a href="product-grid.html">Briefs</a>
-                                    <a href="product-grid.html">Shapewear</a>
-                                    <a href="product-grid.html">Sleepwear & Loungewear</a>
-                                    <a href="product-grid.html">Swimwear</a>
-                                    <a href="product-grid.html">Camisoles & Thermals</a>
-                                    <a href="product-grid.html">Blazers & Coats</a>
-                                    <a href="product-grid.html">Suits</a>
-                                    <a href="product-grid.html">Rain Jackets</a>
-                                 </div>
-                              </div>
-                              <div class="col-lg-2 col-md-2">
-                                 <div class="mega-list">
-                                    <a class="mega-title" href="product-grid.html">Bottomwear</a>
-                                    <a href="product-grid.html"> Jeans</a>
-                                    <a href="product-grid.html">Casual Trousers</a>
-                                    <a href="product-grid.html">Formal Trousers</a>
-                                    <a href="product-grid.html">Shorts</a>
-                                    <a href="product-grid.html">Track Pants & Joggers</a>
-                                    <a href="product-grid.html">T-Shirts</a>
-                                    <a href="product-grid.html">Sweatshirts</a>
-                                    <a href="product-grid.html">Casual Shirts</a>
-                                    <a href="product-grid.html">Formal Shirts</a>
-                                 </div>
-                              </div>
-                              <div class="col-lg-2 col-md-2">
-                                 <div class="mega-list">
-                                    <a class="mega-title" href="product-grid.html">Western Wear</a>
-                                    <a href="product-grid.html">Sweaters</a>
-                                    <a href="product-grid.htproduct-grid.htmll">Jackets</a>
-                                    <a href="product-grid.html">Blazers & Coats</a>
-                                    <a href="product-grid.html">Suits</a>
-                                    <a href="product-grid.html">Rain Jackets</a>
-                                    <a href="product-grid.html">T-Shirts</a>
-                                    <a href="product-grid.html">Casual Shirts</a>
-                                    <a href="product-grid.html">Formal Shirts</a>
-                                    <a href="product-grid.html">Sweatshirts</a>
-                                 </div>
-                              </div>
-                              <div class="col-lg-2 col-md-2">
-                                 <div class="mega-list">
-                                    <a class="mega-title" href="product-grid.html">Footwear</a>
-                                    <a href="product-grid.html">Casual Shoes</a>
-                                    <a href="product-grid.html">Sports Shoes</a>
-                                    <a href="product-grid.html">Formal Shoes</a>
-                                    <a href="product-grid.html">Sandals & Floaters</a>
-                                    <a href="product-grid.html">Flip Flops</a>
-                                    <a href="product-grid.html">Socks</a>
-                                    <a href="product-grid.html">Formal Shirts</a>
-                                    <a href="product-grid.html">Sneakers</a>
-                                    <a href="product-grid.html">Sweatshirts</a>
-                                 </div>
-                              </div>
-                              <div class="col-lg-2 col-md-2">
-                                 <div class="mega-list">
-                                    <a class="mega-title" href="product-grid.html">Lingerie & Sleepwear</a>
-                                    <a href="product-grid.html">Bras & Lingerie Sets</a>
-                                    <a href="product-grid.html">Briefs</a>
-                                    <a href="product-grid.html">Shapewear</a>
-                                    <a href="product-grid.html">Sleepwear & Loungewear</a>
-                                    <a href="product-grid.html">Swimwear</a>
-                                    <a href="product-grid.html">Camisoles & Thermals</a>
-                                    <a href="product-grid.html">Blazers & Coats</a>
-                                    <a href="product-grid.html">Suits</a>
-                                    <a href="product-grid.html">Rain Jackets</a>
-                                 </div>
-                              </div>
-                              <div class="col-lg-2 col-md-2">
-                                 <div class="mega-list">
-                                    <a class="mega-title" href="product-grid.html">Bottomwear</a>
-                                    <a href="product-grid.html"> Jeans</a>
-                                    <a href="product-grid.html">Casual Trousers</a>
-                                    <a href="product-grid.html">Formal Trousers</a>
-                                    <a href="product-grid.html">Shorts</a>
-                                    <a href="product-grid.html">Track Pants & Joggers</a>
-                                    <a href="product-grid.html">T-Shirts</a>
-                                    <a href="product-grid.html">Sweatshirts</a>
-                                    <a href="product-grid.html">Casual Shirts</a>
-                                    <a href="product-grid.html">Formal Shirts</a>
-                                 </div>
-                              </div>
-                           </div>
-                        </div>
-                     </li>
-                     <li class="nav-item dropdown mega-drop-main">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                           MEN</a>
-                        <div class="dropdown-menu mega-drop  shadow-sm border-0" aria-labelledby="navbarDropdown">
-                           <div class="row ml-0 mr-0">
-                              <div class="col-lg-3 col-sm-3 col-xs-3 col-md-3">
-                                 <div class="mega-list">
-                                    <a class="mega-title" href="product-grid.html">Topwear</a>
-                                    <a href="product-grid.html">T-Shirts</a>
-                                    <a href="product-grid.html">Casual Shirts</a>
-                                    <a href="product-grid.html">Formalproduct-grid.htmlShirts</a>
-                                    <a href="product-grid.html">Sweatshirts</a>
-                                    <a href="product-grid.html">Sweaters</a>
-                                    <a href="product-grid.html">Jackets</a>
-                                    <a href="product-grid.html">Blazers & Coats</a>
-                                    <a href="product-grid.html">Suits</a>
-                                    <a href="product-grid.html">Rain Jackets</a>
-                                 </div>
-                              </div>
-                              <div class="col-lg-3 col-sm-3 col-xs-3 col-md-3">
-                                 <div class="mega-list">
-                                    <a class="mega-title" href="product-grid.html">Western Wear</a>
-                                    <a href="product-grid.html">Sweaters</a>
-                                    <a href="product-grid.html">Jackets</a>
-                                    <a href="product-grid.html">Blazers & Coats</a>
-                                    <a href="product-grid.html">Suits</a>
-                                    <a href="product-grid.html">Rain Jackets</a>
-                                    <a href="product-grid.html">T-Shirts</a>
-                                    <a href="product-grid.html">Casual Shirts</a>
-                                    <a href="product-grid.html">Formal Shirts</a>
-                                    <a href="product-grid.html">Sweatshirts</a>
-                                 </div>
-                              </div>
-                              <div class="col-lg-3 col-sm-3 col-xs-3 col-md-3">
-                                 <div class="mega-list">
-                                    <a class="mega-title" href="product-grid.html">Bottomwear</a>
-                                    <a href="product-grid.html"> Jeans</a>
-                                    <a href="product-grid.html">Casual Trousers</a>
-                                    <a href="product-grid.html">Formal Trousers</a>
-                                    <a href="product-grid.html">Shorts</a>
-                                    <a href="product-grid.html">Track Pants & Joggers</a>
-                                    <a href="product-grid.html">T-Shirts</a>
-                                    <a href="product-grid.html">Sweatshirts</a>
-                                    <a href="product-grid.html">Casual Shirts</a>
-                                    <a href="product-grid.html">Formal Shirts</a>
-                                 </div>
-                              </div>
-                              <div class="col-lg-3 col-sm-3 col-xs-3 col-md-3">
-                                 <div class="mega-list">
-                                    <a class="mega-title" href="product-grid.html">Footwear</a>
-                                    <a href="product-grid.html">Casual Shoes</a>
-                                    <a href="product-grid.html">Sports Shoes</a>
-                                    <a href="product-grid.html">Formal Shoes</a>
-                                    <a href="product-grid.html">Sneakers</a>
-                                    <a href="product-grid.html">Sweatshirts</a>
-                                    <a href="product-grid.html">Sandals & Floaters</a>
-                                    <a href="product-grid.html">Flip Flops</a>
-                                    <a href="product-grid.html">Socks</a>
-                                    <a href="product-grid.html">Formal Shirts</a>
-                                 </div>
-                              </div>
-                           </div>
-                        </div>
-                     </li>
-                     <li class="nav-item">
-                        <a class="nav-link" href="product-grid.html">SALE</a>
-                     </li>
-                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                           PAGES
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right shadow-sm border-0">
-                           <a class="dropdown-item" href="product-grid.html">Product List</a>
-                           <a class="dropdown-item" href="product-detail.html">Product Detail</a>
-                           <a class="dropdown-item" href="checkout.html">Checkout</a>
-                           <a class="dropdown-item" href="profile.html">My Account</a>
-                           <a class="dropdown-item" href="about-us.html">About Us</a>
-                           <a class="dropdown-item" href="faq.html">FAQ</a>
-                           <a class="dropdown-item" href="contact-us.html">Contact Us</a>
-                        </div>
-                     </li>
-                  </ul>
-                  <form class="form-inline my-2 my-lg-0 top-search">
-                     <button class="btn-link" type="submit"><i class="icofont-search"></i></button>
-                     <input class="form-control mr-sm-2" type="search"
-                        placeholder="Search for products, brands and more" aria-label="Search">
-                  </form>
-                  {% if not request.user.is_authenticated %}
-                  <ul class="navbar-nav ml-auto profile-nav-right">
-                     <li class="nav-item">
-                        <a href="#" data-target="#login" data-toggle="modal" class="nav-link ml-0">
-                           <i class="icofont-ui-user"></i> Login/Sign Up
-                        </a>
-                     </li>
-                     <li class="nav-item cart-nav">
-                        <a data-toggle="offcanvas" class="nav-link" href="#" >
-                           <i class="icofont-basket"></i> Cart
-                           <span class="badge badge-danger">{{item_count}}</span>
-                        </a>
-                     </li>
-                  </ul>
-                  {% else %}
-                  <ul class="navbar-nav ml-auto profile-nav-right">
-                     <li class="nav-item dropdown">
-                        <a class="nav-link ml-0 dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <img alt="Generic placeholder image" src="https://ui-avatars.com/api/?name={{ user.username }}&background=1e3c72&color=fff" class="nav-osahan-pic rounded-pill"> My Account
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right shadow-sm border-0">
-                           <a class="dropdown-item" href="profile.html"><i class="icofont-ui-user"></i> My Profile</a>
-                           <a class="dropdown-item" href="profile.html"><i class="icofont-location-pin"></i> My Address</a>
-                           <a class="dropdown-item" href="profile.html"><i class="icofont-heart"></i> Wish List</a>
-                           <a class="dropdown-item" href="profile.html"><i class="icofont-list"></i> Order List</a>
-                           <a class="dropdown-item" href="profile.html"><i class="icofont-file-document"></i> Order Status</a>
-                           <a class="dropdown-item" href="profile.html"><i class="icofont-logout"></i> Logout</a>
-                        </div>
-                     </li>
-                     <li class="nav-item cart-nav">
-                        <a data-toggle="offcanvas" class="nav-link" href="#">
-                        <i class="icofont-basket"></i> Cart
-                        <span class="badge badge-danger">{{item_count}}</span>
-                        </a>
-                     </li>
-                  </ul>
-                  {% endif %}
-               </div>
+        <nav class="navbar navbar-expand-lg navbar-light bg-white pt-0 pb-0">
+          <div class="container">
+            <a class="navbar-brand" href="{% url 'home:home' %}"><img src="{% static 'img/zoyro.png' %}" alt="gurdeep osahan designer" /></a>
+            <a class="toggle" href="#"><span></span></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav mr-auto main-nav-left">
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'home:home' %}"><i class="icofont-ui-home"></i></a>
+                </li>
+              
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">SHIRT</a>
+                  <div class="dropdown-menu dropdown-menu-right shadow-sm border-0" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="{% url 'search:search_redirect' %}?q=Casual Shirts">Casual Shirts</a>
+                    <a class="dropdown-item" href="{% url 'search:search_redirect' %}?q=Dress Shirts">Dress Shirts</a>
+                    <a class="dropdown-item" href="{% url 'search:search_redirect' %}?q=Linen Shirts">Linen Shirts</a>
+                    <a class="dropdown-item" href="{% url 'search:search_redirect' %}?q=Denim Shirts">Denim Shirts</a>
+                    <a class="dropdown-item" href="{% url 'search:search_redirect' %}?q=Flannel Shirts">Flannel Shirts</a>
+                    <a class="dropdown-item" href="{% url 'search:search_redirect' %}?q=Overshirts">Overshirts</a>
+                    <a class="dropdown-item" href="{% url 'search:search_redirect' %}?q=Short Sleeve Shirts">Short Sleeve Shirts</a>
+                    <a class="dropdown-item" href="{% url 'search:search_redirect' %}?q=Long Sleeve Shirts">Long Sleeve Shirts</a>
+                    <a class="dropdown-item" href="{% url 'search:search_redirect' %}?q=Mandarin Collar Shirts">Mandarin Collar Shirts</a>
+                    <a class="dropdown-item" href="{% url 'search:search_redirect' %}?q=Printed Shirts">Printed Shirts</a>
+                    <a class="dropdown-item" href="{% url 'search:search_redirect' %}?q=Solid Shirts">Solid Shirts</a>
+                  </div>
+                </li>
+              
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" id="tshirtDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">T-SHIRT</a>
+                  <div class="dropdown-menu dropdown-menu-right shadow-sm border-0" aria-labelledby="tshirtDropdown">
+                    <a class="dropdown-item" href="{% url 'search:search_redirect' %}?q=Crew Neck T-Shirts">Crew Neck T-Shirts</a>
+                    <a class="dropdown-item" href="{% url 'search:search_redirect' %}?q=V-Neck T-Shirts">V-Neck T-Shirts</a>
+                    <a class="dropdown-item" href="{% url 'search:search_redirect' %}?q=Polo T-Shirts">Polo T-Shirts</a>
+                    <a class="dropdown-item" href="{% url 'search:search_redirect' %}?q=Graphic T-Shirts">Graphic T-Shirts</a>
+                    <a class="dropdown-item" href="{% url 'search:search_redirect' %}?q=Plain T-Shirts">Plain T-Shirts</a>
+                    <a class="dropdown-item" href="{% url 'search:search_redirect' %}?q=Henley T-Shirts">Henley T-Shirts</a>
+                    <a class="dropdown-item" href="{% url 'search:search_redirect' %}?q=Full Sleeve T-Shirts">Full Sleeve T-Shirts</a>
+                    <a class="dropdown-item" href="{% url 'search:search_redirect' %}?q=Half Sleeve T-Shirts">Half Sleeve T-Shirts</a>
+                    <a class="dropdown-item" href="{% url 'search:search_redirect' %}?q=Oversized T-Shirts">Oversized T-Shirts</a>
+                    <a class="dropdown-item" href="{% url 'search:search_redirect' %}?q=Muscle Fit T-Shirts">Muscle Fit T-Shirts</a>
+                    <a class="dropdown-item" href="{% url 'search:search_redirect' %}?q=Crop T-Shirts">Crop T-Shirts</a>
+                    <a class="dropdown-item" href="{% url 'search:search_redirect' %}?q=Tank Tops / Sleeveless Tees">Tank Tops / Sleeveless Tees</a>
+                  </div>
+                </li>
+              
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'search:search_redirect' %}?q=Panjabi">PANJABI</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'search:search_redirect' %}?q=Polo Shirt">POLO SHIRT</a>
+                </li>
+              
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" id="winterDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">WINTER</a>
+                  <div class="dropdown-menu dropdown-menu-right shadow-sm border-0" aria-labelledby="winterDropdown">
+                    <a class="dropdown-item" href="{% url 'search:search_redirect' %}?q=Hoodies">Hoodies</a>
+                    <a class="dropdown-item" href="{% url 'search:search_redirect' %}?q=Sweatshirts">Sweatshirts</a>
+              
+                    <div class="dropdown-submenu">
+                      <a class="dropdown-item dropdown-toggle" href="#">Jackets</a>
+                      <div class="dropdown-menu">
+                        <a class="dropdown-item" href="{% url 'search:search_redirect' %}?q=Bomber Jackets">Bomber Jackets</a>
+                        <a class="dropdown-item" href="{% url 'search:search_redirect' %}?q=Puffer Jackets">Puffer Jackets</a>
+                        <a class="dropdown-item" href="{% url 'search:search_redirect' %}?q=Parkas">Parkas</a>
+                        <a class="dropdown-item" href="{% url 'search:search_redirect' %}?q=Denim Jackets">Denim Jackets</a>
+                        <a class="dropdown-item" href="{% url 'search:search_redirect' %}?q=Leather Jackets">Leather Jackets</a>
+                      </div>
+                    </div>
+              
+                    <div class="dropdown-submenu">
+                      <a class="dropdown-item dropdown-toggle" href="#">Coats</a>
+                      <div class="dropdown-menu">
+                        <a class="dropdown-item" href="{% url 'search:search_redirect' %}?q=Trench Coats">Trench Coats</a>
+                        <a class="dropdown-item" href="{% url 'search:search_redirect' %}?q=Overcoats">Overcoats</a>
+                        <a class="dropdown-item" href="{% url 'search:search_redirect' %}?q=Peacoats">Peacoats</a>
+                      </div>
+                    </div>
+              
+                    <div class="dropdown-submenu">
+                      <a class="dropdown-item dropdown-toggle" href="#">Sweaters</a>
+                      <div class="dropdown-menu">
+                        <a class="dropdown-item" href="{% url 'search:search_redirect' %}?q=Pullovers">Pullovers</a>
+                        <a class="dropdown-item" href="{% url 'search:search_redirect' %}?q=Cardigans">Cardigans</a>
+                        <a class="dropdown-item" href="{% url 'search:search_redirect' %}?q=Turtlenecks">Turtlenecks</a>
+                      </div>
+                    </div>
+              
+                    <a class="dropdown-item" href="{% url 'search:search_redirect' %}?q=Thermal Wear">Thermal Wear</a>
+                    <a class="dropdown-item" href="{% url 'search:search_redirect' %}?q=Fleece Jackets">Fleece Jackets</a>
+                  </div>
+                </li>
+              </ul>
+              
+              <form class="form-inline my-0 mx-2 top-search" mathod="GET" action="{% url 'search:search_redirect' %}" style="width: 30%; min-width: 200px;">
+                <div class="input-group w-100">
+                  <input class="form-control form-control-sm w-75" name="q" type="search" placeholder="Search products..." aria-label="Search" />
+                  <div class="input-group-append">  
+                    <button class="btn btn-sm btn-link" type="submit"><i class="icofont-search"></i></button>
+                  </div>
+                </div>
+              </form>
+              {% if not request.user.is_authenticated %}
+                <ul class="navbar-nav ml-auto profile-nav-right">
+                  <li class="nav-item">
+                    <a href="#" data-target="#login" data-toggle="modal" class="nav-link ml-0"><i class="icofont-ui-user"></i> Login/Sign Up</a>
+                  </li>
+                  <li class="nav-item cart-nav">
+                    <a data-toggle="offcanvas" class="nav-link" href="#">
+                      <i class="icofont-basket"></i> Cart
+                      <span class="badge badge-danger badge-pill">{{ item_count }}</span>
+                    </a>
+                  </li>
+                </ul>
+              {% else %}
+                <ul class="navbar-nav ml-auto profile-nav-right">
+                  <li class="nav-item dropdown">
+                    <a class="nav-link ml-0 dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img alt="User" src="https://ui-avatars.com/api/?name={{ user.username }}&background=1e3c72&color=fff" class="nav-osahan-pic rounded-pill" style="width: 24px; height: 24px;" /> My Account</a>
+                    <div class="dropdown-menu dropdown-menu-right shadow-sm border-0">
+                      <a class="dropdown-item" href="profile.html"><i class="icofont-ui-user"></i> My Profile</a>
+                      <a class="dropdown-item" href="profile.html"><i class="icofont-location-pin"></i> My Address</a>
+                      <a class="dropdown-item" href="profile.html"><i class="icofont-heart"></i> Wish List</a>
+                      <a class="dropdown-item" href="profile.html"><i class="icofont-list"></i> Order List</a>
+                      <a class="dropdown-item" href="profile.html"><i class="icofont-file-document"></i> Order Status</a>
+                      <a class="dropdown-item" href="{% url 'accounts:logout' %}"><i class="icofont-logout"></i> Logout</a>
+                    </div>
+                  </li>
+                  <li class="nav-item cart-nav">
+                    <a data-toggle="offcanvas" class="nav-link" href="#">
+                      <i class="icofont-basket"></i> Cart
+                      <span class="badge badge-danger badge-pill">{{ item_count }}</span>
+                    </a>
+                  </li>
+                </ul>
+              {% endif %}
             </div>
-         </nav>
+          </div>
+        </nav>
       </div>
       <!-- Header End -->
       {% block banner %}
-      {% endblock  %}
-   </div>
-   {% block content %}
-   {% endblock  %}
-   
-   <!-- Footer -->
-   <footer class="bg-white border-bottom border-top">
+
+      {% endblock %}
+    </div>
+    {% block content %}
+
+    {% endblock %}
+
+    <!-- Footer -->
+    <footer class="bg-white border-bottom border-top">
       <div class="container">
-         <div class="row no-gutters">
-            <div class="col-md-4">
-               <div class="border-right py-5 pr-5">
-                  <h6 class="mt-0 mb-4 f-14 text-dark font-weight-bold">TOP CATEGORIES</h6>
-                  <div class="row no-gutters">
-                     <div class="col-6">
-                        <ul class="list-unstyled mb-0">
-                           <li><a href="#">Dresses for Girls</a></li>
-                           <li><a href="#">Maxi Dresses</a></li>
-                           <li><a href="#">Tops for Girls</a></li>
-                           <li><a href="#">Women Jumpsuits</a></li>
-                           <li><a href="#">Dungarees Dress</a></li>
-                        </ul>
-                     </div>
-                     <div class="col-6">
-                        <ul class="list-unstyled mb-0">
-                           <li><a href="#">T Shirts</a></li>
-                           <li><a href="#">Shoes for Men</a></li>
-                           <li><a href="#">Ripped Jeans</a></li>
-                           <li><a href="#">Jeans for Girls</a></li>
-                           <li><a href="#">Denim shirts</a></li>
-                        </ul>
-                     </div>
-                  </div>
-               </div>
+        <div class="row no-gutters">
+          <div class="col-md-4">
+            <div class="border-right py-5 pr-5">
+              <h6 class="mt-0 mb-4 f-14 text-dark font-weight-bold">TOP CATEGORIES</h6>
+              <div class="row no-gutters">
+                <div class="col-6">
+                  <ul class="list-unstyled mb-0">
+                    <li>
+                      <a href="#">Dresses for Girls</a>
+                    </li>
+                    <li>
+                      <a href="#">Maxi Dresses</a>
+                    </li>
+                    <li>
+                      <a href="#">Tops for Girls</a>
+                    </li>
+                    <li>
+                      <a href="#">Women Jumpsuits</a>
+                    </li>
+                    <li>
+                      <a href="#">Dungarees Dress</a>
+                    </li>
+                  </ul>
+                </div>
+                <div class="col-6">
+                  <ul class="list-unstyled mb-0">
+                    <li>
+                      <a href="#">T Shirts</a>
+                    </li>
+                    <li>
+                      <a href="#">Shoes for Men</a>
+                    </li>
+                    <li>
+                      <a href="#">Ripped Jeans</a>
+                    </li>
+                    <li>
+                      <a href="#">Jeans for Girls</a>
+                    </li>
+                    <li>
+                      <a href="#">Denim shirts</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
             </div>
-            <div class="col-md-4">
-               <div class="border-right py-5 px-5">
-                  <h6 class="mt-0 mb-4 f-14 text-dark font-weight-bold">ABOUT US</h6>
-                  <div class="row no-gutters">
-                     <div class="col-6">
-                        <ul class="list-unstyled mb-0">
-                           <li><a href="#">History</a></li>
-                           <li><a href="#">Band of Trust</a></li>
-                           <li><a href="#">Brand Guidelines</a></li>
-                           <li><a href="#">TV Commercials</a></li>
-                           <li><a href="#">In the News
-                              </a>
-                           </li>
-                        </ul>
-                     </div>
-                     <div class="col-6">
-                        <ul class="list-unstyled mb-0">
-                           <li><a href="#">Awards</a></li>
-                           <li><a href="#">Terms & Conditions</a></li>
-                           <li><a href="#">Privacy Policy</a></li>
-                           <li><a href="#">Careers</a></li>
-                           <li><a href="#">Offers</a></li>
-                        </ul>
-                     </div>
-                  </div>
-               </div>
+          </div>
+          <div class="col-md-4">
+            <div class="border-right py-5 px-5">
+              <h6 class="mt-0 mb-4 f-14 text-dark font-weight-bold">ABOUT US</h6>
+              <div class="row no-gutters">
+                <div class="col-6">
+                  <ul class="list-unstyled mb-0">
+                    <li>
+                      <a href="#">History</a>
+                    </li>
+                    <li>
+                      <a href="#">Band of Trust</a>
+                    </li>
+                    <li>
+                      <a href="#">Brand Guidelines</a>
+                    </li>
+                    <li>
+                      <a href="#">TV Commercials</a>
+                    </li>
+                    <li>
+                      <a href="#">In the News</a>
+                    </li>
+                  </ul>
+                </div>
+                <div class="col-6">
+                  <ul class="list-unstyled mb-0">
+                    <li>
+                      <a href="#">Awards</a>
+                    </li>
+                    <li>
+                      <a href="#">Terms & Conditions</a>
+                    </li>
+                    <li>
+                      <a href="#">Privacy Policy</a>
+                    </li>
+                    <li>
+                      <a href="#">Careers</a>
+                    </li>
+                    <li>
+                      <a href="#">Offers</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
             </div>
-            <div class="col-md-4">
-               <div class="py-5 pl-5">
-                  <h6 class="mt-0 mb-4 f-14 text-dark font-weight-bold">DOWNLOAD APP</h6>
-                  <div class="app">
-                     <a href="#">
-                        <img class="img-fluid" src="{% static 'img/google.png' %}">
-                     </a>
-                     <a href="#">
-                        <img class="img-fluid" src="{% static 'img/apple.png' %}">
-                     </a>
-                  </div>
-                  <h6 class="mt-4 mb-4 f-14 text-dark font-weight-bold">KEEP IN TOUCH</h6>
-                  <div class="footer-social">
-                     <a class="btn-facebook" href="#"><i class="icofont-facebook"></i></a>
-                     <a class="btn-twitter" href="#"><i class="icofont-twitter"></i></a>
-                     <a class="btn-instagram" href="#"><i class="icofont-instagram"></i></a>
-                     <a class="btn-whatsapp" href="#"><i class="icofont-whatsapp"></i></a>
-                     <a class="btn-messenger" href="#"><i class="icofont-facebook-messenger"></i></a>
-                     <a class="btn-google" href="#"><i class="icofont-google-plus"></i></a>
-                  </div>
-               </div>
+          </div>
+          <div class="col-md-4">
+            <div class="py-5 pl-5">
+              <h6 class="mt-0 mb-4 f-14 text-dark font-weight-bold">DOWNLOAD APP</h6>
+              <div class="app">
+                <a href="https://www.webintoapp.com/download/apk/714579/app-release.apk"><img class="img-fluid" src="{% static 'img/google.png' %}" /></a>
+                <a href="#"><img class="img-fluid" src="{% static 'img/apple.png' %}" /></a>
+              </div>
+              <h6 class="mt-4 mb-4 f-14 text-dark font-weight-bold">KEEP IN TOUCH</h6>
+              <div class="footer-social">
+                <a class="btn-facebook" href="#"><i class="icofont-facebook"></i></a>
+                <a class="btn-twitter" href="#"><i class="icofont-twitter"></i></a>
+                <a class="btn-instagram" href="#"><i class="icofont-instagram"></i></a>
+                <a class="btn-whatsapp" href="#"><i class="icofont-whatsapp"></i></a>
+                <a class="btn-messenger" href="#"><i class="icofont-facebook-messenger"></i></a>
+                <a class="btn-google" href="#"><i class="icofont-google-plus"></i></a>
+              </div>
             </div>
-         </div>
+          </div>
+        </div>
       </div>
       <!-- /.container -->
-   </footer>
-   <div class="popular-tag py-5">
+    </footer>
+    <div class="popular-tag py-5">
       <div class="container">
-         <div class="row">
-            <div class="col-lg-12">
-               <h6 class="mt-0 mb-4 f-14 text-dark font-weight-bold">POPULAR SEARCHES</h6>
-               <p class="mb-0">
-                  <a href="#">Makeup</a> &nbsp; | &nbsp; <a href="#">Dresses For Girls</a> &nbsp; | &nbsp; <a
-                     href="#">T-Shirts</a> &nbsp; | &nbsp; <a href="#">Sandals</a> &nbsp; | &nbsp; <a
-                     href="#">Headphones</a> &nbsp; | &nbsp; <a href="#">Babydolls</a> &nbsp; | &nbsp; <a
-                     href="#">Blazers For Men</a> &nbsp; | &nbsp; <a href="#">Handbags</a> &nbsp; | &nbsp; <a
-                     href="#">Ladies Watches</a> &nbsp; | &nbsp; <a href="#">Bags</a> &nbsp; | &nbsp; <a href="#">Sport
-                     Shoes</a> &nbsp; | &nbsp; <a href="#">Reebok Shoes</a> &nbsp; | &nbsp; <a href="#">Puma Shoes</a>
-                  &nbsp; | &nbsp; <a href="#">Boxers Wallets</a> &nbsp; | &nbsp; <a href="#">Tops</a> &nbsp; | &nbsp; <a
-                     href="#">Earrings</a> &nbsp; | &nbsp; <a href="#">Fastrack Watches</a> &nbsp; | &nbsp; <a
-                     href="#">Nike</a> &nbsp; | &nbsp; <a href="#">Smart Watches</a> &nbsp; | &nbsp; <a href="#">Cricket
-                     Shoes</a> &nbsp; | &nbsp; <a href="#">Forever 21</a> &nbsp; | &nbsp; <a href="#">Eye Makeup</a> <a
-                     href="#">Photo</a> &nbsp; | &nbsp; <a href="#">Fashion Show</a> &nbsp; | &nbsp; <a
-                     href="#">Lipstick</a> &nbsp; | &nbsp; <a href="#">Dresses</a> &nbsp; | &nbsp; <a href="#">Nike
-                     Shoes</a> &nbsp; | &nbsp; <a href="#">Goggles</a> &nbsp; | &nbsp; <a href="#">Suit Chinos</a>
-                  &nbsp; | &nbsp; <a href="#">Adidas Shoes</a> &nbsp; | &nbsp; <a href="#">Woodland Shoes</a> &nbsp; |
-                  &nbsp; <a href="#">Boxers Wallets</a> &nbsp; | &nbsp; <a href="#">Tops</a> &nbsp; | &nbsp; <a
-                     href="#">Earrings</a> &nbsp; | &nbsp; <a href="#">Fastrack Watches</a> &nbsp; | &nbsp; <a
-                     href="#">Nike</a> &nbsp; | &nbsp; <a href="#">Smart Watches</a> &nbsp; | &nbsp; <a href="#">Cricket
-                     Shoes</a> &nbsp; | &nbsp; <a href="#">Forever 21</a> &nbsp; | &nbsp; <a href="#">Eye Makeup</a> <a
-                     href="#">Photo</a> &nbsp; | &nbsp; <a href="#">Fashion Show</a> &nbsp; | &nbsp; <a
-                     href="#">Lipstick</a> &nbsp; | &nbsp; <a href="#">Dresses</a> &nbsp; | &nbsp; <a href="#">Nike
-                     Shoes</a> &nbsp; | &nbsp; <a href="#">Goggles</a> &nbsp; | &nbsp; <a href="#">Suit Chinos</a>
-                  &nbsp; | &nbsp; <a href="#">Adidas Shoes</a> &nbsp; | &nbsp; <a href="#">Woodland Shoes</a>
-               </p>
-            </div>
-         </div>
+        <div class="row">
+          <div class="col-lg-12">
+            <h6 class="mt-0 mb-4 f-14 text-dark font-weight-bold">POPULAR SEARCHES</h6>
+            <p class="mb-0">
+              <a href="#">Makeup</a> &nbsp; | &nbsp; <a href="#">Dresses For Girls</a> &nbsp; | &nbsp; <a href="#">T-Shirts</a> &nbsp; | &nbsp; <a href="#">Sandals</a> &nbsp; | &nbsp; <a href="#">Headphones</a> &nbsp; | &nbsp; <a href="#">Babydolls</a> &nbsp; | &nbsp; <a href="#">Blazers For Men</a> &nbsp; | &nbsp; <a href="#">Handbags</a> &nbsp; | &nbsp; <a href="#">Ladies Watches</a> &nbsp; | &nbsp; <a href="#">Bags</a> &nbsp; | &nbsp; <a href="#">Sport Shoes</a> &nbsp; | &nbsp; <a href="#">Reebok Shoes</a> &nbsp; | &nbsp; <a href="#">Puma Shoes</a>
+              &nbsp; | &nbsp; <a href="#">Boxers Wallets</a> &nbsp; | &nbsp; <a href="#">Tops</a> &nbsp; | &nbsp; <a href="#">Earrings</a> &nbsp; | &nbsp; <a href="#">Fastrack Watches</a> &nbsp; | &nbsp; <a href="#">Nike</a> &nbsp; | &nbsp; <a href="#">Smart Watches</a> &nbsp; | &nbsp; <a href="#">Cricket Shoes</a> &nbsp; | &nbsp; <a href="#">Forever 21</a> &nbsp; | &nbsp; <a href="#">Eye Makeup</a> <a href="#">Photo</a> &nbsp; | &nbsp; <a href="#">Fashion Show</a> &nbsp; | &nbsp; <a href="#">Lipstick</a> &nbsp; | &nbsp; <a href="#">Dresses</a> &nbsp; | &nbsp; <a href="#">Nike Shoes</a> &nbsp; | &nbsp; <a href="#">Goggles</a> &nbsp; | &nbsp; <a href="#">Suit Chinos</a>
+              &nbsp; | &nbsp; <a href="#">Adidas Shoes</a> &nbsp; | &nbsp; <a href="#">Woodland Shoes</a> &nbsp; | &nbsp; <a href="#">Boxers Wallets</a> &nbsp; | &nbsp; <a href="#">Tops</a> &nbsp; | &nbsp; <a href="#">Earrings</a> &nbsp; | &nbsp; <a href="#">Fastrack Watches</a> &nbsp; | &nbsp; <a href="#">Nike</a> &nbsp; | &nbsp; <a href="#">Smart Watches</a> &nbsp; | &nbsp; <a href="#">Cricket Shoes</a> &nbsp; | &nbsp; <a href="#">Forever 21</a> &nbsp; | &nbsp; <a href="#">Eye Makeup</a> <a href="#">Photo</a> &nbsp; | &nbsp; <a href="#">Fashion Show</a> &nbsp; | &nbsp; <a href="#">Lipstick</a> &nbsp; | &nbsp; <a href="#">Dresses</a> &nbsp; | &nbsp; <a href="#">Nike Shoes</a> &nbsp; | &nbsp; <a href="#">Goggles</a> &nbsp; | &nbsp; <a href="#">Suit Chinos</a>
+              &nbsp; | &nbsp; <a href="#">Adidas Shoes</a> &nbsp; | &nbsp; <a href="#">Woodland Shoes</a>
+            </p>
+          </div>
+        </div>
       </div>
-   </div>
-   <div class="copyright bg-light py-3">
-      <div class="container">
-         <div class="row">
-            <div class="col-md-6 d-flex align-items-center">
-               <p class="mb-0">© Copyright 2019 <a href="#">Chpoee</a> . All Rights Reserved
-               </p>
-            </div>
-            <div class="col-md-6 text-right">
-               <img class="img-fluid" src="{% static 'img/payment_methods.png' %}">
-            </div>
-         </div>
-      </div>
-   </div>
- <!-- Modal -->
- <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-   <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-         <div class="modal-header">
-           <h5 class="modal-title" id="exampleModalCenterTitle">Search...</h5>
-           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-             <span aria-hidden="true">×</span>
-           </button>
-         </div>
-         <div class="modal-body">
-           <input class="form-control form-control-lg mb-3" type="text" placeholder="Search for products, brands and more">
-        <button type="button" class="btn btn-primary btn-block btn-lg">Search</button></div>
-         
-       </div>
-   </div>
- </div>
-
- <div class="mobile-footer-nav shadow">
-   <div class="row no-gutters text-center">
-     <div class="col active">
-       <a href="{% url 'home:home' %}"><i class="icofont icofont-home"></i></a>
-     </div>
-     <div class="col">
-      <a type="button" data-toggle="modal" data-target="#exampleModalCenter" href="#"><i class="icofont icofont-search"></i></a>
-     </div>
-     <div class="col">
-      <a href="#" data-toggle="offcanvas"><i class="icofont-shopping-cart"></i></a>
     </div>
-     <div class="col ">
-       <a href="#"><i class="icofont icofont-heart"></i></a>
-     </div>
-     <div class="col">
-      <a id="nevMenu" href="#" role="button">
-         <i class="icofont icofont-navigation-menu"></i>
-       </a>
-     </div>
-     
-   </div>
- </div>
- 
- 
- 
-   <nav id="main-nav">
+    <div class="copyright bg-light py-3">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6 d-flex align-items-center">
+            <p class="mb-0">
+              © Copyright 2019 <a href="#">Chpoee</a> . All Rights Reserved
+            </p>
+          </div>
+          <div class="col-md-6 text-right">
+            <img class="img-fluid" src="{% static 'img/payment_methods.png' %}" />
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalCenterTitle">Search...</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+          </div>
+          <div class="modal-body">
+            <input class="form-control form-control-lg mb-3" type="text" placeholder="Search for products, brands and more" />
+            <button type="button" class="btn btn-primary btn-block btn-lg">Search</button>
+          </div>
+        </div>
+      </div>
+    </div>
 
+    <div class="mobile-footer-nav shadow">
+      <div class="row no-gutters text-center">
+        <div class="col active">
+          <a href="{% url 'home:home' %}"><i class="icofont icofont-home"></i></a>
+        </div>
+        <div class="col">
+          <a type="button" data-toggle="modal" data-target="#exampleModalCenter" href="#"><i class="icofont icofont-search"></i></a>
+        </div>
+        <div class="col">
+          <a href="#" data-toggle="offcanvas"><i class="icofont-shopping-cart"></i></a>
+        </div>
+        <div class="col">
+         <a href="#" class="wishlist-trigger" data-toggle="wishlist-offcanvas">
+           <i class="icofont icofont-heart"></i>
+           <span class="wishlist-count-badge">{% if wishlist_count %}{{ wishlist_count }}{% endif %}</span>
+         </a>
+       </div>
+        <div class="col">
+          <a id="nevMenu" href="#" role="button"><i class="icofont icofont-navigation-menu"></i></a>
+        </div>
+      </div>
+    </div>
+
+    <nav id="main-nav">
       <ul class="first-nav">
         <li class="search" data-nav-custom-content>
           <div class="form-container">
             <form class="search-form" action="https://www.google.com/search" target="_blank" method="get">
-              <input type="text" name="q" placeholder="Search..." autocomplete="off">
+              <input type="text" name="q" placeholder="Search..." autocomplete="off" />
             </form>
           </div>
         </li>
         <li class="cryptocurrency">
           <a href="#" target="_blank">Cryptocurrency</a>
           <ul>
-            <li><a href="#">Bitcoin</a></li>
-            <li><a href="#">Ethereum</a></li>
+            <li>
+              <a href="#">Bitcoin</a>
+            </li>
+            <li>
+              <a href="#">Ethereum</a>
+            </li>
             <li class="add">
               <a href="#" data-nav-close="false" data-add="['Litecoin','Dogecoin','Bitcoin Cash','ZCash']">Add Coin</a>
             </li>
@@ -677,386 +789,624 @@
       </ul>
 
       <ul class="second-nav">
-        <li class="devices">
-          <span>Devices</span>
-          <ul>
-            <li class="mobile">
-              <a href="#">Mobile Phones</a>
-              <ul>
-                <li><a href="#">Super Smart Phone</a></li>
-                <li><a href="#">Thin Magic Mobile</a></li>
-                <li><a href="#">Performance Crusher</a></li>
-                <li><a href="#">Futuristic Experience</a></li>
-              </ul>
-            </li>
-            <li class="television">
-              <a href="#">Televisions</a>
-              <div class="subnav-container">
-                <ul>
-                  <li><a href="#">Flat Superscreen</a></li>
-                  <li><a href="#">Gigantic LED</a></li>
-                  <li><a href="#">Power Eater</a></li>
-                  <li><a href="#">3D Experience</a></li>
-                  <li><a href="#">Classic Comfort</a></li>
-                </ul>
-              </div>
-            </li>
-            <li class="camera">
-              <a href="#">Cameras</a>
-              <ul>
-                <li><a href="#">Smart Shot</a></li>
-                <li><a href="#">Power Shooter</a></li>
-                <li><a href="#">Easy Photo Maker</a></li>
-                <li><a href="#">Super Pixel</a></li>
-              </ul>
-            </li>
-            <li data-nav-custom-content>
-              <div class="custom-message">
-                You can add any custom content to your navigation items. This text is just an example.
-              </div>
-            </li>
-          </ul>
-        </li>
-        <li class="magazines">
-          <a href="#magazines">Magazines</a>
-          <ul>
-            <li><a href="#">National Geographic</a></li>
-            <li><a href="#">Scientific American</a></li>
-            <li><a href="#">The Spectator</a></li>
-            <li><a href="#">The Rambler</a></li>
-            <li><a href="#">Physics World</a></li>
-            <li><a href="#">Popular Science</a></li>
-            <li><a href="#">Popular Mechanics</a></li>
-            <li><a href="#">Sky & Telescope</a></li>
-            <li><a href="#">Discover</a></li>
-            <li><a href="#">New Scientist</a></li>
-            <li><a href="#">Psychology Today</a></li>
-            <li><a href="#">Wired</a></li>
-          </ul>
-        </li>
-        <li class="store">
-          <a href="#">Store</a>
+        <li class="shirts">
+          <span>SHIRT</span>
           <ul>
             <li>
-              <a href="#">Clothes</a>
+              <a href="#">Formal Shirts</a>
+            </li>
+            <li>
+              <a href="#">Casual Shirts</a>
+            </li>
+            <li>
+              <a href="#">Dress Shirts</a>
+            </li>
+            <li>
+              <a href="#">Linen Shirts</a>
+            </li>
+            <li>
+              <a href="#">Denim Shirts</a>
+            </li>
+            <li>
+              <a href="#">Flannel Shirts</a>
+            </li>
+            <li>
+              <a href="#">Overshirts</a>
+            </li>
+            <li>
+              <a href="#">Short Sleeve Shirts</a>
+            </li>
+            <li>
+              <a href="#">Long Sleeve Shirts</a>
+            </li>
+            <li>
+              <a href="#">Mandarin Collar Shirts</a>
+            </li>
+            <li>
+              <a href="#">Printed Shirts</a>
+            </li>
+            <li>
+              <a href="#">Solid Shirts</a>
+            </li>
+          </ul>
+        </li>
+
+        <li class="tshirts">
+          <span>T-SHIRT</span>
+          <ul>
+            <li>
+              <a href="#">Crew Neck T-Shirts</a>
+            </li>
+            <li>
+              <a href="#">V-Neck T-Shirts</a>
+            </li>
+            <li>
+              <a href="#">Polo T-Shirts</a>
+            </li>
+            <li>
+              <a href="#">Graphic T-Shirts</a>
+            </li>
+            <li>
+              <a href="#">Plain T-Shirts</a>
+            </li>
+            <li>
+              <a href="#">Henley T-Shirts</a>
+            </li>
+            <li>
+              <a href="#">Full Sleeve T-Shirts</a>
+            </li>
+            <li>
+              <a href="#">Half Sleeve T-Shirts</a>
+            </li>
+            <li>
+              <a href="#">Oversized T-Shirts</a>
+            </li>
+            <li>
+              <a href="#">Muscle Fit T-Shirts</a>
+            </li>
+            <li>
+              <a href="#">Crop T-Shirts</a>
+            </li>
+            <li>
+              <a href="#">Tank Tops / Sleeveless Tees</a>
+            </li>
+          </ul>
+        </li>
+
+        <li>
+          <a href="product-grid.html">PANJABI</a>
+        </li>
+        <li>
+          <a href="product-grid.html">POLO SHIRT</a>
+        </li>
+
+        <li class="winter">
+          <span>WINTER</span>
+          <ul>
+            <li>
+              <a href="#">Hoodies</a>
+            </li>
+            <li>
+              <a href="#">Sweatshirts</a>
+            </li>
+            <li>
+              <a href="#">Jackets</a>
               <ul>
                 <li>
-                  <a href="#">Women's Clothing</a>
-                  <ul>
-                    <li><a href="#">Tops</a></li>
-                    <li><a href="#">Dresses</a></li>
-                    <li><a href="#">Trousers</a></li>
-                    <li><a href="#">Shoes</a></li>
-                    <li><a href="#">Sale</a></li>
-                  </ul>
+                  <a href="#">Bomber Jackets</a>
                 </li>
                 <li>
-                  <a href="#">Men's Clothing</a>
-                  <ul>
-                    <li><a href="#">Shirts</a></li>
-                    <li><a href="#">Trousers</a></li>
-                    <li><a href="#">Shoes</a></li>
-                    <li><a href="#">Sale</a></li>
-                  </ul>
+                  <a href="#">Puffer Jackets</a>
+                </li>
+                <li>
+                  <a href="#">Parkas</a>
+                </li>
+                <li>
+                  <a href="#">Denim Jackets</a>
+                </li>
+                <li>
+                  <a href="#">Leather Jackets</a>
                 </li>
               </ul>
             </li>
-            <li><a href="#">Jewelry</a></li>
-            <li><a href="#">Music</a></li>
-            <li><a href="#">Grocery</a></li>
+            <li>
+              <a href="#">Coats</a>
+              <ul>
+                <li>
+                  <a href="#">Trench Coats</a>
+                </li>
+                <li>
+                  <a href="#">Overcoats</a>
+                </li>
+                <li>
+                  <a href="#">Peacoats</a>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <a href="#">Sweaters</a>
+              <ul>
+                <li>
+                  <a href="#">Pullovers</a>
+                </li>
+                <li>
+                  <a href="#">Cardigans</a>
+                </li>
+                <li>
+                  <a href="#">Turtlenecks</a>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <a href="#">Thermal Wear</a>
+            </li>
+            <li>
+              <a href="#">Fleece Jackets</a>
+            </li>
           </ul>
-        </li>
-        <li class="collections"><a href="#collections">Collections</a></li>
-        <li class="nolink">No Link</li>
-        <li class="disabled"><a href="#" disabled>Disabled Link</a></li>
-        <li class="add">
-          <a href="#" data-nav-close="false" data-add="['Charts', 'Logs', 'Tests', 'Profile']">Add Item</a>
         </li>
       </ul>
 
       <ul class="bottom-nav">
         <li class="github">
           <a href="#" target="_blank">
-            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
+            </svg>
           </a>
         </li>
         <li class="email">
           <a href="#" target="_blank">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+              <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
+              <path d="M0 0h24v24H0z" fill="none" />
+            </svg>
           </a>
         </li>
         <li class="ko-fi">
           <a href="#" target="_blank">
-            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M23.881 8.948c-.773-4.085-4.859-4.593-4.859-4.593H.723c-.604 0-.679.798-.679.798s-.082 7.324-.022 11.822c.164 2.424 2.586 2.672 2.586 2.672s8.267-.023 11.966-.049c2.438-.426 2.683-2.566 2.658-3.734 4.352.24 7.422-2.831 6.649-6.916zm-11.062 3.511c-1.246 1.453-4.011 3.976-4.011 3.976s-.121.119-.31.023c-.076-.057-.108-.09-.108-.09-.443-.441-3.368-3.049-4.034-3.954-.709-.965-1.041-2.7-.091-3.71.951-1.01 3.005-1.086 4.363.407 0 0 1.565-1.782 3.468-.963 1.904.82 1.832 3.011.723 4.311zm6.173.478c-.928.116-1.682.028-1.682.028V7.284h1.77s1.971.551 1.971 2.638c0 1.913-.985 2.667-2.059 3.015z"/></svg>
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M23.881 8.948c-.773-4.085-4.859-4.593-4.859-4.593H.723c-.604 0-.679.798-.679.798s-.082 7.324-.022 11.822c.164 2.424 2.586 2.672 2.586 2.672s8.267-.023 11.966-.049c2.438-.426 2.683-2.566 2.658-3.734 4.352.24 7.422-2.831 6.649-6.916zm-11.062 3.511c-1.246 1.453-4.011 3.976-4.011 3.976s-.121.119-.31.023c-.076-.057-.108-.09-.108-.09-.443-.441-3.368-3.049-4.034-3.954-.709-.965-1.041-2.7-.091-3.71.951-1.01 3.005-1.086 4.363.407 0 0 1.565-1.782 3.468-.963 1.904.82 1.832 3.011.723 4.311zm6.173.478c-.928.116-1.682.028-1.682.028V7.284h1.77s1.971.551 1.971 2.638c0 1.913-.985 2.667-2.059 3.015z" />
+            </svg>
           </a>
         </li>
       </ul>
-
-   </nav>
+    </nav>
 
     <div class="cart-sidebar">
       <div class="cart-sidebar-header">
-         <h5>
-            My Cart <span class="text-info">({{item_count}} item)</span> <a data-toggle="offcanvas" class="float-right" href="#"><i
-                  class="icofont icofont-close-line"></i>
-            </a>
-         </h5>
+        <h5>My Cart <span class="text-info">({{ item_count }} item)</span> <a data-toggle="offcanvas" class="float-right" href="#"><i class="icofont icofont-close-line"></i></a></h5>
       </div>
       <div class="cart-sidebar-body">
-         {% if request.user.is_authenticated %}
-         {% for item in cart_items %}
-         <div class="cart-list-product">
-            <a class="float-right remove-cart" href="#" data-item-id="{{ item.id }}">
-               <i class="icofont icofont-ui-delete"></i>
-           </a>
-            <img class="img-fluid" src="{{ item.product.default_image.url }}" alt="">
-            <span class="badge badge-success">{{ item.product.discount }}% OFF</span>
-            <h5><a href="#">{{ item.product.title|slice:":35" }}</a></h5>
-            <div class="stars-rating"><i class="icofont icofont-star active"></i><i
-                  class="icofont icofont-star active"></i><i class="icofont icofont-star active"></i><i
-                  class="icofont icofont-star active"></i><i class="icofont icofont-star"></i> <span>613</span></div>
-            <p class="f-14 mb-0 text-dark float-right">৳{{ item.product.offer_price }} <del class="small text-secondary">৳ {{ item.product.price }} </del></p>
+        {% if request.user.is_authenticated %}
+          {% for item in cart_items %}
+            <div class="cart-list-product">
+              <a class="float-right remove-cart" href="#" data-item-id="{{ item.id }}"><i class="icofont icofont-ui-delete"></i></a>
+              {% if item.product.default_image %}
+              <img class="img-fluid" src="{{ item.product.default_image.url }}" alt="" />
+              {% else %}
+              <img class="img-fluid" src="{% static 'img/product.jpg'%}" alt="" />
+              {% endif %}
+              <span class="badge badge-success">{{ item.product.discount }}% OFF</span>
+              <h5><a href="#">{{ item.product.title|slice:':35' }}</a></h5>
+              <div class="stars-rating">
+                <i class="icofont icofont-star active"></i><i class="icofont icofont-star active"></i><i class="icofont icofont-star active"></i><i class="icofont icofont-star active"></i><i class="icofont icofont-star"></i> <span>613</span>
+              </div>
+              <p class="f-14 mb-0 text-dark float-right">
+                ৳{{ item.product.offer_price }} <del class="small text-secondary">৳ {{ item.product.price }}</del>
+              </p>
 
-            <span class="count-number float-left" data-id="{{ item.id }}">
-               <input type="hidden" class="cart-item-id" value="{{ item.id }}">
-               <a class="btn btn-outline-secondary btn-sm left dec quantity-down" href="#"> 
-                  <i class="icofont-minus"></i> 
-               </a>
-               <input class="count-number-input" type="text" value="{{ item.quantity }}" readonly>
-               <a class="btn btn-outline-secondary btn-sm right inc quantity-up" href="#"> 
-                  <i class="icofont-plus"></i> 
-               </a>
-               Size: <strong class="text-info">{{ item.size|upper }}</strong>
-            </span>
-         </div>
-         {% empty %}
-         <p>Your cart is empty</p>
-         {% endfor %}
-         {% else %}
-         {% for key, item in cart_items.items %}
-         <div class="cart-list-product">
-            <a class="float-right remove-cart" href="#" data-item-id="{{ item.id }}">
-               <i class="icofont icofont-ui-delete"></i>
-           </a>
-            <img class="img-fluid" src="{{ item.product.default_image.url }}" alt="">
-            <span class="badge badge-success">{{ item.product.discount }}% OFF</span>
-            <h5><a href="#">{{ item.product.title|slice:":35" }}</a></h5>
-            <div class="stars-rating"><i class="icofont icofont-star active"></i><i
-                  class="icofont icofont-star active"></i><i class="icofont icofont-star active"></i><i
-                  class="icofont icofont-star active"></i><i class="icofont icofont-star"></i> <span>613</span></div>
-            <p class="f-14 mb-0 text-dark float-right">৳{{ item.product.offer_price }} <del class="small text-secondary">৳ {{ item.product.price }} </del></p>
+              <span class="count-number float-left" data-id="{{ item.id }}">
+                <input type="hidden" class="cart-item-id" value="{{ item.id }}" />
+                
+                <input type="hidden" class="max-quantity" value="{{ item.max_quantity }}" />
+                
+                
+                <a class="btn btn-outline-secondary btn-sm left dec quantity-down" href="#"><i class="icofont-minus"></i></a>
+                <input class="count-number-input" type="text" value="{{ item.quantity }}" readonly />
+                <a class="btn btn-outline-secondary btn-sm right inc quantity-up" href="#"><i class="icofont-plus"></i></a>
+                Size: <strong class="text-info">{{ item.size|upper }}</strong>
+              </span>
+            </div>
+          {% empty %}
+          <p class="empty-cart-message">Your cart is empty</p>
+          {% endfor %}
+        {% else %}
+          {% for key, item in cart_items.items %}
+            <div class="cart-list-product">
+              <a class="float-right remove-cart" href="#" data-item-id="{{ item.id }}"><i class="icofont icofont-ui-delete"></i></a>
+              
+              {% if item.product.default_image %}
+              <img class="img-fluid" src="{{ item.product.default_image.url }}" alt="" />
+              {% else %}
+              <img class="img-fluid" src="{% static 'img/product.jpg'%}" alt="" />
+              {% endif %}
+              <span class="badge badge-success">{{ item.product.discount }}% OFF</span>
+              <h5><a href="#">{{ item.product.title|slice:':35' }}</a></h5>
+              <div class="stars-rating">
+                <i class="icofont icofont-star active"></i><i class="icofont icofont-star active"></i><i class="icofont icofont-star active"></i><i class="icofont icofont-star active"></i><i class="icofont icofont-star"></i> <span>613</span>
+              </div>
+              <p class="f-14 mb-0 text-dark float-right">
+                ৳{{ item.product.offer_price }} <del class="small text-secondary">৳ {{ item.product.price }}</del>
+              </p>
 
-            <span class="count-number float-left" data-id="{{ item.id }}">
-               <input type="hidden" class="cart-item-id" value="{{ item.id }}">
-               <a class="btn btn-outline-secondary btn-sm left dec quantity-down" href="#"> 
-                  <i class="icofont-minus"></i> 
-               </a>
-               <input class="count-number-input" type="text" value="{{ item.quantity }}" readonly>
-               <a class="btn btn-outline-secondary btn-sm right inc quantity-up" href="#"> 
-                  <i class="icofont-plus"></i> 
-               </a>
-               Size: <strong class="text-info">{{ item.size|upper }}</strong>
-            </span>
-         </div>
-         {% empty %}
-         <p>Your cart is empty</p>
-         {% endfor %}
-         {% endif %}
-        
+              <span class="count-number float-left" data-id="{{ item.id }}">
+                <input type="hidden" class="cart-item-id" value="{{ item.id }}" />
+                <input type="hidden" class="max-quantity" value="{{ item.max_quantity }}" />
+                <a class="btn btn-outline-secondary btn-sm left dec quantity-down" href="#"><i class="icofont-minus"></i></a>
+                <input class="count-number-input" type="text" value="{{ item.quantity }}" readonly />
+                <a class="btn btn-outline-secondary btn-sm right inc quantity-up" href="#"><i class="icofont-plus"></i></a>
+                Size: <strong class="text-info">{{ item.size|upper }}</strong>
+              </span>
+            </div>
+          {% empty %}
+          <p class="empty-cart-message">Your cart is empty</p>
+          {% endfor %}
+        {% endif %}
       </div>
       <div class="cart-sidebar-footer">
-         <div class="cart-store-details">
-            <p>Sub Total <strong class="float-right">৳{{sub_total}}</strong></p>
-            <p>Delivery Charges <strong class="float-right text-danger">+ ৳{{delivery_charge}}</strong></p>
-            <h6>Your total savings <strong class="float-right text-danger">৳{{total_saving}}</strong></h6>
-         </div>
-         <a href="checkout.html"><button class="btn btn-primary btn-lg btn-block text-left" type="button"><span
-                  class="float-left"><i class="icofont icofont-cart"></i> Proceed to Checkout </span><span
-                  class="float-right"><strong>৳{{total}}</strong> <span
-                     class="icofont icofont-bubble-right"></span></span></button></a>
+        <div class="cart-store-details">
+          <p>
+            Sub Total <strong class="float-right">৳{{ sub_total }}</strong>
+          </p>
+          <p>
+            Delivery Charges <strong class="float-right text-danger">+ ৳{{ delivery_charge }}</strong>
+          </p>
+          <h6>Your total savings <strong class="float-right text-danger">৳{{ total_saving }}</strong></h6>
+        </div>
+        <a href="{% url 'checkout:checkout_view' %}"><button class="btn btn-primary btn-lg btn-block text-left" type="button"><span class="float-left"><i class="icofont icofont-cart"></i> Proceed to Checkout</span><span class="float-right"><strong>৳{{ total|floatformat:2 }}</strong> <span class="icofont icofont-bubble-right"></span></span></button></a>
       </div>
-   </div>
-   <!-- Bootstrap core JavaScript -->
-   <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
-   <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
-   <!-- select2 Js -->
-   <script src="{% static 'vendor/select2/js/select2.min.js' %}"></script>
-   <!-- Owl Carousel -->
-   <script src="{% static 'vendor/owl-carousel/owl.carousel.js' %}"></script>
-   <!-- Slider Js -->
-   <script src="{% static 'vendor/slider/slider.js' %}"></script>
-   <!-- Custom scripts for all pages-->
-   <script src="{% static 'js/custom.js' %}"></script>
-   <script src="{% static 'js/hc-offcanvas-nav.js' %}?ver=4.1.1"></script>
-   <link rel="stylesheet" href="{% static 'js/demo.css' %}?ver=3.4.0">
-   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    </div>
+    <!-- address form model -->
+    <div class="modal fade" id="add-address-modal" tabindex="-1" role="dialog" aria-labelledby="add-address" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+          <div class="modal-content border-0">
+              <div class="modal-header bg-primary text-white py-3">
+                  <h5 class="modal-title font-weight-500" id="add-address" style="font-size: 1.5rem;">ADD NEW DELIVERY ADDRESS</h5>
+                  <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true" style="font-size: 2rem;">&times;</span>
+                  </button>
+              </div>
+              <form action="{% url 'delivery:create_delivery_address' %}" method="POST">
+              <div class="modal-body p-5">
+                    {% csrf_token %}
+                      <!-- Address Type Selector -->
+                      <div class="form-group mb-4">
+                          <label class="font-weight-500 text-dark mb-3" style="font-size: 1.1rem;">ADDRESS TYPE</label>
+                          <div class="btn-group btn-group-toggle w-100" data-toggle="buttons">
+                              <label class="btn btn-outline-primary active rounded-left py-3" style="border-width: 2px;">
+                                <input type="radio" name="address_type" value="home" autocomplete="off" checked>
+                                  <i class="fas fa-home fa-lg mr-2"></i><span class="font-weight-600">HOME</span>
+                              </label>
+                              <label class="btn btn-outline-primary py-3" style="border-width: 2px;">
+                                <input type="radio" name="address_type" value="wirk" autocomplete="off">
+                                  <i class="fas fa-briefcase fa-lg mr-2"></i><span class="font-weight-600">WORK</span>
+                              </label>
+                              <label class="btn btn-outline-primary rounded-right py-3" style="border-width: 2px;">
+                                <input type="radio" name="address_type" value="other" autocomplete="off">
+                                  <i class="fas fa-map-marker-alt fa-lg mr-2"></i><span class="font-weight-600">OTHER</span>
+                              </label>
+                          </div>
+                      </div>
+  
+                      <!-- Name Field -->
+                      <div class="form-row mb-4">
+                        <div class="col-md-6 form-group">
+                          <label class="font-weight-500 text-dark mb-3" style="font-size: 1.1rem;">FIRST NAME<span class="text-danger">*</span></label>
+                          <input type="text" class="form-control form-control-lg" name="first_name" placeholder="Your First Name...">
+                        </div>
+                        <div class="col-md-6 form-group">
+                          <label class="font-weight-500 text-dark mb-3" style="font-size: 1.1rem;">LAST NAME<span class="text-danger">*</span></label>
+                          <input type="text" class="form-control form-control-lg" name="last_name" placeholder="Your Last Name...">
+                        </div>
+                      </div>
+  
+                      <!-- Contact Information -->
+                      <div class="form-row mb-4">
+                        <div class="col-md-6 form-group">
+                          <label class="font-weight-500 text-dark mb-3" style="font-size: 1.1rem;">
+                              PHONE NUMBER <span class="text-danger">*</span>
+                          </label>
+                          <input type="tel" class="form-control form-control-lg" name="phone_number" 
+                                 id="phoneInput"
+                                 placeholder="e.g. 01712345678" 
+                                 required 
+                                 pattern="01[0-9]{9}" 
+                                 maxlength="11"
+                                 title="Must be an 11-digit number starting with 01 (e.g. 01712345678)"
+                                 oninput="validatePhoneInput(this)">
+                      </div>
+                      <script>
+                        function validatePhoneInput(input) {
+                            // Remove any non-digit characters
+                            let value = input.value.replace(/\D/g, '');
+                            
+                            // Enforce maximum length of 11 digits
+                            value = value.slice(0, 11);
+                            
+                            // If first digit exists and isn't '0', clear the input
+                            if (value.length >= 1 && value[0] !== '0') {
+                                value = '';
+                            }
+                            // If second digit exists and isn't '1', keep only the '0'
+                            else if (value.length >= 2 && value[1] !== '1') {
+                                value = '0';
+                            }
+                            
+                            // Update the input value
+                            input.value = value;
+                        }
+                        </script>                      
+                          <div class="col-md-6 form-group">
+                              <label class="font-weight-500 text-dark mb-3" style="font-size: 1.1rem;">EMAIL<span class="text-danger">*</span></label>
+                              <input type="email" class="form-control form-control-lg" name="email" placeholder="your@email.com">
+                          </div>
+                      </div>
+  
+                      <!-- Location Fields -->
+                      <div class="form-row mb-4">
+                          <div class="col-md-6 form-group">
+                              <label class="font-weight-500 text-dark mb-3" style="font-size: 1.1rem;">DIVISION <span class="text-danger">*</span></label>
+                              <select id="division" class="form-control form-control-lg" name="division" onchange="updateDistricts()">
+                                  <option value="">Select Division</option>
+                                  <option value="Dhaka">Dhaka</option>
+                                  <option value="Chattogram">Chattogram</option>
+                                  <option value="Rajshahi">Rajshahi</option>
+                                  <option value="Khulna">Khulna</option>
+                                  <option value="Barishal">Barishal</option>
+                                  <option value="Sylhet">Sylhet</option>
+                                  <option value="Rangpur">Rangpur</option>
+                                  <option value="Mymensingh">Mymensingh</option>
+                              </select>
+                          </div>
+                          <div class="col-md-6 form-group">
+                              <label class="font-weight-500 text-dark mb-3" style="font-size: 1.1rem;">DISTRICT <span class="text-danger">*</span></label>
+                              <select id="district" class="form-control form-control-lg" name="district" onchange="updateUpazilas()">
+                                  <option value="">Select District</option>
+                              </select>
+                          </div>
+                      </div>
+  
+                      <!-- Upazila and Postal Code -->
+                      <div class="form-row mb-4">
+                          <div class="col-md-6 form-group">
+                              <label class="font-weight-500 text-dark mb-3" style="font-size: 1.1rem;">UPAZILA/THANA <span class="text-danger">*</span></label>
+                              <select id="upazila" class="form-control form-control-lg" name="upazila">
+                                  <option value="">Select Upazila/Thana</option>
+                              </select>
+                          </div>
+                          <div class="col-md-6 form-group">
+                              <label class="font-weight-500 text-dark mb-3" style="font-size: 1.1rem;">POSTAL CODE <span class="text-danger">*</span></label>
+                              <input type="number" class="form-control form-control-lg" name="postal_code" placeholder="e.g. 1207">
+                          </div>
+                      </div>
+  
+                      <!-- Delivery Area -->
+                      <div class="form-group mb-4">
+                          <label class="font-weight-500 text-dark mb-3" style="font-size: 1.1rem;">DELIVERY AREA <span class="text-danger">*</span></label>
+                          <div class="input-group input-group-lg">
+                              <input type="text" class="form-control form-control-lg" name="delivery_area" placeholder="Area/Moholla/Road">
+                              
+                          </div>
+                      </div>
+                      <label class="checkbox-wrapper">
+                        <input type="checkbox" class="checkbox-input" name="is_default" />
+                        <span class="checkbox-tile">
+                          <span class="checkmark"></span>
+                        </span>
+                        <span
+                          data-unchecked="Set as default address"
+                          data-checked="DEFAULT ADDRESS"
+                          class="label-text"
+                        ></span>
+                      </label> 
+                               
+                  
+              </div>
+              <div class="modal-footer bg-light py-4 px-5">
+                  <button type="button" class="btn btn-lg btn-outline-secondary font-weight-600 px-5 py-2" data-dismiss="modal">
+                      <i class="fas fa-times mr-2"></i>CANCEL
+                  </button>
+                  <button type="submit" class="btn btn-lg btn-primary font-weight-600 px-5 py-2">
+                      <i class="fas fa-check-circle mr-2"></i>SAVE ADDRESS
+                  </button>
+              </div>
+            </form>
+          </div>
+      </div>
+  </div>
+  
 
+ 
+      
 
-   <script>
-      document.addEventListener("DOMContentLoaded", function () {
-          const downButtons = document.querySelectorAll('.quantity-down');
-          const upButtons = document.querySelectorAll('.quantity-up');
+    <!-- Bootstrap core JavaScript -->
+    <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <!-- select2 Js -->
+    <script src="{% static 'vendor/select2/js/select2.min.js' %}"></script>
+    <!-- Owl Carousel -->
+    <script src="{% static 'vendor/owl-carousel/owl.carousel.js' %}"></script>
+    <!-- Slider Js -->
+    <script src="{% static 'vendor/slider/slider.js' %}"></script>
+    <!-- Custom scripts for all pages -->
+    <script src="{% static 'js/custom.js' %}"></script>
+    <script src="{% static 'js/hc-offcanvas-nav.js' %}?ver=4.1.1"></script>
+    <link rel="stylesheet" href="{% static 'js/demo.css' %}?ver=3.4.0" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        const downButtons = document.querySelectorAll('.quantity-down')
+        const upButtons = document.querySelectorAll('.quantity-up')
       
-          downButtons.forEach(button => {
-              button.addEventListener('click', function(e) {
-                  e.preventDefault();
-                  const container = this.closest('.count-number');
-                  const input = container.querySelector('.count-number-input');
-                  const itemId = container.querySelector('.cart-item-id').value;
-                  let quantity = parseInt(input.value);
+        downButtons.forEach((button) => {
+          button.addEventListener('click', function (e) {
+            e.preventDefault()
+            const container = this.closest('.count-number')
+            const input = container.querySelector('.count-number-input')
+            const itemId = container.querySelector('.cart-item-id').value
+            let quantity = parseInt(input.value)
       
-                  if (quantity > 1) {
-                      quantity -= 1;
-                      input.value = quantity;
-                      updateQuantity(itemId, quantity);
-                  }
-              });
-          });
+            if (quantity > 1) {
+              quantity -= 1
+              input.value = quantity
+              updateQuantity(itemId, quantity)
+            }
+          })
+        })
       
-          upButtons.forEach(button => {
-              button.addEventListener('click', function(e) {
-                  e.preventDefault();
-                  const container = this.closest('.count-number');
-                  const input = container.querySelector('.count-number-input');
-                  const itemId = container.querySelector('.cart-item-id').value;
-                  let quantity = parseInt(input.value);
+        upButtons.forEach((button) => {
+          button.addEventListener('click', function (e) {
+            e.preventDefault()
+            const container = this.closest('.count-number')
+            const input = container.querySelector('.count-number-input')
+            const itemId = container.querySelector('.cart-item-id').value
+            const maxqty = container.querySelector('.max-quantity')
+            let quantity = parseInt(input.value)
+            let maxQuantity = parseInt(maxqty.value)
+            // Check if current quantity is less than max before incrementing
+            if (quantity < maxQuantity) {
+              quantity += 1;
+              input.value = quantity;
+              updateQuantity(itemId, quantity);
+            } else {
+              // Optional: You could add some visual feedback here that max was reached
+              console.log('Maximum quantity reached');
+            }
+          })
+        })
       
-                  quantity += 1;
-                  input.value = quantity;
-                  updateQuantity(itemId, quantity);
-              });
-          });
+        function updateQuantity(itemId, quantity) {
+          console.log('Updating Item:', itemId, 'Quantity:', quantity) // ✅ Debug print
+          fetch("{% url 'cart:update_cart_item' %}", {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'X-CSRFToken': getCookie('csrftoken')
+            },
+            body: JSON.stringify({
+              item_id: itemId,
+              quantity: quantity
+            })
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              console.log('Server response:', data)
+              if (data.status === 'success') {
+                const ctx = data.context
+                document.querySelector('.cart-store-details p strong.float-right').textContent = `৳${ctx.sub_total}`
+                document.querySelector('.cart-store-details p strong.text-danger').textContent = `+ ৳${ctx.delivery_charge}`
+                document.querySelector('.cart-store-details h6 strong.float-right').textContent = `৳${ctx.total_saving}`
+                document.querySelector('.btn.btn-primary span.float-right strong').textContent = `৳${ctx.total}`
+                const itemCountText = `(${ctx.item_count} item${ctx.item_count !== 1 ? 's' : ''})`
+                const itemCountSpan = document.querySelector('.cart-sidebar-header span.text-info')
+                if (itemCountSpan) itemCountSpan.textContent = itemCountText
       
-          function updateQuantity(itemId, quantity) {
-              console.log("Updating Item:", itemId, "Quantity:", quantity); // ✅ Debug print
-              fetch("{% url 'cart:update_cart_item' %}", {
-                  method: "POST",
-                  headers: {
-                      "Content-Type": "application/json",
-                      "X-CSRFToken": getCookie("csrftoken")
-                  },
-                  body: JSON.stringify({
-                      item_id: itemId,
-                      quantity: quantity
-                  })
-              })
-              .then(response => response.json())
-              .then(data => {
-               console.log("Server response:", data);
-               if (data.status === "success") {
-                   const ctx = data.context;
-                   document.querySelector('.cart-store-details p strong.float-right').textContent = `৳${ctx.sub_total}`;
-                   document.querySelector('.cart-store-details p strong.text-danger').textContent = `+ ৳${ctx.delivery_charge}`;
-                   document.querySelector('.cart-store-details h6 strong.float-right').textContent = `৳${ctx.total_saving}`;
-                   document.querySelector('.btn.btn-primary span.float-right strong').textContent = `৳${ctx.total}`;
-                   const itemCountText = `(${ctx.item_count} item${ctx.item_count !== 1 ? 's' : ''})`;
-                   const itemCountSpan = document.querySelector('.cart-sidebar-header span.text-info');
-                   if (itemCountSpan) itemCountSpan.textContent = itemCountText;
-           
-                   // ✅ Update item count in navbar badge
-                   const cartBadge = document.querySelector('.cart-nav .badge-danger');
-                   if (cartBadge) cartBadge.textContent = ctx.item_count;
-               }
-           })
-           
-              .catch(error => {
-                  console.error("Fetch error:", error);
-              });
-          }
-      
-          function getCookie(name) {
-              let cookieValue = null;
-              if (document.cookie && document.cookie !== '') {
-                  const cookies = document.cookie.split(';');
-                  for (let cookie of cookies) {
-                      if (cookie.trim().startsWith(name + '=')) {
-                          cookieValue = decodeURIComponent(cookie.trim().substring(name.length + 1));
-                          break;
-                      }
-                  }
+                // ✅ Update item count in navbar badge
+                const cartBadge = document.querySelector('.cart-nav .badge-danger')
+                if (cartBadge) cartBadge.textContent = ctx.item_count
               }
-              return cookieValue;
+            })
+      
+            .catch((error) => {
+              console.error('Fetch error:', error)
+            })
+        }
+      
+        function getCookie(name) {
+          let cookieValue = null
+          if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';')
+            for (let cookie of cookies) {
+              if (cookie.trim().startsWith(name + '=')) {
+                cookieValue = decodeURIComponent(cookie.trim().substring(name.length + 1))
+                break
+              }
+            }
           }
-      });
-      </script>
+          return cookieValue
+        }
+      })
+    </script>
 
-      <script>
-         document.addEventListener('DOMContentLoaded', function () {
-             // Check if offcanvas should be opened after reload
-             if (localStorage.getItem('openOffcanvasAfterReload') === 'true') {
-                 const toggle = document.querySelector('[data-toggle="offcanvas"]');
-                 if (toggle) toggle.click();
-                 localStorage.removeItem('openOffcanvasAfterReload');
-             }
-         
-             // Add click event for all remove buttons
-             document.querySelectorAll('.remove-cart').forEach(function (button) {
-                 button.addEventListener('click', function (e) {
-                     e.preventDefault();
-         
-                     const itemId = this.dataset.itemId;
-                     const url = "{% url 'cart:remove_from_cart' %}";
-         
-                     fetch(url, {
-                         method: 'POST',
-                         headers: {
-                             'Content-Type': 'application/json',
-                             'X-CSRFToken': getCookie('csrftoken'),
-                         },
-                         body: JSON.stringify({ item_id: itemId })
-                     })
-                     .then(response => response.json())
-                     .then(data => {
-                         if (data) {
-                             // Mark to reopen offcanvas after reload
-                             localStorage.setItem('openCartAfterReload', 'true');
-                             location.reload();
-                         } else {
-                             console.error("Remove failed:", data.message);
-                         }
-                     })
-                     .catch(error => console.error('Error:', error));
-                 });
-             });
-         
-             // CSRF helper
-             function getCookie(name) {
-                 let cookieValue = null;
-                 if (document.cookie && document.cookie !== '') {
-                     const cookies = document.cookie.split(';');
-                     for (let i = 0; i < cookies.length; i++) {
-                         const cookie = cookies[i].trim();
-                         if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                             cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                             break;
-                         }
-                     }
-                 }
-                 return cookieValue;
-             }
-         });
-         </script>
-         
-         <script>
-            // This runs on every page load
-            window.addEventListener('load', function () {
-                if (localStorage.getItem('openCartAfterReload') === 'true') {
-                    // Open the cart offcanvas
-                    const cartToggleBtn = document.querySelector('a[data-toggle="offcanvas"]');
-                    if (cartToggleBtn) {
-                        cartToggleBtn.click();
-                    }
-                    // Remove the flag after use
-                    localStorage.removeItem('openCartAfterReload');
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        // Check if offcanvas should be opened after reload
+        if (localStorage.getItem('openOffcanvasAfterReload') === 'true') {
+          const toggle = document.querySelector('[data-toggle="offcanvas"]')
+          if (toggle) toggle.click()
+          localStorage.removeItem('openOffcanvasAfterReload')
+        }
+      
+        // Add click event for all remove buttons
+        document.querySelectorAll('.remove-cart').forEach(function (button) {
+          button.addEventListener('click', function (e) {
+            e.preventDefault()
+      
+            const itemId = this.dataset.itemId
+            const url = "{% url 'cart:remove_from_cart' %}"
+      
+            fetch(url, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCookie('csrftoken')
+              },
+              body: JSON.stringify({ item_id: itemId })
+            })
+              .then((response) => response.json())
+              .then((data) => {
+                if (data) {
+                  // Mark to reopen offcanvas after reload
+                  localStorage.setItem('openCartAfterReload', 'true')
+                  location.reload()
+                } else {
+                  console.error('Remove failed:', data.message)
                 }
-            });
-            </script>
-         
-   <script>
-      (function($) {
-        var $main_nav = $('#main-nav');
-        var $toggle = $('.toggle');
+              })
+              .catch((error) => console.error('Error:', error))
+          })
+        })
+      
+        // CSRF helper
+        function getCookie(name) {
+          let cookieValue = null
+          if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';')
+            for (let i = 0; i < cookies.length; i++) {
+              const cookie = cookies[i].trim()
+              if (cookie.substring(0, name.length + 1) === name + '=') {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1))
+                break
+              }
+            }
+          }
+          return cookieValue
+        }
+      })
+    </script>
 
+    <script>
+      // This runs on every page load
+      window.addEventListener('load', function () {
+        if (localStorage.getItem('openCartAfterReload') === 'true') {
+          // Open the cart offcanvas
+          const cartToggleBtn = document.querySelector('a[data-toggle="offcanvas"]')
+          if (cartToggleBtn) {
+            cartToggleBtn.click()
+          }
+          // Remove the flag after use
+          localStorage.removeItem('openCartAfterReload')
+        }
+      })
+    </script>
+
+    <script>
+      ;(function ($) {
+        var $main_nav = $('#main-nav')
+        var $toggle = $('.toggle')
+      
         var defaultOptions = {
           disableAt: false,
           customToggle: $toggle,
@@ -1066,117 +1416,286 @@
           levelTitleAsBack: true,
           pushContent: '#container',
           insertClose: 2
-        };
-
+        }
+      
         // call our plugin
-        var Nav = $main_nav.hcOffcanvasNav(defaultOptions);
-
+        var Nav = $main_nav.hcOffcanvasNav(defaultOptions)
+      
         // add new items to original nav
-        $main_nav.find('li.add').children('a').on('click', function() {
-          var $this = $(this);
-          var $li = $this.parent();
-          var items = eval('(' + $this.attr('data-add') + ')');
-
-          $li.before('<li class="new"><a href="#">'+items[0]+'</a></li>');
-
-          items.shift();
-
-          if (!items.length) {
-            $li.remove();
-          }
-          else {
-            $this.attr('data-add', JSON.stringify(items));
-          }
-
-          Nav.update(true);
-        });
-
+        $main_nav
+          .find('li.add')
+          .children('a')
+          .on('click', function () {
+            var $this = $(this)
+            var $li = $this.parent()
+            var items = eval('(' + $this.attr('data-add') + ')')
+      
+            $li.before('<li class="new"><a href="#">' + items[0] + '</a></li>')
+      
+            items.shift()
+      
+            if (!items.length) {
+              $li.remove()
+            } else {
+              $this.attr('data-add', JSON.stringify(items))
+            }
+      
+            Nav.update(true)
+          })
+      
         // demo settings update
-
+      
         const update = (settings) => {
           if (Nav.isOpen()) {
-            Nav.on('close.once', function() {
-              Nav.update(settings);
-              Nav.open();
-            });
-
-            Nav.close();
+            Nav.on('close.once', function () {
+              Nav.update(settings)
+              Nav.open()
+            })
+      
+            Nav.close()
+          } else {
+            Nav.update(settings)
           }
-          else {
-            Nav.update(settings);
-          }
-        };
-
-        $('.actions').find('a').on('click', function(e) {
-          e.preventDefault();
-
-          var $this = $(this).addClass('active');
-          var $siblings = $this.parent().siblings().children('a').removeClass('active');
-          var settings = eval('(' + $this.data('demo') + ')');
-
-          update(settings);
-        });
-
-        $('.actions').find('input').on('change', function() {
-          var $this = $(this);
-          var settings = eval('(' + $this.data('demo') + ')');
-
-          if ($this.is(':checked')) {
-            update(settings);
-          }
-          else {
-            var removeData = {};
-            $.each(settings, function(index, value) {
-              removeData[index] = false;
-            });
-
-            update(removeData);
-          }
-        });
-      })(jQuery);
+        }
+      
+        $('.actions')
+          .find('a')
+          .on('click', function (e) {
+            e.preventDefault()
+      
+            var $this = $(this).addClass('active')
+            var $siblings = $this.parent().siblings().children('a').removeClass('active')
+            var settings = eval('(' + $this.data('demo') + ')')
+      
+            update(settings)
+          })
+      
+        $('.actions')
+          .find('input')
+          .on('change', function () {
+            var $this = $(this)
+            var settings = eval('(' + $this.data('demo') + ')')
+      
+            if ($this.is(':checked')) {
+              update(settings)
+            } else {
+              var removeData = {}
+              $.each(settings, function (index, value) {
+                removeData[index] = false
+              })
+      
+              update(removeData)
+            }
+          })
+      })(jQuery)
     </script>
     {% if not request.user.is_authenticated %}
-    <script>
+      <script>
         window.onload = function () {
-            google.accounts.id.initialize({
-                client_id: "{{ GOOGLE_CLIENT_ID }}",
-                login_uri: "{% provider_login_url 'google' process='login' %}",
-                auto_select: true,
-                cancel_on_tap_outside: false,
-            });
-
-            google.accounts.id.prompt();  // show One Tap
+          google.accounts.id.initialize({
+            client_id: '{{ GOOGLE_CLIENT_ID }}',
+            login_uri: "{% provider_login_url 'google' process='login' %}",
+            auto_select: true,
+            cancel_on_tap_outside: false
+          })
+        
+          google.accounts.id.prompt() // show One Tap
         }
-    </script>
-    {% else %}
-        <p>Hello, {{ request.user.username }}!</p>
+      </script>
     {% endif %}
 
-  {% comment %} mobile nev scripts {% endcomment %}
-  <script>
-   document.addEventListener('DOMContentLoaded', function () {
-     const triggerButton = document.querySelector('.toggle.hc-nav-trigger.hc-nav-1');
-     const nevMenu = document.getElementById('nevMenu');
- 
-     nevMenu.addEventListener('click', function (e) {
-       e.preventDefault();
-       if (triggerButton) {
-         triggerButton.click(); // Simulate click on hamburger menu trigger
-       }
-     });
-   });
- 
-    document.addEventListener('DOMContentLoaded', function () {
-      const navItems = document.querySelectorAll('.mobile-footer-nav .col');
-  
-      navItems.forEach(item => {
-        item.addEventListener('click', function () {
-          navItems.forEach(el => el.classList.remove('active'));
-          this.classList.add('active');
-        });
-      });
-    });
-  </script>
-</body>
+    {% comment %}mobile nev scripts{% endcomment %}
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        const triggerButton = document.querySelector('.toggle.hc-nav-trigger.hc-nav-1')
+        const nevMenu = document.getElementById('nevMenu')
+      
+        nevMenu.addEventListener('click', function (e) {
+          e.preventDefault()
+          if (triggerButton) {
+            triggerButton.click() // Simulate click on hamburger menu trigger
+          }
+        })
+      })
+      
+      document.addEventListener('DOMContentLoaded', function () {
+        const navItems = document.querySelectorAll('.mobile-footer-nav .col')
+      
+        navItems.forEach((item) => {
+          item.addEventListener('click', function () {
+            navItems.forEach((el) => el.classList.remove('active'))
+            this.classList.add('active')
+          })
+        })
+      })
+    </script>
 
+    {% comment %}social oauth pop up scripts{% endcomment %}
+    <script>
+      function openGoogleOAuthPopup() {
+        const url = 'https://accounts.google.com/o/oauth2/v2/auth/oauthchooseaccount?client_id=321987152556-sfp8useco7j0t261q8mkj9u88ih23j52.apps.googleusercontent.com&redirect_uri=http%3A%2F%2F127.0.0.1%3A8000%2Faccounts%2Fgoogle%2Flogin%2Fcallback%2F&scope=profile&response_type=code&state=dgHgXUoo1YsNya7k&service=lso&o2v=2&ddm=1&flowName=GeneralOAuthFlow'
+        const width = 500
+        const height = 600
+        const left = (screen.width - width) / 2
+        const top = (screen.height - height) / 2
+      
+        window.open(url, 'googleOAuthPopup', `width=${width},height=${height},left=${left},top=${top},resizable=yes,scrollbars=yes,toolbar=no,menubar=no,location=no,status=no`)
+      
+        return false
+      }
+      
+      function openFacebookOAuthPopup() {
+        const url = "{% url 'social_zoyro:begin' 'facebook' %}?next={{ request.path }}"
+        const width = 500
+        const height = 600
+        const left = (screen.width - width) / 2
+        const top = (screen.height - height) / 2
+      
+        window.open(url, 'facebookOAuthPopup', `width=${width},height=${height},left=${left},top=${top},resizable=yes,scrollbars=yes,toolbar=no,menubar=no,location=no,status=no`)
+      
+        return false
+      }
+    </script>
+    <script>
+      const bangladeshData = {
+          Dhaka: {
+              Dhaka: ["Agargaon", "Azimpur", "Badarganj", "Badda", "Banani", "Banasree", "Baridhara", "Bashundhara", "Bosila", "Dhamrai", "Demra", "Dhanmondi", "Dohar", "Eskaton", "Farmgate", "Gulshan", "Hazaribagh", "Jatrabari", "Joypara", "Kakrail", "Kamalapur", "Kamrangirchar", "Kallyanpur", "Keraniganj", "Khilgaon", "Khilkhet", "Lalmatia", "Malibagh", "Mirpur", "Mogbazar", "Mohakhali", "Mohammadpur", "Motijheel", "Mouchak", "New Market", "Nawabganj", "Nikunja", "Paltan", "Panthapath", "Rampura", "Sabujbagh", "Savar", "Segunbagicha", "Shahbagh", "Sher-e-Bangla Nagar", "Shyamoli", "Sutrapur", "Tejgaon", "Tikatuli", "Turag", "Uttara", "Wari"],
+              Faridpur: ["Alfadanga", "Bhanga", "Boalmari", "Charbhadrasan", "Madhukhali", "Nagarkanda", "Sadarpur", "Saltha"],
+              Gazipur: ["Gazipur Sadar", "Kaliakair", "Kaliganj", "Kapasia", "Sreepur"],
+              Gopalganj: ["Gopalganj Sadar", "Kashiani", "Kotalipara", "Muksudpur", "Tungipara"],
+              Kishoreganj: ["Austagram", "Bajitpur", "Bhairab", "Hossainpur", "Itna", "Karimganj", "Katiadi", "Kishoreganj Sadar", "Kuliarchar", "Mithamain", "Nikli", "Pakundia", "Tarail"],
+              Madaripur: ["Kalkini", "Madaripur Sadar", "Rajoir", "Shibchar"],
+              Manikganj: ["Daulatpur", "Ghior", "Harirampur", "Manikganj Sadar", "Saturia", "Shivalaya", "Singair"],
+              Munshiganj: ["Gazaria", "Lohajang", "Munshiganj Sadar", "Sirajdikhan", "Srinagar", "Tongibari"],
+              Narayanganj: ["Araihazar", "Bandar", "Narayanganj Sadar", "Rupganj", "Sonargaon"],
+              Narsingdi: ["Belabo", "Monohardi", "Narsingdi Sadar", "Palash", "Raipura", "Shibpur"],
+              Rajbari: ["Baliakandi", "Goalandaghat", "Pangsha", "Rajbari Sadar"],
+              Shariatpur: ["Bhedarganj", "Damudya", "Gosairhat", "Naria", "Shariatpur Sadar", "Zajira"],
+              Tangail: ["Basail", "Bhuapur", "Delduar", "Ghatail", "Gopalpur", "Kalihati", "Madhupur", "Mirzapur", "Nagarpur", "Sakhipur", "Tangail Sadar"]
+          },
+          Chattogram: {
+              Chattogram: ["Anwara", "Banshkhali", "Boalkhali", "Chandanaish", "Fatikchhari", "Hathazari", "Lohagara", "Mirsharai", "Patiya", "Rangunia", "Raozan", "Sandwip", "Satkania", "Sitakunda"],
+              "Cox's Bazar": ["Chakaria", "Cox's Bazar Sadar", "Kutubdia", "Maheshkhali", "Ramu", "Teknaf", "Ukhia"],
+              Brahmanbaria: ["Akhaura", "Bancharampur", "Brahmanbaria Sadar", "Kasba", "Nabinagar", "Nasirnagar", "Sarail"],
+              Comilla: ["Barura", "Brahmanpara", "Burichong", "Chandina", "Chauddagram", "Daudkandi", "Debidwar", "Homna", "Comilla Sadar", "Laksam", "Monohorgonj", "Meghna", "Muradnagar", "Nangalkot", "Titas"],
+              Chandpur: ["Chandpur Sadar", "Faridganj", "Haimchar", "Haziganj", "Kachua", "Matlab North", "Matlab South", "Shahrasti"],
+              Feni: ["Chhagalnaiya", "Daganbhuiyan", "Feni Sadar", "Parshuram", "Sonagazi", "Fulgazi"],
+              Khagrachhari: ["Dighinala", "Khagrachhari Sadar", "Lakshmichhari", "Mahalchhari", "Manikchhari", "Matiranga", "Panchhari", "Ramgarh"],
+              Lakshmipur: ["Lakshmipur Sadar", "Raipur", "Ramganj", "Ramgati", "Komolnagar"],
+              Noakhali: ["Begumganj", "Chatkhil", "Companiganj", "Hatiya", "Senbagh", "Sonaimuri", "Subarnachar", "Noakhali Sadar", "Kabirhat"],
+              Rangamati: ["Bagaichhari", "Barkal", "Kawkhali", "Langadu", "Naniarchar", "Rangamati Sadar", "Rajasthali"]
+          },
+          Rajshahi: {
+              Rajshahi: ["Bagha", "Bagmara", "Charghat", "Durgapur", "Godagari", "Mohanpur", "Paba", "Puthia", "Tanore"],
+              Bogura: ["Adamdighi", "Bogura Sadar", "Dhunat", "Dhupchanchia", "Gabtali", "Kahaloo", "Nandigram", "Sariakandi", "Sherpur", "Shibganj", "Sonatala"],
+              Chapainawabganj: ["Bholahat", "Chapainawabganj Sadar", "Gomastapur", "Nachole", "Shibganj"],
+              Joypurhat: ["Akkelpur", "Joypurhat Sadar", "Kalai", "Khetlal", "Panchbibi"],
+              Naogaon: ["Atrai", "Badalgachi", "Dhamoirhat", "Manda", "Mohadevpur", "Naogaon Sadar", "Niamatpur", "Patnitala", "Porsha", "Raninagar", "Sapahar"],
+              Natore: ["Bagatipara", "Baraigram", "Gurudaspur", "Lalpur", "Natore Sadar", "Singra"],
+              Pabna: ["Atgharia", "Bera", "Bhangura", "Chatmohar", "Faridpur", "Ishwardi", "Pabna Sadar", "Santhia", "Sujanagar"],
+              Sirajganj: ["Belkuchi", "Chauhali", "Kamarkhanda", "Kazipur", "Raiganj", "Shahjadpur", "Sirajganj Sadar", "Tarash", "Ullahpara"]
+          },
+          Khulna: {
+              Khulna: ["Batiaghata", "Dacope", "Dumuria", "Dighalia", "Koyra", "Paikgachha", "Phultala", "Rupsha", "Terokhada"],
+              Bagerhat: ["Bagerhat Sadar", "Chitalmari", "Fakirhat", "Kachua", "Mollahat", "Mongla", "Morrelganj", "Rampal", "Sarankhola"],
+              Chuadanga: ["Alamdanga", "Chuadanga Sadar", "Damurhuda", "Jibannagar"],
+              Jessore: ["Abhaynagar", "Bagherpara", "Chaugachha", "Jhikargachha", "Keshabpur", "Jessore Sadar", "Manirampur", "Sharsha"],
+              Jhenaidah: ["Harinakunda", "Jhenaidah Sadar", "Kaliganj", "Kotchandpur", "Maheshpur", "Shailkupa"],
+              Kushtia: ["Bheramara", "Daulatpur", "Khoksa", "Kumarkhali", "Kushtia Sadar", "Mirpur"],
+              Magura: ["Magura Sadar", "Mohammadpur", "Shalikha", "Sreepur"],
+              Meherpur: ["Gangni", "Meherpur Sadar", "Mujibnagar"],
+              Narail: ["Kalia", "Lohagara", "Narail Sadar"],
+              Satkhira: ["Assasuni", "Debhata", "Kalaroa", "Kaliganj", "Satkhira Sadar", "Shyamnagar", "Tala"]
+          },
+          Barishal: {
+              Barishal: ["Agailjhara", "Babuganj", "Bakerganj", "Banaripara", "Gaurnadi", "Hizla", "Barishal Sadar", "Mehendiganj", "Muladi", "Wazirpur"],
+              Barguna: ["Amtali", "Bamna", "Barguna Sadar", "Betagi", "Patharghata", "Taltali"],
+              Bhola: ["Bhola Sadar", "Burhanuddin", "Char Fasson", "Daulatkhan", "Lalmohan", "Manpura", "Tazumuddin"],
+              Jhalokati: ["Jhalokati Sadar", "Kathalia", "Nalchity", "Rajapur"],
+              Patuakhali: ["Bauphal", "Dashmina", "Galachipa", "Kalapara", "Mirzaganj", "Patuakhali Sadar", "Rangabali"],
+              Pirojpur: ["Bhandaria", "Kawkhali", "Mathbaria", "Nazirpur", "Pirojpur Sadar", "Nesarabad", "Zianagar"]
+          },
+          Sylhet: {
+              Sylhet: ["Balaganj", "Beanibazar", "Bishwanath", "Companiganj", "Fenchuganj", "Golapganj", "Gowainghat", "Jaintiapur", "Kanaighat", "Sylhet Sadar", "Zakiganj"],
+              Habiganj: ["Ajmiriganj", "Bahubal", "Baniyachong", "Chunarughat", "Habiganj Sadar", "Lakhai", "Madhabpur", "Nabiganj"],
+              Moulvibazar: ["Barlekha", "Juri", "Kamalganj", "Kulaura", "Moulvibazar Sadar", "Rajnagar", "Sreemangal"],
+              Sunamganj: ["Bishwamvarpur", "Chhatak", "Derai", "Dharampasha", "Dowarabazar", "Jagannathpur", "Jamalganj", "Sullah", "Sunamganj Sadar", "Tahirpur"]
+          },
+          Rangpur: {
+              Rangpur: ["Badarganj", "Gangachara", "Kaunia", "Rangpur Sadar", "Mithapukur", "Pirgachha", "Pirganj", "Taraganj"],
+              Dinajpur: ["Birampur", "Birganj", "Biral", "Bochaganj", "Chirirbandar", "Phulbari", "Ghoraghat", "Hakimpur", "Kaharole", "Khansama", "Dinajpur Sadar", "Nawabganj", "Parbatipur"],
+              Gaibandha: ["Fulchhari", "Gaibandha Sadar", "Gobindaganj", "Palashbari", "Sadullapur", "Saghata", "Sundarganj"],
+              Kurigram: ["Bhurungamari", "Char Rajibpur", "Chilmari", "Phulbari", "Kurigram Sadar", "Nageshwari", "Rajarhat", "Raomari", "Ulipur"],
+              Lalmonirhat: ["Aditmari", "Hatibandha", "Kaliganj", "Lalmonirhat Sadar", "Patgram"],
+              Nilphamari: ["Dimla", "Domar", "Jaldhaka", "Kishoreganj", "Nilphamari Sadar", "Saidpur"],
+              Panchagarh: ["Atwari", "Boda", "Debiganj", "Panchagarh Sadar", "Tetulia"],
+              Thakurgaon: ["Baliadangi", "Haripur", "Pirganj", "Ranisankail", "Thakurgaon Sadar"]
+          },
+          Mymensingh: {
+              Mymensingh: ["Bhaluka", "Dhobaura", "Fulbaria", "Gaffargaon", "Gauripur", "Haluaghat", "Ishwarganj", "Mymensingh Sadar", "Muktagachha", "Nandail", "Phulpur", "Trishal"],
+              Jamalpur: ["Bakshiganj", "Dewanganj", "Islampur", "Jamalpur Sadar", "Madarganj", "Melandaha", "Sarishabari"],
+              Netrokona: ["Atpara", "Barhatta", "Durgapur", "Khaliajuri", "Kendua", "Madan", "Mohanganj", "Netrokona Sadar", "Purbadhala"],
+              Sherpur: ["Jhenaigati", "Nakla", "Nalitabari", "Sherpur Sadar", "Sreebardi"]
+          }
+      };
+  
+      function updateDistricts() {
+          const divisionSelect = document.getElementById('division');
+          const districtSelect = document.getElementById('district');
+          const upazilaSelect = document.getElementById('upazila');
+          
+          // Clear previous options
+          districtSelect.innerHTML = '<option value="">Select District</option>';
+          upazilaSelect.innerHTML = '<option value="">Select Upazila/Thana</option>';
+          
+          const selectedDivision = divisionSelect.value;
+          if (selectedDivision) {
+              const districts = Object.keys(bangladeshData[selectedDivision]);
+              districts.forEach(district => {
+                  const option = document.createElement('option');
+                  option.value = district;
+                  option.textContent = district;
+                  districtSelect.appendChild(option);
+              });
+          }
+      }
+  
+      function updateUpazilas() {
+          const divisionSelect = document.getElementById('division');
+          const districtSelect = document.getElementById('district');
+          const upazilaSelect = document.getElementById('upazila');
+          
+          // Clear previous options
+          upazilaSelect.innerHTML = '<option value="">Select Upazila/Thana</option>';
+          
+          const selectedDivision = divisionSelect.value;
+          const selectedDistrict = districtSelect.value;
+          
+          if (selectedDivision && selectedDistrict) {
+              const upazilas = bangladeshData[selectedDivision][selectedDistrict];
+              upazilas.forEach(upazila => {
+                  const option = document.createElement('option');
+                  option.value = upazila;
+                  option.textContent = upazila;
+                  upazilaSelect.appendChild(option);
+              });
+          }
+      }
+      
+  </script>
+  <script>
+    $(document).ready(function(){
+        {% if messages %}
+            {% for message in messages %}
+                Swal.fire({
+                    title: "{{ message.tags|title }}",
+                    text: "{{ message }}",
+                    icon: "{{ message.tags }}",
+                    confirmButtonText: "OK"
+                });
+            {% endfor %}
+        {% endif %}
+    });
+</script>
+  </body>
 </html>

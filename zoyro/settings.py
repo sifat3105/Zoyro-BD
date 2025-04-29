@@ -52,17 +52,21 @@ INSTALLED_APPS = [
     'users',
     'banners',
     'discounts',
+    'delivery',
 
      # allauth
     'django.contrib.sites',
+    'social_django',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
+    'allauth.socialaccount.providers.facebook',
 ]
 SITE_ID = 1
 
 AUTHENTICATION_BACKENDS = [
+    'social_core.backends.facebook.FacebookOAuth2',
     'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend',
 ]
@@ -81,6 +85,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'allauth.account.middleware.AccountMiddleware',
+    'social_django.middleware.SocialAuthExceptionMiddleware',
 ]
 
 ROOT_URLCONF = 'zoyro.urls'
@@ -95,7 +100,9 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'products.context_processors.zoyro'
+                'products.context_processors.zoyro',
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
             ],
         },
     },
@@ -170,6 +177,8 @@ SOCIALACCOUNT_PROVIDERS = {
 
 GOOGLE_CLIENT_ID = '321987152556-sfp8useco7j0t261q8mkj9u88ih23j52.apps.googleusercontent.com'
 GOOGLE_CLIENT_SECRET = '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'
+SOCIAL_AUTH_FACEBOOK_KEY = '1718642072069342'  # App ID
+SOCIAL_AUTH_FACEBOOK_SECRET = 'ea3cf060be0aff744134e26293ac742d'
 
 OPENAI_API_KEY = "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"
 
