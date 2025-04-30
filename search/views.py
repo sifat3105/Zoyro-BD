@@ -1,12 +1,7 @@
 import random
 import string
-from django.db.models import Q, Case, When, Count
+from django.db.models import Case, When, Count
 from django.core.paginator import Paginator
-import faiss
-import numpy as np
-from sentence_transformers import SentenceTransformer, util
-
-from django.core.cache import cache
 from django.db.models import Case, When
 from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render
@@ -14,70 +9,11 @@ from django.urls import reverse
 from django.utils.http import urlencode
 
 from products.models import Product, Category, Brand
-from .utils import smart_product_search
 
-# Initialize the model once at startup
-
-model = SentenceTransformer('all-MiniLM-L6-v2')
-
-def get_product_embeddings():
-    """Cache product embeddings and return them with product IDs"""
-    cache_key = 'product_embeddings'
-    embeddings_data = cache.get(cache_key)
-    
-    if embeddings_data is None:
-        products = Product.objects.all().only(
-            'id', 'title', 'quick_overview', 'additional_description'
-        )
-        
-        product_texts = {
-            p.id: f"{p.title} {p.quick_overview} {p.additional_description}".strip()
-            for p in products
-        }
-        
-        texts = list(product_texts.values())
-        vectors = model.encode(
-            texts,
-            batch_size=64,
-            convert_to_numpy=True,
-            normalize_embeddings=True
-        ).astype('float32')
-        
-        embeddings_data = {
-            'product_ids': list(product_texts.keys()),
-            'embeddings': vectors
-        }
-        cache.set(cache_key, embeddings_data, timeout=60*60*24)
-    
-    return embeddings_data
-
-def get_faiss_index():
-    """Initialize and cache FAISS index"""
-    cache_key = 'faiss_product_index'
-    index = cache.get(cache_key)
-    
-    if index is None:
-        embeddings_data = get_product_embeddings()
-        vectors = embeddings_data['embeddings']
-        index = faiss.IndexFlatIP(vectors.shape[1])
-        index.add(vectors)
-        cache.set(cache_key, index, timeout=60*60*24)
-    
-    return index
-
-def search_products(query, top_k=100):
-    """Perform semantic search using FAISS"""
-    query_vec = model.encode(
-        query,
-        convert_to_numpy=True,
-        normalize_embeddings=True
-    ).astype('float32').reshape(1, -1)
-    
-    index = get_faiss_index()
-    distances, indices = index.search(query_vec, top_k)
-    
-    embeddings_data = get_product_embeddings()
-    return [embeddings_data['product_ids'][i] for i in indices[0]]
+def search_products(query):
+    return list(
+        Product.objects.filter(title__icontains=query).values_list('id', flat=True)
+    )
 
 def product_search(request):
     query = request.GET.get('q', '').strip()
