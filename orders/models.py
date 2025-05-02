@@ -60,15 +60,27 @@ class Order(models.Model):
         super().save(*args, **kwargs)
     
     def save(self, *args, **kwargs):
+        # Generate order number if it doesn't exist
         if not self.order_number:
-            # Get the last order_number and increment
+            # Get the last order and increment the number
             last_order = Order.objects.order_by('-id').first()
-            if last_order:
-                last_id = int(last_order.order_number) if last_order.order_number.isdigit() else 1000
-                self.order_number = f"ORD-{str(last_id + 1)}"
+            if last_order and last_order.order_number:
+                try:
+                    # Extract number from "ORD-1000" format
+                    last_number = int(last_order.order_number.split('-')[1])
+                    self.order_number = f"ORD-{last_number + 1}"
+                except (IndexError, ValueError):
+                    # Fallback if format is wrong
+                    self.order_number = f"ORD-{last_order.id + 1000}"
             else:
-                self.order_number = "ORD-1000"  # Starting number
-        super().save(*args, **kwargs)   
+                self.order_number = "ORD-1000"
+        
+        # Set estimated delivery date if it's a new order and not set
+        if not self.estimated_delivery_date and not self.pk:
+            delivery_days = random.randint(3, 5)
+            self.estimated_delivery_date = timezone.now().date() + timezone.timedelta(days=delivery_days)
+            
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return f"Order #{self.order_number}"

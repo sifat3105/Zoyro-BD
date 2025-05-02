@@ -9,8 +9,36 @@ from django.urls import reverse
 from django.utils.http import urlencode
 
 from products.models import Product, Category, Brand
+from django.db.models import Q
+from difflib import SequenceMatcher
 
-def search_products(query):
+def search_products(query, threshold=0.9):
+    # First try to match with category/subcategory names
+    category_matches = Category.objects.filter(
+        Q(name__icontains=query) | 
+        Q(subcategories__name__icontains=query)
+    ).distinct()
+    
+    # Check for high similarity matches
+    exact_category_matches = []
+    for cat in category_matches:
+        if SequenceMatcher(None, query.lower(), cat.name.lower()).ratio() >= threshold:
+            exact_category_matches.append(cat)
+        for subcat in cat.subcategories.all():
+            if SequenceMatcher(None, query.lower(), subcat.name.lower()).ratio() >= threshold:
+                exact_category_matches.append(cat)
+                break
+    
+    # If we found high accuracy category matches, return products from those categories
+    if exact_category_matches:
+        return list(
+            Product.objects.filter(
+                Q(category__in=exact_category_matches) |
+                Q(subcategory__category__in=exact_category_matches)
+            ).values_list('id', flat=True)
+        )
+    
+    # Fall back to product title search if no good category matches
     return list(
         Product.objects.filter(title__icontains=query).values_list('id', flat=True)
     )

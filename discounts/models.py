@@ -14,8 +14,8 @@ class Coupon(models.Model):
 
     def is_applicable(self, request):
         cart = getattr(request.user, 'cart', None)
-        if cart:
-            total_spent = cart.get_total_price()
+        if cart: 
+            total_spent = cart.get_total_offer_price()
         else:
             total_spent = 0 
         if total_spent >= self.minimum_spend:

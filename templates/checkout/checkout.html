@@ -314,9 +314,10 @@
                                                 <i class="icofont-info-circle"></i> A small cash on delivery charge may apply.
                                             </div>
                                             <hr>
-                                            <a href="thanks.html" class="btn btn-primary btn-block btn-lg">
-                                                PAY ৳<span id="cash-total-price">{{total}}</span> ON DELIVERY
-                                                <i class="icofont-long-arrow-right"></i>
+                                            <a href="#" id="cod-payment-btn" class="btn btn-primary btn-block btn-lg"
+                                           
+                                            PAY ৳<span id="cash-total-price">{{ total_cost }}</span> ON DELIVERY
+                                            <i class="icofont-long-arrow-right"></i>
                                             </a>
                                         </div>
                                     </div>
@@ -357,7 +358,7 @@
                    <div class="cart-list-product">
                     <a class="float-right remove-cart" href="#"><i class="icofont icofont-close-circled"></i></a>
                       {% if item.product.default_image %}
-                      <img class="img-fluid" src="{{ item.product.default_image.url }}" alt="" />   
+                      <img class="img-fluid" src="{{ item.product.c.url }}" alt="" />   
                       {% else %}
                       <img class="img-fluid" src="{% static 'img/product.jpg'%}" alt="" />
                       {% endif %}
@@ -553,4 +554,85 @@
             });
         });
         </script>
+
+
+        <script>
+            document.getElementById('cod-payment-btn').addEventListener('click', function(e) {
+                e.preventDefault();
+            
+                const selectedAddress = document.querySelector('input[name="deliveryAddress"]:checked');
+            
+                if (!selectedAddress) {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'No Delivery Address Selected',
+                        text: 'Please select a delivery address before proceeding!',
+                        confirmButtonText: 'Select Address'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            const addressSectionBtn = document.querySelector('[data-target="#collapseTwo"]');
+                            if (addressSectionBtn) {
+                                addressSectionBtn.click();
+                            }
+                        }
+                    });
+            
+                    return;
+                }
+            
+                const addressId = selectedAddress.value;
+            
+                const finalUrl = `/orders/cod/create/${addressId}/`;
+            
+                fetch(finalUrl, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRFToken': getCookie('csrftoken')
+                    }
+                })
+                .then(response => {
+                    if (response.redirected) {
+                        // If backend redirects, force browser to follow it
+                        window.location.href = response.url;
+                    } else {
+                        return response.json();
+                    }
+                })
+                .then(data => {
+                    if (data && !data.success) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Order Failed',
+                            text: data.message,
+                            confirmButtonText: 'Try Again'
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Something went wrong!',
+                        text: 'Please try again later.',
+                        confirmButtonText: 'Okay'
+                    });
+                });
+            });
+            
+            // CSRF helper
+            function getCookie(name) {
+                let cookieValue = null;
+                if (document.cookie && document.cookie !== '') {
+                    const cookies = document.cookie.split(';');
+                    for (let i = 0; i < cookies.length; i++) {
+                        const cookie = cookies[i].trim();
+                        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                            break;
+                        }
+                    }
+                }
+                return cookieValue;
+            }
+            </script>
 {% endblock  %}

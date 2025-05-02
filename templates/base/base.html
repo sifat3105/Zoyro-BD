@@ -441,88 +441,28 @@
                 <li class="nav-item">
                   <a class="nav-link" href="{% url 'home:home' %}"><i class="icofont-ui-home"></i></a>
                 </li>
-              
-                <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">SHIRT</a>
+                
+                
+
+                {% for category in nav_categories %}
+                {% if category.subcategories.all %}
+                <li class="nav-item  dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ category.name|upper }}</a>
+                  
                   <div class="dropdown-menu dropdown-menu-right shadow-sm border-0" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="{% url 'search:search_redirect' %}?q=Casual Shirts">Casual Shirts</a>
-                    <a class="dropdown-item" href="{% url 'search:search_redirect' %}?q=Dress Shirts">Dress Shirts</a>
-                    <a class="dropdown-item" href="{% url 'search:search_redirect' %}?q=Linen Shirts">Linen Shirts</a>
-                    <a class="dropdown-item" href="{% url 'search:search_redirect' %}?q=Denim Shirts">Denim Shirts</a>
-                    <a class="dropdown-item" href="{% url 'search:search_redirect' %}?q=Flannel Shirts">Flannel Shirts</a>
-                    <a class="dropdown-item" href="{% url 'search:search_redirect' %}?q=Overshirts">Overshirts</a>
-                    <a class="dropdown-item" href="{% url 'search:search_redirect' %}?q=Short Sleeve Shirts">Short Sleeve Shirts</a>
-                    <a class="dropdown-item" href="{% url 'search:search_redirect' %}?q=Long Sleeve Shirts">Long Sleeve Shirts</a>
-                    <a class="dropdown-item" href="{% url 'search:search_redirect' %}?q=Mandarin Collar Shirts">Mandarin Collar Shirts</a>
-                    <a class="dropdown-item" href="{% url 'search:search_redirect' %}?q=Printed Shirts">Printed Shirts</a>
-                    <a class="dropdown-item" href="{% url 'search:search_redirect' %}?q=Solid Shirts">Solid Shirts</a>
+                    {% for subcategory in category.subcategories.all %}
+                    <a class="dropdown-item" href="{{ subcategory.get_absolute_url }}">{{ subcategory.name }}</a>
+                    {% endfor %}
                   </div>
                 </li>
-              
-                <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" href="#" id="tshirtDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">T-SHIRT</a>
-                  <div class="dropdown-menu dropdown-menu-right shadow-sm border-0" aria-labelledby="tshirtDropdown">
-                    <a class="dropdown-item" href="{% url 'search:search_redirect' %}?q=Crew Neck T-Shirts">Crew Neck T-Shirts</a>
-                    <a class="dropdown-item" href="{% url 'search:search_redirect' %}?q=V-Neck T-Shirts">V-Neck T-Shirts</a>
-                    <a class="dropdown-item" href="{% url 'search:search_redirect' %}?q=Polo T-Shirts">Polo T-Shirts</a>
-                    <a class="dropdown-item" href="{% url 'search:search_redirect' %}?q=Graphic T-Shirts">Graphic T-Shirts</a>
-                    <a class="dropdown-item" href="{% url 'search:search_redirect' %}?q=Plain T-Shirts">Plain T-Shirts</a>
-                    <a class="dropdown-item" href="{% url 'search:search_redirect' %}?q=Henley T-Shirts">Henley T-Shirts</a>
-                    <a class="dropdown-item" href="{% url 'search:search_redirect' %}?q=Full Sleeve T-Shirts">Full Sleeve T-Shirts</a>
-                    <a class="dropdown-item" href="{% url 'search:search_redirect' %}?q=Half Sleeve T-Shirts">Half Sleeve T-Shirts</a>
-                    <a class="dropdown-item" href="{% url 'search:search_redirect' %}?q=Oversized T-Shirts">Oversized T-Shirts</a>
-                    <a class="dropdown-item" href="{% url 'search:search_redirect' %}?q=Muscle Fit T-Shirts">Muscle Fit T-Shirts</a>
-                    <a class="dropdown-item" href="{% url 'search:search_redirect' %}?q=Crop T-Shirts">Crop T-Shirts</a>
-                    <a class="dropdown-item" href="{% url 'search:search_redirect' %}?q=Tank Tops / Sleeveless Tees">Tank Tops / Sleeveless Tees</a>
-                  </div>
-                </li>
-              
+                {% else %}
                 <li class="nav-item">
-                  <a class="nav-link" href="{% url 'search:search_redirect' %}?q=Panjabi">PANJABI</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="{% url 'search:search_redirect' %}?q=Polo Shirt">POLO SHIRT</a>
-                </li>
+                <a class="nav-link" href="{{category.get_absolute_url}}">{{ category.name|upper }}</a>
+              </li>
+                {% endif %}
+                {% endfor %}  
               
-                <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" href="#" id="winterDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">WINTER</a>
-                  <div class="dropdown-menu dropdown-menu-right shadow-sm border-0" aria-labelledby="winterDropdown">
-                    <a class="dropdown-item" href="{% url 'search:search_redirect' %}?q=Hoodies">Hoodies</a>
-                    <a class="dropdown-item" href="{% url 'search:search_redirect' %}?q=Sweatshirts">Sweatshirts</a>
-              
-                    <div class="dropdown-submenu">
-                      <a class="dropdown-item dropdown-toggle" href="#">Jackets</a>
-                      <div class="dropdown-menu">
-                        <a class="dropdown-item" href="{% url 'search:search_redirect' %}?q=Bomber Jackets">Bomber Jackets</a>
-                        <a class="dropdown-item" href="{% url 'search:search_redirect' %}?q=Puffer Jackets">Puffer Jackets</a>
-                        <a class="dropdown-item" href="{% url 'search:search_redirect' %}?q=Parkas">Parkas</a>
-                        <a class="dropdown-item" href="{% url 'search:search_redirect' %}?q=Denim Jackets">Denim Jackets</a>
-                        <a class="dropdown-item" href="{% url 'search:search_redirect' %}?q=Leather Jackets">Leather Jackets</a>
-                      </div>
-                    </div>
-              
-                    <div class="dropdown-submenu">
-                      <a class="dropdown-item dropdown-toggle" href="#">Coats</a>
-                      <div class="dropdown-menu">
-                        <a class="dropdown-item" href="{% url 'search:search_redirect' %}?q=Trench Coats">Trench Coats</a>
-                        <a class="dropdown-item" href="{% url 'search:search_redirect' %}?q=Overcoats">Overcoats</a>
-                        <a class="dropdown-item" href="{% url 'search:search_redirect' %}?q=Peacoats">Peacoats</a>
-                      </div>
-                    </div>
-              
-                    <div class="dropdown-submenu">
-                      <a class="dropdown-item dropdown-toggle" href="#">Sweaters</a>
-                      <div class="dropdown-menu">
-                        <a class="dropdown-item" href="{% url 'search:search_redirect' %}?q=Pullovers">Pullovers</a>
-                        <a class="dropdown-item" href="{% url 'search:search_redirect' %}?q=Cardigans">Cardigans</a>
-                        <a class="dropdown-item" href="{% url 'search:search_redirect' %}?q=Turtlenecks">Turtlenecks</a>
-                      </div>
-                    </div>
-              
-                    <a class="dropdown-item" href="{% url 'search:search_redirect' %}?q=Thermal Wear">Thermal Wear</a>
-                    <a class="dropdown-item" href="{% url 'search:search_redirect' %}?q=Fleece Jackets">Fleece Jackets</a>
-                  </div>
-                </li>
+                
               </ul>
               
               <form class="form-inline my-0 mx-2 top-search" mathod="GET" action="{% url 'search:search_redirect' %}" style="width: 30%; min-width: 200px;">
@@ -589,40 +529,20 @@
               <div class="row no-gutters">
                 <div class="col-6">
                   <ul class="list-unstyled mb-0">
-                    <li>
-                      <a href="#">Dresses for Girls</a>
-                    </li>
-                    <li>
-                      <a href="#">Maxi Dresses</a>
-                    </li>
-                    <li>
-                      <a href="#">Tops for Girls</a>
-                    </li>
-                    <li>
-                      <a href="#">Women Jumpsuits</a>
-                    </li>
-                    <li>
-                      <a href="#">Dungarees Dress</a>
-                    </li>
+                    {% for subcategory in nav_sobcategories|slice:":5" %}
+                      <li>
+                        <a href="{{ subcategory.get_absolute_url }}">{{ subcategory.name }}</a>
+                      </li>
+                    {% endfor %}
                   </ul>
                 </div>
                 <div class="col-6">
                   <ul class="list-unstyled mb-0">
-                    <li>
-                      <a href="#">T Shirts</a>
-                    </li>
-                    <li>
-                      <a href="#">Shoes for Men</a>
-                    </li>
-                    <li>
-                      <a href="#">Ripped Jeans</a>
-                    </li>
-                    <li>
-                      <a href="#">Jeans for Girls</a>
-                    </li>
-                    <li>
-                      <a href="#">Denim shirts</a>
-                    </li>
+                    {% for subcategory in nav_sobcategories|slice:"5:10" %}
+                      <li>
+                        <a href="{{ subcategory.get_absolute_url }}">{{ subcategory.name }}</a>
+                      </li>
+                    {% endfor %}
                   </ul>
                 </div>
               </div>

@@ -45,14 +45,12 @@ class ProductAdmin(admin.ModelAdmin):
     list_display = (
         'image_thumbnail',
         'title',
-        'category',
         'subcategory',
-        'price',
         'offer_price',
         'discount_display',
         'availability_status',
+        'quantity',
         'is_active',
-        'click_count',
         'total_orders',
     )
     list_filter = (
@@ -70,13 +68,12 @@ class ProductAdmin(admin.ModelAdmin):
         'subcategory__name',
     )
     list_editable = (
-        'price',
         'offer_price',
         'is_active',
     )
     readonly_fields = (
         'slug',
-        'click_count',
+        'quantity',
         'total_orders',
         'created_at',
         'updated_at',
@@ -86,7 +83,6 @@ class ProductAdmin(admin.ModelAdmin):
         ('Basic Information', {
             'fields': (
                 'title',
-                'slug',
                 'product_code',
                 'sku',
                 'quick_overview',
@@ -100,7 +96,6 @@ class ProductAdmin(admin.ModelAdmin):
                 'price',
                 'offer_price',
                 'discount',
-                'quantity',
                 'availability',
             )
         }),
@@ -131,7 +126,16 @@ class ProductAdmin(admin.ModelAdmin):
     actions = ['activate_products', 'deactivate_products', 'mark_as_top_sell']
     list_per_page = 25
     save_on_top = True
-    
+
+    def save_related(self, request, form, formsets, change):
+        # Save the inlines first
+        super().save_related(request, form, formsets, change)
+        # Calculate total quantity after ApparelSizes are saved
+        product = form.instance
+        total_quantity = sum(size.quantity for size in product.apparel_sizes.all())
+        product.quantity = total_quantity
+        product.save()
+
     def image_thumbnail(self, obj):
         if obj.default_image:
             return format_html('<img src="{}" style="max-height: 50px; max-width: 50px;" />', obj.default_image.url)

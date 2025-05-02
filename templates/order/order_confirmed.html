@@ -1,4 +1,5 @@
 {% extends "base/base.html" %}
+{% load static %}
 {% block title %}{% endblock  %}
 
 {% block content %}
@@ -6,7 +7,7 @@
     <div class="container">
        <div class="row">
           <div class="col-md-12 text-center pt-5 pb-5">
-             <img class="img-fluid mb-5" src="img/thanks.png" alt="404">
+             <img class="img-fluid mb-5" src="{% static "img/thanks.png" %}" alt="404">
              <h1 class="mt-2 mb-2 text-success">Congratulations!</h1>
              <h2 class="mt-2 mb-2 text-success"></h2>
              <p class="mb-3">You have successfully placed your order</p>
@@ -14,7 +15,7 @@
                 <p class="mb-1">Your order number is:</p>
                 <h3 class="text-primary font-weight-bold">{{ order_number }}</h3>
              </div>
-             <a class="btn btn-primary btn-lg" href="profile.html">View Order :)</a>
+             <a class="btn btn-primary btn-lg" href="{% url 'orders:details' %}?order_id={{order_number}}">View Order :)</a>
           </div>
        </div>
     </div>

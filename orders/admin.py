@@ -161,7 +161,7 @@ class OrderAdmin(admin.ModelAdmin):
 class OrderItemAdmin(admin.ModelAdmin):
     list_display = (
         'order_number',
-        'product_name',
+        'product_title',
         'quantity',
         'unit_price_formatted',
         'discount_formatted',
@@ -170,7 +170,7 @@ class OrderItemAdmin(admin.ModelAdmin):
     list_filter = ('order__status',)
     search_fields = (
         'order__order_number',
-        'product__name',
+        'product__title',
     )
     readonly_fields = (
         'order',
@@ -185,10 +185,10 @@ class OrderItemAdmin(admin.ModelAdmin):
     order_number.short_description = 'Order Number'
     order_number.admin_order_field = 'order__order_number'
 
-    def product_name(self, obj):
-        return obj.product.name if obj.product else '[Deleted Product]'
-    product_name.short_description = 'Product'
-    product_name.admin_order_field = 'product__name'
+    def product_title(self, obj):
+        return obj.product.title if obj.product else '[Deleted Product]'
+    product_title.short_description = 'Product'
+    product_title.admin_order_field = 'product__title'
 
     def unit_price_formatted(self, obj):
         return f"${obj.unit_price:.2f}"

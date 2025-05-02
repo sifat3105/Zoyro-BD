@@ -21,6 +21,9 @@ class Category(models.Model):
         if not self.slug:
             self.slug = slugify(self.name)
         super().save(*args, **kwargs)
+        
+    def get_absolute_url(self):
+        return reverse('search:search_redirect') + f'?q={self.name}'
 
     def __str__(self):
         return self.name
@@ -43,6 +46,9 @@ class SubCategory(models.Model):
 
     def __str__(self):
         return f"{self.category.name} → {self.name}"
+    
+    def get_absolute_url(self):
+        return reverse('search:search_redirect') + f'?q={self.name}'
 
 class Brand(models.Model):
     name = models.CharField(max_length=100, default="ZOYRO")
@@ -97,14 +103,18 @@ class Product(models.Model):
         if self.subcategory and not self.category:
             self.category = self.subcategory.category
 
+        if self.quantity == 0:
+            self.availability = 'Out of Stock'
+        elif self.availability == 'out_of_stock' and self.quantity > 0:
+            # Optional: Set back to 'in_stock' if quantity becomes positive
+            self.availability = 'In Stock'
         super().save(*args, **kwargs)
 
 
+    def get_absolute_url(self):
+        return reverse('products:details', args=[self.slug])
 
-        @receiver([post_save, post_delete], sender=Product)
-        def clear_search_cache(sender, **kwargs):
-            from django.core.cache import cache
-            cache.delete_many(['product_embeddings', 'faiss_product_index'])
+
 
     def get_quantity_for_size(self, size):
             try:
@@ -116,13 +126,6 @@ class Product(models.Model):
     def __str__(self):
         return self.title
 
-class ProductImage(models.Model):
-    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='images')
-    image = models.ImageField(upload_to='products/extra_images/')
-    alt_text = models.CharField(max_length=255, blank=True)
-
-    def __str__(self):
-        return f"Image for {self.product.title}"
     
 class ApparelSize(models.Model):
     APPAREL_SIZES = [
@@ -139,3 +142,12 @@ class ApparelSize(models.Model):
     
     def __str__(self):
         return self.size
+    
+
+class ProductImage(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='images')
+    image = models.ImageField(upload_to='products/extra_images/')
+    alt_text = models.CharField(max_length=255, blank=True)
+
+    def __str__(self):
+        return f"Image for {self.product.title}"

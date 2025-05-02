@@ -4,6 +4,23 @@
 {% block title %}{{product.title}}{% endblock  %}
 
 {% block content %}
+<style>
+   .disabled-size {
+       pointer-events: none; /* Prevent interaction */
+       opacity: 0.5; /* Make it semi-transparent */
+       color: #999 !important; /* Light gray text */
+       background-color: #f5f5f5 !important; /* Light gray background */
+       border-color: #ddd !important; /* Light border */
+       text-decoration: line-through; /* Optional: strikethrough text */
+   }
+
+   /* Remove hover effects for disabled elements */
+   .disabled-size:hover {
+       cursor: not-allowed; /* Show not-allowed cursor */
+       background-color: #f5f5f5 !important; /* Maintain same background */
+   }
+</style>
+ 
 <section class="py-2  inner-header">
     <div class="container">
        <div class="row d-flex align-items-center">
@@ -99,9 +116,15 @@
                         <div id="size-info" class="mt-2 text-info font-weight-bold"></div>
                         {% for size in all_sizes %}
                            {% if size in available_sizes %}
+                           {% if size_quantities|get_item:size %}
                            <label class="btn btn-sm btn-outline-secondary" title="{{ size_quantities|get_item:size }}" data-bs-toggle="tooltip">
                               <input type="radio" name="size" value="{{ size }}" autocomplete="off"> {{ size|upper }}
-                        </label>
+                           </label>
+                           {% else %}
+                           <label class="btn btn-sm btn-outline-secondary disabled-size">
+                              <input type="radio" name="size" value="{{ size }}" autocomplete="off" disabled> {{ size|upper }}
+                           </label>
+                           {% endif %}
                         
                                              
                            {% else %}
@@ -112,33 +135,6 @@
                         {% endfor %}
                      </div>
                   </div>
-                  <script>
-                     document.addEventListener('DOMContentLoaded', function () {
-                       var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-                       tooltipTriggerList.forEach(function (tooltipTriggerEl) {
-                         new bootstrap.Tooltip(tooltipTriggerEl)
-                       })
-                     });
-                   </script>
-           <style>
-               .disabled-size {
-                   pointer-events: none; /* Prevent interaction */
-                   opacity: 0.5; /* Make it semi-transparent */
-                   color: #999 !important; /* Light gray text */
-                   background-color: #f5f5f5 !important; /* Light gray background */
-                   border-color: #ddd !important; /* Light border */
-                   text-decoration: line-through; /* Optional: strikethrough text */
-               }
-           
-               /* Remove hover effects for disabled elements */
-               .disabled-size:hover {
-                   cursor: not-allowed; /* Show not-allowed cursor */
-                   background-color: #f5f5f5 !important; /* Maintain same background */
-               }
-           </style>
-             
-             
-             
                    <div class="clearfix"></div>
                    <div class="product-variation">
                      
@@ -167,7 +163,7 @@
                    <div class="short-description border-bottom">
                       <h6 class="mb-3">
                          <span class="text-dark font-weight-bold">Quick Overview</span>  
-                         <small class="float-right">Availability: <strong class="badge badge-danger">In Stock</strong></small>
+                        <small class="float-right">Availability: <strong class="badge badge-danger">{{product.availability}}</strong></small>
                       </h6>
                       <p>{{product.quick_overview}} <a class="font-weight-bold" href="#det">View More[...]</a></p>
                    </div>
@@ -563,7 +559,7 @@
               } else {
                   value = value + 1;
               }
-              
+               
               input.value = value;
           });
       });
@@ -581,7 +577,14 @@
      });
       </script>
 
-   
+      <script>
+         document.addEventListener('DOMContentLoaded', function () {
+           var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+           tooltipTriggerList.forEach(function (tooltipTriggerEl) {
+             new bootstrap.Tooltip(tooltipTriggerEl)
+           })
+         });
+       </script>
 
    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 {% endblock  %}

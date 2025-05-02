@@ -1,16 +1,20 @@
 from accounts.views import create_guest_user
 from django.shortcuts import get_object_or_404
 from cart.models import Cart
-from products.models import Product
+from products.models import Product, Category,SubCategory
 from django.conf import settings
+from decimal import Decimal
 
 
 def zoyro(request):
+    categories = Category.objects.all()
+    sobcategories = SubCategory.objects.all()
     domain = request.get_host()
+
     if request.user.is_authenticated:
         cart, created = Cart.objects.get_or_create(user=request.user)
-        total_price = float(cart.get_total_price())
-        sub_total = float(cart.get_total_offer_price())
+        total_price = Decimal(cart.get_total_price())
+        sub_total = Decimal(cart.get_total_offer_price())
         discount = int(((total_price - sub_total) / total_price) * 100) if total_price and sub_total else 0
         dis_price = int(total_price - sub_total)
         total_saving = f"{dis_price} ({discount}%)"
@@ -20,10 +24,12 @@ def zoyro(request):
             item.max_quantity = item.product.get_quantity_for_size(i_size)
         wishlist_items = None
         context = {
+            'nav_categories': categories, 
+            'nav_sobcategories': sobcategories, 
             'sub_total': sub_total if cart else '0.00',
             'total_saving': total_saving,
             'delivery_charge': '70.00' if cart else '0.00',
-            'total': round(sub_total + 70.00, 2) if cart else 0.00,
+            'total': round(sub_total + Decimal(70.00), 2) if cart else 0.00,
             'cart_items': cart_items,
             'item_count': cart.get_total_item_count(),
             'domain': domain,
@@ -34,10 +40,10 @@ def zoyro(request):
         
     else:
         cart = request.session.get('cart', {})
-        total_price = sum(float(item.get('price', 0)) * float(item.get('quantity', 0)) for item in cart.values())
-        sub_total = round(float(sum(float(item.get('offer_price', 0)) * float(item.get('quantity', 0)) for item in cart.values())),2)
+        total_price = sum(Decimal(item.get('price', 0)) * Decimal(item.get('quantity', 0)) for item in cart.values())
+        sub_total = round(Decimal(sum(Decimal(item.get('offer_price', 0)) * Decimal(item.get('quantity', 0)) for item in cart.values())),2)
         discount = int(((total_price - sub_total) / total_price) * 100) if total_price and sub_total else 0
-        dis_price = round(float(total_price - sub_total),2)
+        dis_price = round(Decimal(total_price - sub_total),2)
         total_saving = f"{dis_price} ({discount}%)"
         wishlist_items = None
         cart_items = {}
@@ -59,10 +65,12 @@ def zoyro(request):
                 continue
          
         context = {
+            'nav_categories': categories,
+            'nav_sobcategories': sobcategories, 
             'sub_total': sub_total if cart else '0.00',
             'total_saving': total_saving,
             'delivery_charge': '70.00' if cart else '0.00',
-            'total': round(sub_total + 70.00, 2) if cart else 0.00,
+            'total': round(sub_total + Decimal(70.00), 2) if cart else 0.00,
             'cart_items': cart_items,
             'item_count': sum(int(item['quantity']) for item in cart_items.values()),
             'domain': domain,

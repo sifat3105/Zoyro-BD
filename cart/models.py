@@ -34,8 +34,7 @@ class Cart(models.Model):
     def get_total_item_count(self):
         return self.items.aggregate(total_quantity=Sum('quantity'))['total_quantity'] or 0
     
-    def get_total_item_count(self):
-        return self.items.aggregate(total_quantity=Sum('quantity'))['total_quantity'] or 0
+
 
 
 class CartItem(models.Model):
