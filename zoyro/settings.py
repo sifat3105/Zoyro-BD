@@ -113,19 +113,16 @@ TEMPLATES = [
 WSGI_APPLICATION = 'zoyro.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/5.2/ref/settings/#databases
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'zoyrobdc_zoyro_database',
-#         'USER': 'zoyrobdc_sifat',
-#         'PASSWORD': 'aW&w^.xwmJ-r',
-#         'HOST': 'pgsql.zoyrobd.com',
-#         'PORT': '5432',
-#     }
-# }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'zoyrobdc_zoyro_database',
+        'USER': 'zoyrobdc_sifat',
+        'PASSWORD': 'aW&w^.xwmJ-r',
+        'HOST': 'localhost',
+        'PORT': '5432',
+    }
+}
 
 DATABASES = {
     'default': {
