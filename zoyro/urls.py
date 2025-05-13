@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.conf import settings
-from django.conf.urls.static import static
+from django.conf.urls.static import static as st
 from django.urls import path, include
 from products.sitemaps import ProductSitemap, CategorySitemap, StaticViewSitemap, SubCategory
 from django.contrib import sitemaps
@@ -31,5 +31,5 @@ urlpatterns = [
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps_dict}, name='sitemap'),
 ]
 
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+urlpatterns += st(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+urlpatterns += st(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

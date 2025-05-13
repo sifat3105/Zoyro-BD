@@ -465,14 +465,111 @@
                 
               </ul>
               
-              <form class="form-inline my-0 mx-2 top-search" mathod="GET" action="{% url 'search:search_redirect' %}" style="width: 30%; min-width: 200px;">
-                <div class="input-group w-100">
-                  <input class="form-control form-control-sm w-75" name="q" type="search" placeholder="Search products..." aria-label="Search" />
-                  <div class="input-group-append">  
-                    <button class="btn btn-sm btn-link" type="submit"><i class="icofont-search"></i></button>
+              <div style="position: relative; width: 30%; min-width: 200px;">
+                <form id="product-search-form" action="{% url 'search:search_redirect' %}" class="form-inline my-0 mx-2 top-search">
+                  <div class="input-group w-100">
+                    <input id="search-input" class="form-control form-control-sm w-75" name="q" type="search" placeholder="Search products..." aria-label="Search" autocomplete="off" />
+                    <div class="input-group-append">  
+                      <button class="btn btn-sm btn-link" type="submit"><i class="icofont-search"></i></button>
+                    </div>
                   </div>
-                </div>
-              </form>
+                </form>
+                <ul id="suggestions" style="display:none;"></ul>
+              </div>
+              
+              <style>
+                #suggestions {
+                  position: absolute;
+                  width: %;
+                  min-width: 400px;
+                  background-color: white;
+                  border: 1px solid #ddd;
+                  border-top: none;
+                  max-height: 300px;
+                  overflow-y: auto;
+                  z-index: 1000;
+                  padding: 0;
+                  margin: 0;
+                }
+                
+                #suggestions li {
+                  list-style: none;
+                }
+                
+                #suggestions li a:hover {
+                  background-color: #f0f0f0;
+                }
+                
+              </style>
+              <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                const searchInput = document.getElementById('search-input');
+                const suggestionsList = document.getElementById('suggestions');
+              
+                searchInput.addEventListener('input', function() {
+                  const query = this.value.trim();
+              
+                  if (query.length === 0) {
+                    suggestionsList.innerHTML = '';
+                    suggestionsList.style.display = 'none';
+                    return;
+                  }
+              
+                  fetch(`/search/products/?q=${encodeURIComponent(query)}`)
+                    .then(response => response.json())
+                    .then(data => {
+                      suggestionsList.innerHTML = '';
+                      suggestionsList.style.display = 'block';
+              
+                      if (data.js_products.length === 0) {
+                        suggestionsList.innerHTML = '<li class="dropdown-item">No products found</li>';
+                        return;
+                      }
+              
+                      data.js_products.forEach(product => {
+                        const li = document.createElement('li');
+                        li.classList.add('dropdown-item');
+              
+                        const link = document.createElement('a');
+                        link.href = `/products/details/${product.slug}/`;
+                        link.style.display = 'flex';
+                        link.style.alignItems = 'center';
+                        link.style.textDecoration = 'none';
+                        link.style.color = '#333';
+              
+                        const img = document.createElement('img');
+                        img.src = product.image_url;
+                        img.alt = product.title;
+                        img.style.width = '40px';
+                        img.style.height = '40px';
+                        img.style.objectFit = 'cover';
+                        img.style.marginRight = '10px';
+                        img.style.borderRadius = '4px';
+              
+                        const text = document.createElement('span');
+                        text.textContent = `${product.title} - $${product.price}`;
+              
+                        link.appendChild(img);
+                        link.appendChild(text);
+                        li.appendChild(link);
+              
+                        suggestionsList.appendChild(li);
+                      });
+                    })
+                    .catch(error => {
+                      console.error('Error fetching products:', error);
+                    });
+                });
+              
+                // Hide suggestions when clicking outside
+                document.addEventListener('click', function(event) {
+                  if (!searchInput.contains(event.target) && !suggestionsList.contains(event.target)) {
+                    suggestionsList.style.display = 'none';
+                  }
+                });
+              });
+              
+                </script>
               {% if not request.user.is_authenticated %}
                 <ul class="navbar-nav ml-auto profile-nav-right">
                   <li class="nav-item">

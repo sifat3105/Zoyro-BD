@@ -12,6 +12,34 @@ from products.models import Product, Category, Brand
 from django.db.models import Q
 from difflib import SequenceMatcher
 
+from django.conf import settings
+
+def js_search_products(request):
+    query = request.GET.get('q', '')
+    
+    try:
+        if not query:
+            return JsonResponse({'js_products': []})
+        
+        products = Product.objects.filter(title__icontains=query)[:10]
+        data = []
+        for product in products:
+            data.append({
+                'id': product.id,
+                'title': product.title,
+                'price': str(product.price),
+                'slug': product.slug,
+                'image_url': product.default_image.url if product.default_image else settings.STATIC_URL + 'img/default-product.png'
+            })
+        
+        return JsonResponse({'js_products': data})
+    
+    except Exception as e:
+        print("ERROR:", e)
+        return JsonResponse({'js_products': [], 'error': str(e)}, status=500)
+
+
+
 def search_products(query, threshold=0.9):
     # First try to match with category/subcategory names
     category_matches = Category.objects.filter(

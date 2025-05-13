@@ -113,24 +113,27 @@ TEMPLATES = [
 WSGI_APPLICATION = 'zoyro.wsgi.application'
 
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'zoyrobdc_zoyro_database',
-        'USER': 'zoyrobdc_sifat',
-        'PASSWORD': 'aW&w^.xwmJ-r',
-        'HOST': 'localhost',
-        'PORT': '5432',
-    }
-}
+# Database
+# https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 # DATABASES = {
 #     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-        
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'zoyrobdc_zoyro_database',
+#         'USER': 'zoyrobdc_sifat',
+#         'PASSWORD': 'aW&w^.xwmJ-r',
+#         'HOST': 'pgsql.zoyrobd.com',
+#         'PORT': '5432',
 #     }
 # }
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+        
+    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
@@ -165,14 +168,10 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = '/static/'
-MEDIA_URL = '/media/'
-
+STATIC_URL = 'static/'
+MEDIA_URL = 'media/'
 STATICFILES_DIRS = [BASE_DIR / 'static', ]
-
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field

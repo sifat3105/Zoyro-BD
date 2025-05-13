@@ -67,11 +67,11 @@
                </div>
                
                <!-- Desktop Filters -->
-               <div class="filters shadow-sm rounded bg-white mb-3 d-none d-md-block">
+               <div class="filters desktop-filters shadow-sm rounded bg-white mb-3 d-none d-md-block">
                   <div class="filters-header border-bottom pl-4 pr-4 pt-3 pb-3">
                      <h5 class="m-0 text-dark">Filter By</h5>
                   </div>
-                  <div class="filters-body">
+                  <div class="filters-body" id="desktop-filters">
                      <div class="filters-card border-bottom p-4">
                         <h6 class="mb-3">Price Range</h6>
                         <div class="row">
@@ -234,15 +234,15 @@
 <script>
    document.addEventListener('DOMContentLoaded', function() {
        // Auto-submit mobile filters when changed
-       const mobileFilters = document.querySelector('.mobile-filters');
-       if (mobileFilters) {
+       const mobileFilters = document.querySelector('.desktop-filters');
+       {% comment %} if (mobileFilters) {
            const inputs = mobileFilters.querySelectorAll('input[type="checkbox"], input[type="number"]');
            inputs.forEach(input => {
                input.addEventListener('change', function() {
                    this.closest('form').submit();
                });
            });
-       }
+       } {% endcomment %}
        
        // Handle price range inputs to prevent min > max
        const minPrice = document.querySelector('input[name="min_price"]');
@@ -265,4 +265,3 @@
    </script>
    
 {% endblock %}
-

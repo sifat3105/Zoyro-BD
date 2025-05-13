@@ -9,6 +9,7 @@ from decimal import Decimal
 def zoyro(request):
     categories = Category.objects.all()
     sobcategories = SubCategory.objects.all()
+    # search_product_list = Product.objects.all()
     domain = request.get_host()
 
     if request.user.is_authenticated:
@@ -24,6 +25,7 @@ def zoyro(request):
             item.max_quantity = item.product.get_quantity_for_size(i_size)
         wishlist_items = None
         context = {
+            # 'search_product_list': search_product_list, 
             'nav_categories': categories, 
             'nav_sobcategories': sobcategories, 
             'sub_total': sub_total if cart else '0.00',
@@ -65,6 +67,7 @@ def zoyro(request):
                 continue
          
         context = {
+            # 'search_product_list': search_product_list,
             'nav_categories': categories,
             'nav_sobcategories': sobcategories, 
             'sub_total': sub_total if cart else '0.00',
